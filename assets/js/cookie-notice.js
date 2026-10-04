@@ -1,7 +1,8 @@
 /* VersicherungsFuchs Cookie-Hinweis - TDDDG-konform (§ 25 TDDDG, DSK 2023).
    - "Nur notwendige" und "Alle akzeptieren" gleichberechtigt auf der ersten Ebene
-   - Eine Stufe: Marketing (Google Ads Conversion-Messung + Google Analytics 4) — Consent BASIC: die Tags
-     laedt assets/js/vf-messung.js erst nach Zustimmung (Ereignis 'vf-consent'); vorher kein Google-Request.
+   - Eine Stufe: Marketing (Google Ads Conversion-Messung + Google Analytics 4) — Consent ADVANCED (05.10.2026):
+     assets/js/vf-messung.js laedt die Tags sofort; ohne Zustimmung bleibt alles "denied" (keine Cookies,
+     nur cookielose Pings). Die Zustimmung hebt per consent update auf "granted".
    - Persistenz: localStorage 'vf_cookie_consent' = 'accepted' | 'necessary'
    - Widerruf: Link mit class="vf-cn-trigger" -> zuruecksetzen + neu laden
    Im <head> steht nur der dataLayer-Stub mit Consent-Default "denied". */
@@ -37,11 +38,10 @@
       + '<div class="vf-cn__inner">'
       + '  <h2 id="vf-cn-title" class="vf-cn__title">Cookies &amp; Datenschutz</h2>'
       + '  <p id="vf-cn-desc" class="vf-cn__body">'
-      + '    Technisch notwendige Cookies brauchen wir, damit die Seite funktioniert.'
-      + '    Optional messen wir, ueber welche Anzeige Sie zu uns gefunden haben'
-      + '    (Google Ads) und wie die Seite genutzt wird (Google Analytics 4). Sie entscheiden -'
-      + '    jederzeit widerrufbar ueber „Cookie-Einstellungen" im Fussbereich. Details in der'
-      + '    <a href="/datenschutz.html">Datenschutzerklaerung</a>.'
+      + '    Mit Ihrer Zustimmung nutzen wir Google Analytics und messen den Erfolg unserer Anzeigen mit Cookies.'
+      + '    Ohne Zustimmung setzen wir keine Cookies; Google erh\u00e4lt dann nur anonyme Messsignale ohne Cookies.'
+      + '    Sie entscheiden - jederzeit widerrufbar \u00fcber „Cookie-Einstellungen" im Fu\u00dfbereich. Details in der'
+      + '    <a href="/datenschutz.html">Datenschutzerkl\u00e4rung</a>.'
       + '  </p>'
       + '  <div class="vf-cn__actions">'
       + '    <button type="button" class="vf-cn__btn vf-cn__btn--accept" data-vf-cn="accept">Alle akzeptieren</button>'

@@ -30,12 +30,12 @@
     .plausi-meldung{margin:6px 0 0;font-size:.875rem;line-height:1.4;color:#ffb4a8;overflow-wrap:anywhere}
     [aria-invalid="true"]{border-color:#ef4444 !important;box-shadow:0 0 0 1px #ef4444}
   </style>
-<!-- Consent BASIC (16.09.2026): Google Ads + GA4 laden erst nach Einwilligung (assets/js/vf-messung.js).
-     Hier nur dataLayer-Stub + consent default — kein Request an Google. -->
+<!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
+     bleibt alles "denied" - keine Cookies, nur cookielose Pings. ads_data_redaction entfernt Klick-Kennungen. -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});</script>
+gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
-<script defer src="/assets/js/cookie-notice.js?v=20260916b"></script>
+<script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 </head>
 <body>
 <nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
@@ -152,6 +152,6 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   };
 })();
 </script>
-<script defer src="/assets/js/vf-messung.js?v=20260916b"></script>
+<script defer src="/assets/js/vf-messung.js?v=20261005"></script>
 </body>
 </html>
