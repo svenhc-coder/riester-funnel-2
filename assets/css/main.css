@@ -522,3 +522,13 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
 .btn-primary svg,.nav-cta svg{stroke:#0a0a0f;}
 .btn-primary:hover,a.btn-primary:hover,.nav-cta:hover{color:#0a0a0f !important;}
 .quellen-hinweis a{color:var(--acc);text-decoration:underline;text-underline-offset:2px}
+/* Navigation bei 320 px (08.10.2026): Logo + Checks + Wissen + CTA waren 470 px breit -> horizontaler Ueberlauf auf allen
+   Seiten. Unter 400 px entfaellt der Text-Link "Checks" (gleiches Ziel wie der CTA), Abstaende werden enger. */
+@media (max-width:400px){
+  .nav-inner{padding:0 14px;gap:10px}
+  .nav-logo img{height:40px}
+  .nav-links{gap:2px}
+  .nav-links a{padding:6px 8px}
+  .nav-links a[href="/versicherungs-check/"]:not(.nav-cta){display:none}
+  .nav-links a.nav-cta{padding:8px 12px}
+}
