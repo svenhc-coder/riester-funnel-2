@@ -25,7 +25,7 @@ assert.strictEqual(ki({ search: '?utm_source=chatgpt.com', sitzung: { vf_ref: 'h
 assert.strictEqual(ki({ referrer: 'https://www.google.com/' }), '', 'Google ist keine KI-Quelle');
 assert.strictEqual(ki({ sitzung: { vf_utm: '{kaputt' } }), '', 'kaputter Speicher wirft nicht');
 // Einbindung: jede Seite mit /api/lead laedt das Skript und gibt ki_quelle in extra mit
-for (const seite of ['check-anfrage/index.html', 'altersvorsorgedepot/index.html', 'pkv-check/index.html', 'pkv-check.html',
+for (const seite of ['check-anfrage/index.html', 'altersvorsorgedepot/index.html', 'pkv-check/index.html',
   'riester-check/result/index.html', 'versicherungs-check/ergebnis/index.html', 'versicherungs-check/voranfrage/index.html']) {
   const h = fs.readFileSync(path.join(wurzel, seite), 'utf8');
   assert.ok(/<script src="\/assets\/js\/vf-ki-quelle\.js[^"]*"><\/script>/.test(h), seite + ': Skript eingebunden');
