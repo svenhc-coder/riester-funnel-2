@@ -33,6 +33,9 @@ VF = os.path.dirname(HIER)
 REGIO = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(VF))), "regionalmarken-websites")
 sys.path.insert(0, REGIO)
 import rechtliches as R  # noqa: E402
+sys.path.insert(0, HIER)
+# 08.10.2026: Schmale Bildschirme (vf-nav-schmal / vf-h1-umbruch) - eine Quelle, auch fuer neu erzeugte Rechtsseiten
+from schmale_bildschirme_2026_10_08 import schmal  # noqa: E402
 
 V = "20260916"
 B = {"name": "VersicherungsFuchs", "nap": None, "turnstile_sitekey": "", "domain": "versicherungs-fuchs.online"}
@@ -444,6 +447,7 @@ if __name__ == "__main__":
         t = siegel_seite(rel, t)
         t = aussagen(rel, t)
         t = ueberschriften(rel, t)
+        t = schmal(rel, t)
         if t != alt: schreibe(rel, t)
     print("geaendert (%d):" % len(GEAENDERT))
     for g in GEAENDERT: print("  ", g)
