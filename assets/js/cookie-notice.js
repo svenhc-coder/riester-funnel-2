@@ -41,7 +41,7 @@
       + '    Mit Ihrer Zustimmung nutzen wir Google Analytics und messen den Erfolg unserer Anzeigen mit Cookies.'
       + '    Ohne Zustimmung setzen wir keine Cookies; Google erh\u00e4lt dann nur anonyme Messsignale ohne Cookies.'
       + '    Sie entscheiden - jederzeit widerrufbar \u00fcber „Cookie-Einstellungen" im Fu\u00dfbereich. Details in der'
-      + '    <a href="/datenschutz.html">Datenschutzerkl\u00e4rung</a>.'
+      + '    <a href="/datenschutz">Datenschutzerkl\u00e4rung</a>.'
       + '  </p>'
       + '  <div class="vf-cn__actions">'
       + '    <button type="button" class="vf-cn__btn vf-cn__btn--accept" data-vf-cn="accept">Alle akzeptieren</button>'
