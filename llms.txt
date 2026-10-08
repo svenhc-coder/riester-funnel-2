@@ -7,7 +7,7 @@
 
 VersicherungsFuchs bietet kostenlose, datenbasierte Selbst-Checks für die wichtigsten privaten Vorsorge- und Versicherungs-Entscheidungen. Alle Checks sind:
 
-- **Transparent**: Die Checks selbst sind kostenlos und unverbindlich. Wer Hilfe bei der Umsetzung wünscht, kann sich an unser Netzwerk unabhängiger Versicherungsexperten vermitteln lassen (provisionsbasierte Maklerleistung, klar gekennzeichnet).
+- **Transparent**: Die Checks selbst sind kostenlos und unverbindlich. Wer Hilfe bei der Umsetzung wünscht, kann sich an unser Netzwerk freier Versicherungsmakler vermitteln lassen (provisionsbasierte Maklerleistung, klar gekennzeichnet).
 - **Datenbasiert**: aktuelle Stichtags-Werte 2026, transparente Annahmen
 - **Schnell**: 3–5 Minuten pro Check
 - **DSGVO-konform**: optional anonym nutzbar

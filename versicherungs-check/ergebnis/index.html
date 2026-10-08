@@ -73,7 +73,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   html+='<div class="res-block" style="background:transparent"><h3>Was dieser Check noch nicht weiß</h3>'
     +'<p>Wenige Fragen können Ihre Situation nur grob einordnen. Ihr genauer Beruf, bestehende Vertragsdetails, '
     +'Ihr Gesundheitszustand und Ihre Ziele fließen erst im persönlichen Gespräch ein. Deshalb ist das hier ein '
-    +'Ausgangspunkt – ein unabhängiger Berater bestätigt oder verfeinert die Einordnung mit Ihnen.</p></div>';
+    +'Ausgangspunkt – ein freier Versicherungsmakler bestätigt oder verfeinert die Einordnung mit Ihnen.</p></div>';
   if(r.voranfrage){
     html+='<div class="res-vor"><strong>Ihr wertvoller nächster Schritt: die anonyme Risiko-Voranfrage.</strong>'
       +'<p style="color:var(--txt2,#8888a0);margin:.4em 0 0;line-height:1.6">Wir fragen für Sie – ohne Ihren Namen – bei mehreren Versicherern an, wie sie Ihre Situation einschätzen. So kennen Sie Ihre echten Chancen, bevor irgendwo ein Antrag steht. Das kostet Sie nichts.</p></div>';
@@ -86,7 +86,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
       +'<a class="btn-primary btn-lg" style="width:100%;justify-content:center" href="/versicherungs-check/voranfrage/?type='+encodeURIComponent(type)+'"><span>Chancen kostenlos prüfen lassen</span></a></div>';
   } else {
     html+='<div class="res-lead"><h3 style="margin:0 0 4px">Kostenlose Einordnung anfordern</h3>'
-      +'<p style="color:var(--txt2,#8888a0);margin:0;font-size:.92rem">Ein unabhängiger Berater meldet sich bei Ihnen – kostenlos und unverbindlich.</p>'
+      +'<p style="color:var(--txt2,#8888a0);margin:0;font-size:.92rem">Ein freier Versicherungsmakler meldet sich bei Ihnen – kostenlos und unverbindlich.</p>'
       +'<form id="leadform" novalidate>'
       +'<input class="res-hp" type="text" name="botcheck" tabindex="-1" autocomplete="off">'
       +'<label for="lf-name">Name</label><input id="lf-name" name="name" autocomplete="name" required data-plausi="name">'
@@ -122,7 +122,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
         extra:Object.assign({tel:f.tel.value.trim()}, window.vfExtra?window.vfExtra():{})})})
     .then(function(x){ if(!x.ok) throw new Error('status '+x.status); return x.json().catch(function(){return {};}); }).then(function(j){
       msg.innerHTML='<div class="res-vor" style="margin:0"><strong>Danke! Ihre Anfrage ist bei uns eingegangen.</strong>'
-        +'<p style="color:var(--txt2,#8888a0);margin:.3em 0 0">Ein unabhängiger Berater meldet sich bei Ihnen.</p></div>';
+        +'<p style="color:var(--txt2,#8888a0);margin:.3em 0 0">Ein freier Versicherungsmakler meldet sich bei Ihnen.</p></div>';
       f.querySelector('#lead-btn').style.display='none';
     }).catch(function(){
       btn.disabled=false; btn.querySelector('span').textContent='Jetzt anfordern';
