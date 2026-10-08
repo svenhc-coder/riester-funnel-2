@@ -851,7 +851,9 @@ window.VF_CHECKS = {
 window.vfExtra = function(){ try{ return {
   utm: JSON.parse(sessionStorage.getItem('vf_utm')||'{}'),
   landing_page: sessionStorage.getItem('vf_landing')||location.pathname,
-  referrer: sessionStorage.getItem('vf_ref')||''
+  referrer: sessionStorage.getItem('vf_ref')||'',
+  // 08.10.2026 KI-Sichtbarkeit: erkannter KI-Assistent (assets/js/vf-ki-quelle.js, liest vf_ref/vf_utm), undefined faellt weg
+  ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined
 }; }catch(e){ return {}; } };
 
 window.vfCheckQuestions = function(type, answers){
