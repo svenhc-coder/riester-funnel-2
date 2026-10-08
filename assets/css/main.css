@@ -532,3 +532,6 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
   .nav-links a[href="/versicherungs-check/"]:not(.nav-cta){display:none}
   .nav-links a.nav-cta{padding:8px 12px}
 }
+/* Lange Komposita in Check-Ueberschriften (08.10.2026): "Berufsunfaehigkeitsversicherung" bei 34 px passt nicht
+   in 272 px -> bu-check.html war bei 320 px 535 px breit. Silbentrennung, notfalls Umbruch im Wort. */
+.check-hero-h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
