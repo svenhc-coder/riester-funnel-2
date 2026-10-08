@@ -15,15 +15,21 @@ https://www.versicherungs-fuchs.online/*   https://versicherungs-fuchs.online/:s
 /bildnachweis       /bildnachweis.html        200
 /widerrufsbelehrung       /widerrufsbelehrung.html        200
 /erstinformation       /erstinformation.html        200
-/bu-check          /bu-check.html           200
-/baufi-check       /baufi-check.html        200
-/renten-check      /renten-check.html       200
-
-# Bestehende
-/riester-check     /riester-check.html      200
-/pkv-check         /pkv-check.html          200
 
 # Alte Stubs (refresh-meta) als Redirects
 /riester-check-start.html      /riester-check/start/      301
 /riester-check-question.html   /riester-check/q/          301
 /riester-check-result.html     /riester-check/result/     301
+
+# Eine URL-Form (Index-Status 08.10.2026): Inhaltsseiten enden auf "/", ohne .html.
+# Die alten .html-Dateien sind entfernt bzw. in Verzeichnisse verschoben, daher greifen diese Regeln
+# ohne "!". /x (ohne Schraegstrich) liefert Sevalla aus dem Verzeichnis aus, Canonical = /x/.
+# Bewusst KEINE Regel /x -> /x/: Netlify-artige Auswertung normalisiert den Schraegstrich beim Abgleich,
+# das ergaebe eine Weiterleitungsschleife (ungetestet auf Sevalla - nicht riskieren).
+/bu-check.html          /bu-check/          301
+/baufi-check.html       /baufi-check/       301
+/renten-check.html      /renten-check/      301
+/pkv-check.html         /pkv-check/         301
+/riester-check.html     /riester-check/     301
+/news.html              /news/              301
+/article.html           /news/              301
