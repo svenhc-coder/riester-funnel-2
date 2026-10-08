@@ -1,0 +1,81 @@
+/* VersicherungsFuchs — Cyber-Einstieg fuer Betriebe (Task 7d36201b, 08.10.2026).
+   Zwei getrennte Einstiege (Sven 24.09.: Ampel und Radar nie vermischen): /cyber-ampel/ und
+   /cyber-versicherbarkeit/. Die Werkzeuge selbst laufen auf cyberpolicen.com und werden nur verlinkt.
+   Tokens aus main.css (--acc, --txt, --txt2, --border); Ampelfarben als eigene Semantik-Tokens. */
+:root{
+  --cy-gruen:#22c55e;--cy-gelb:#eab308;--cy-orange:#fb923c;--cy-rot:#ef4444;
+  --cy-flaeche:rgba(255,255,255,.03);--cy-flaeche2:rgba(255,255,255,.05);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);--ease:cubic-bezier(0.4,0,0.2,1);
+}
+.cy-wrap{max-width:980px;margin:0 auto;padding:0 20px}
+.cy-hero-grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:start}
+@media(min-width:960px){.cy-hero-grid{grid-template-columns:1.1fr .9fr}}
+.cy-acc{color:var(--acc)}
+.cy-lead{font-size:17px;line-height:1.7;color:var(--txt2);margin:0 0 28px;max-width:60ch}
+.cy-lead strong{color:var(--txt);font-weight:600}
+.cy-ctas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cy-ctas .btn-secondary{border-color:rgba(255,255,255,.22)}
+.cy-ctas .btn-secondary:hover{border-color:rgba(255,255,255,.4)}
+.cy-extern{display:block;margin-top:12px;font-size:13px;color:var(--txt3)}
+.cy-extern a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+
+/* Beweis-Karte: zeigt das Ergebnis statt es zu beschreiben */
+.cy-beweis{position:relative;background:var(--cy-flaeche);border:1px solid var(--border);border-radius:20px;padding:24px}
+.cy-beweis-kopf{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin:0 0 16px}
+.cy-stufe{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--border)}
+.cy-stufe:first-of-type{border-top:0;padding-top:0}
+.cy-licht{flex:0 0 auto;width:22px;height:22px;border-radius:50%;margin-top:2px;box-shadow:0 0 0 4px rgba(255,255,255,.04)}
+.cy-licht.gruen{background:var(--cy-gruen);box-shadow:0 0 18px -2px var(--cy-gruen)}
+.cy-licht.gelb{background:var(--cy-gelb);box-shadow:0 0 18px -2px var(--cy-gelb)}
+.cy-licht.orange{background:var(--cy-orange);box-shadow:0 0 18px -2px var(--cy-orange)}
+.cy-licht.rot{background:var(--cy-rot);box-shadow:0 0 18px -2px var(--cy-rot)}
+.cy-stufe b{display:block;color:var(--txt);font-size:15px;line-height:1.4}
+.cy-stufe span{display:block;color:var(--txt2);font-size:14px;line-height:1.5;margin-top:2px}
+.cy-hinweis{margin:16px 0 0;font-size:12.5px;line-height:1.55;color:var(--txt3)}
+
+/* Sektionen: Eyebrow -> Headline mit Punkt -> zweigeteilter Lead */
+.cy-sektion{padding:56px 0 8px}
+.cy-sektion .section-title{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.025em;line-height:1.15}
+.cy-band{background:var(--cy-flaeche);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:56px;padding-bottom:48px}
+
+/* Drei Karten mit Caps-Kicker */
+.cy-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:8px}
+.cy-karte{position:relative;background:var(--cy-flaeche);border:1px solid var(--border);border-radius:16px;padding:22px;
+  transition:transform .38s var(--ease-out),border-color .38s var(--ease-out),background .38s var(--ease-out)}
+.cy-karte:hover{transform:translateY(-3px);border-color:rgba(249,115,22,.35);background:var(--cy-flaeche2)}
+.cy-ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--acc2);color:var(--acc);margin-bottom:14px}
+.cy-ico svg{width:20px;height:20px}
+.cy-karte h3{margin:0 0 6px;font-size:1.12rem;letter-spacing:-.01em}
+.cy-karte p{margin:0 0 14px;color:var(--txt2);font-size:.95rem;line-height:1.55}
+.cy-kicker{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--beige)}
+
+/* Liste mit Icon-Punkten */
+.cy-liste{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
+.cy-liste li{display:flex;gap:12px;align-items:flex-start;background:var(--cy-flaeche);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt2);line-height:1.5;font-size:.95rem;
+  transition:transform .3s var(--ease-out),border-color .3s var(--ease-out)}
+.cy-liste li:hover{transform:translateX(4px);border-color:rgba(249,115,22,.3)}
+.cy-liste li strong{color:var(--txt)}
+.cy-punkt{flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:var(--acc2);color:var(--acc);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.cy-punkt svg{width:13px;height:13px}
+
+/* Abschluss-CTA */
+.cy-abschluss{text-align:center;background:var(--cy-flaeche);border:1px solid var(--border);border-radius:20px;padding:30px 22px;margin:48px 0 8px}
+.cy-abschluss strong{display:block;font-size:1.25rem;letter-spacing:-.01em;color:var(--txt)}
+.cy-abschluss p{color:var(--txt2);margin:.5em auto 18px;max-width:52ch}
+
+/* FAQ als Komponente */
+.cy-faq details{border:1px solid var(--border);border-radius:12px;padding:2px 16px;margin:10px 0;background:var(--cy-flaeche)}
+.cy-faq summary{cursor:pointer;font-weight:600;padding:13px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.cy-faq summary::-webkit-details-marker{display:none}
+.cy-faq summary::after{content:'+';color:var(--acc);font-weight:700;transition:transform .3s var(--ease-out)}
+.cy-faq details[open] summary::after{transform:rotate(45deg)}
+.cy-faq h3{display:inline;font-size:1rem;margin:0;font-weight:600}
+.cy-faq p{color:var(--txt2);margin:0 0 14px;line-height:1.6}
+.cy-recht{color:var(--txt3);font-size:.88rem;margin:26px 0 48px;line-height:1.6}
+
+a.btn-primary:focus-visible,a.btn-secondary:focus-visible,.cy-faq summary:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .cy-karte,.cy-liste li,.cy-faq summary::after{transition:none}
+  .cy-karte:hover,.cy-liste li:hover{transform:none}
+}
