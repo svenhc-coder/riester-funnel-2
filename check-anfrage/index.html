@@ -142,6 +142,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/plausi.js?v=1.1.0"></script>
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
+<script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script>
   var API_URL = 'https://api.versicherungs-fuchs.online';
   var CFG = {
@@ -200,7 +201,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
       // extra.tel: daraus uebernimmt das Backend die Nummer in die Lead-Bridge (Feld phone);
       // phone zusaetzlich top-level (Vorgabe Koordinator 25.09.).
       phone: tel,
-      extra: { tel: tel },
+      // 08.10.2026 KI-Sichtbarkeit: erkannter KI-Assistent (assets/js/vf-ki-quelle.js), undefined faellt weg
+      extra: { tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined },
       source: (check || 'allgemein') + '-check-anfrage'
     };
     fetch(API_URL + '/api/lead', {

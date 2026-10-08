@@ -425,6 +425,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/plausi.js?v=1.1.0"></script>
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
+<script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script>
 // ── State ──────────────────────────────────────────────────────────────────
 var S = { bap: null, bei: null, grund: null, voe: null, kh: null, med: null };
@@ -595,7 +596,7 @@ function submitLead(e) {
       answers: { alter: alter, beitrag: beitrag, jahre_pkv: jahre, bap: S.bap, bei: S.bei, grund: S.grund },
       ampel_status: S.tier === 'high' ? 'red' : S.tier === 'medium' ? 'yellow' : 'green',
       phone:  tel,
-      extra:  { tel: tel },
+      extra:  { tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined },   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
       meta:   JSON.stringify({ alter: alter, beitrag: beitrag, bap: S.bap, bei: S.bei, grund: S.grund })
       // health fields intentionally omitted
     })

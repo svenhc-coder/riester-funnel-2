@@ -131,6 +131,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/plausi.js?v=1.1.0"></script>
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
+<script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script src="/assets/js/brand.js"></script>
 <script src="/assets/js/state.js"></script>
 <script src="/assets/js/scoring.js"></script>
@@ -194,7 +195,7 @@ var stripeInst = null, stripeEls = null;
       // KORREKTER ENDPOINT: /api/lead (singular) mit vollständigem Payload
       fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name:name,email:email,answers:answers,ampel_status:ampel,tier:'ki',source:'riester-check',
-          phone:tel, extra:{tel:tel}})
+          phone:tel, extra:{tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
       })
       .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
       .then(function(data){

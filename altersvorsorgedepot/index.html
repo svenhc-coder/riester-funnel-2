@@ -318,6 +318,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/plausi.js?v=1.1.0"></script>
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
+<script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script>
 function eur(n) { return n.toLocaleString('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}); }
 
@@ -378,7 +379,7 @@ function submitLead(e) {
     },
     ampel_status: 'yellow',
     phone: tel,
-    extra: { tel: tel }
+    extra: { tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
   };
   fetch('https://api.versicherungs-fuchs.online/api/lead', {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
