@@ -85,7 +85,7 @@ var QUESTIONS=[
   var hint = q.hint?'<p class="funnel-hint" id="vf-hinweis"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> '+q.hint+'</p>':'';
   var opts = q.options.map(function(opt){
     var isSel=selected===opt.value;
-    return '<button type="button" role="radio" aria-checked="'+(isSel?'true':'false')+'" class="funnel-option'+(isSel?' funnel-option-selected':'')+'" data-value="'+opt.value+'">'
+    return '<button type="button" role="radio" aria-checked="'+(isSel?'true':'false')+'" tabindex="'+((isSel||(!selected&&opt===q.options[0]))?'0':'-1')+'" class="funnel-option'+(isSel?' funnel-option-selected':'')+'" data-value="'+opt.value+'">'
       +'<span class="funnel-option-radio" aria-hidden="true">'+(isSel?'<span class="funnel-option-radio-inner"></span>':'')+'</span>'
       +'<span class="funnel-option-label">'+opt.label+'</span></button>';
   }).join('');
@@ -110,22 +110,29 @@ var QUESTIONS=[
   // Pfeiltasten wandern zwischen den Antworten, Leertaste/Enter waehlt.
   var frage=document.getElementById('vf-frage');
   if(qIndex>0||imFluss){ try{frage.focus({preventScroll:true});}catch(e){frage.focus();} }
+  // Radiogruppe (WAI-APG): nur die gewaehlte (sonst erste) Antwort ist ein Tab-Stopp; Pfeiltasten waehlen die
+  // naechste Antwort ohne automatisches Weiter, Tab fuehrt zu "Weiter".
+  function markiere(btn){
+    selected=btn.dataset.value;
+    document.querySelectorAll('.funnel-option').forEach(function(b){
+      var an=b.dataset.value===selected;
+      b.classList.toggle('funnel-option-selected',an);
+      b.setAttribute('aria-checked',an?'true':'false');
+      b.tabIndex=an?0:-1;
+      b.querySelector('.funnel-option-radio').innerHTML=an?'<span class="funnel-option-radio-inner"></span>':'';
+    });
+    var nxt=document.getElementById('btn-next'); nxt.disabled=false; nxt.classList.remove('funnel-next-disabled');
+  }
   document.getElementById('options').addEventListener('keydown',function(e){
     var k=e.key; if(k!=='ArrowDown'&&k!=='ArrowUp'&&k!=='ArrowRight'&&k!=='ArrowLeft') return;
     var bs=[].slice.call(document.querySelectorAll('.funnel-option')), i=bs.indexOf(document.activeElement); if(i<0) return;
-    e.preventDefault(); bs[(i+((k==='ArrowDown'||k==='ArrowRight')?1:-1)+bs.length)%bs.length].focus();
+    e.preventDefault(); var ziel=bs[(i+((k==='ArrowDown'||k==='ArrowRight')?1:-1)+bs.length)%bs.length];
+    markiere(ziel); ziel.focus();
   });
 
   document.getElementById('options').addEventListener('click',function(e){
     var btn=e.target.closest('.funnel-option'); if(!btn)return;
-    selected=btn.dataset.value;
-    document.querySelectorAll('.funnel-option').forEach(function(b){
-      b.classList.toggle('funnel-option-selected',b.dataset.value===selected);
-      b.setAttribute('aria-checked',b.dataset.value===selected?'true':'false');
-      b.querySelector('.funnel-option-radio').innerHTML=b.dataset.value===selected?'<span class="funnel-option-radio-inner"></span>':'';
-    });
-    var nxt=document.getElementById('btn-next');
-    nxt.disabled=false; nxt.classList.remove('funnel-next-disabled');
+    markiere(btn);
   });
 
   document.getElementById('btn-next').addEventListener('click',function(){

@@ -24,7 +24,8 @@
   }
   function spaeter() {
     if (geladen || geplant) return; geplant = true;
-    if ('requestIdleCallback' in window) requestIdleCallback(init, { timeout: 2000 }); else setTimeout(init, 300);
+    function los() { geplant = false; init(); }   // nach Resize unter 900 px spaeter erneut planbar
+    if ('requestIdleCallback' in window) requestIdleCallback(los, { timeout: 2000 }); else setTimeout(los, 300);
   }
   function knopf(w) {
     if (w.querySelector('.vf-siegel-zu')) return;
