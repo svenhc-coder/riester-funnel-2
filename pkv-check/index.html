@@ -98,7 +98,7 @@
     .btn-back { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10);
       border-radius: 10px; padding: 12px 22px; color: var(--txt2,#8888a0); cursor: pointer;
       font-size: 0.9rem; font-weight: 600; }
-    .btn-next { background: var(--primary,#f97316); color: #fff; border: none;
+    .btn-next { background: var(--primary,#f97316); color: #0a0a0f; border: none;
       border-radius: 10px; padding: 12px 28px; cursor: pointer; font-size: 0.95rem; font-weight: 700; }
     .btn-next:disabled { opacity: .4; cursor: not-allowed; }
 
@@ -127,7 +127,7 @@
     .r-form input { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
       border-radius: 10px; padding: 12px 14px; color: var(--txt,#f2f2f2); font-size:.9rem; flex: 1; min-width:160px; }
     .r-form input::placeholder { color: rgba(200,200,220,.38); }
-    .r-form button { background: var(--primary,#f97316); color:#fff; border:none; border-radius:10px;
+    .r-form button { background: var(--primary,#f97316); color:#0a0a0f; border:none; border-radius:10px;
       padding:12px 22px; font-weight:700; font-size:.9rem; cursor:pointer; white-space:nowrap; }
     .consent-row { font-size:.72rem; color:var(--txt2,#8888a0); }
     .consent-row input { accent-color:var(--primary,#f97316); }
@@ -135,6 +135,8 @@
     /* Plausibilitaetspruefung (assets/js/plausi.js, 25.09.2026) */
     .r-form .r-field { flex: 1; min-width: 160px; }
     .r-form .r-field input { width: 100%; box-sizing: border-box; }
+    .r-form .r-field label { display:block; font-size:.8rem; color:var(--txt2,#a9a9bf); margin:0 0 4px; }  /* 11.10.2026 Audit WCAG 3.3.2 */
+    .r-form button { align-self:flex-end; }
     .submit-err { display:none; color:#ffb4a8; font-size:.875rem; margin-top:8px; }
     .plausi-meldung { margin:6px 0 0; font-size:.875rem; line-height:1.4; color:#ffb4a8; text-align:left; overflow-wrap:anywhere; }
     [aria-invalid="true"] { border-color:#ef4444 !important; box-shadow:0 0 0 1px #ef4444; }
@@ -241,12 +243,12 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
         <div class="step-title">Ihre aktuelle Situation</div>
 
         <div class="sl-field">
-          <label>Ihr Alter <span id="lbl-alter">42 Jahre</span></label>
+          <label for="sl-alter">Ihr Alter <span id="lbl-alter">42 Jahre</span></label>
           <input type="range" id="sl-alter" min="25" max="65" value="42" step="1" oninput="document.getElementById('lbl-alter').textContent=this.value+' Jahre'">
         </div>
 
         <div class="sl-field">
-          <label>Monatsbeitrag aktuell <span id="lbl-beitrag">520 €/Monat</span></label>
+          <label for="sl-beitrag">Monatsbeitrag aktuell <span id="lbl-beitrag">520 €/Monat</span></label>
           <input type="range" id="sl-beitrag" min="100" max="1200" value="520" step="10" oninput="document.getElementById('lbl-beitrag').textContent=this.value+' €/Monat'">
         </div>
 
@@ -556,9 +558,9 @@ function showResult() {
     + '<div class="r-lead-title">Kostenlose Experteneinordnung anfordern</div>'
     + '<div class="r-lead-sub">Kein Verkaufsgespräch. Wir schauen gemeinsam auf Ihren konkreten Tarif und zeigen, was bei Ihrer Gesellschaft möglich ist.</div>'
     + '<form class="r-form" id="pkv-lead-form">'
-    + '<div class="r-field"><input type="text" id="f-name" name="name" placeholder="Ihr Name" aria-label="Ihr Name" required autocomplete="name" data-plausi="name"></div>'
-    + '<div class="r-field"><input type="email" id="f-email" name="email" placeholder="E-Mail-Adresse" aria-label="E-Mail-Adresse" required autocomplete="email" data-plausi="email"></div>'
-    + '<div class="r-field"><input type="tel" id="f-tel" name="telefon" placeholder="Telefon (für Rückfragen)" aria-label="Telefon (für Rückfragen)" required autocomplete="tel" data-plausi="telefon"></div>'
+    + '<div class="r-field"><label for="f-name">Ihr Name</label><input type="text" id="f-name" name="name" required autocomplete="name" data-plausi="name"></div>'
+    + '<div class="r-field"><label for="f-email">E-Mail-Adresse</label><input type="email" id="f-email" name="email" required autocomplete="email" data-plausi="email"></div>'
+    + '<div class="r-field"><label for="f-tel">Telefon (für Rückfragen)</label><input type="tel" id="f-tel" name="telefon" required autocomplete="tel" data-plausi="telefon"></div>'
     + '<button type="submit">Einordnung anfordern</button>'
     + '</form>'
     + '<div class="consent-row"><label><input type="checkbox" id="f-consent" required> '

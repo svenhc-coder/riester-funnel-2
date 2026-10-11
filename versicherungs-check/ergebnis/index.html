@@ -17,7 +17,7 @@
     .rot .res-dot{background:#d23c32}.gelb .res-dot{background:#ffa000}.gruen .res-dot{background:#3ca05a}
     .res-ampel b{font-size:1.05rem}
     .res-block{border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:14px;background:rgba(255,255,255,.02)}
-    .res-block h3{margin:0 0 6px;font-size:1.05rem}
+    .res-block h2{margin:0 0 6px;font-size:1.05rem}.res-lead h2{font-size:1.17em}
     .res-block p{margin:0;color:var(--txt2,#8888a0);line-height:1.6}
     .res-vor{border:1px solid var(--acc,#ff7a00);background:rgba(255,122,0,.07);border-radius:14px;padding:18px 20px;margin:18px 0}
     .res-lead{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:22px;margin-top:26px}
@@ -78,9 +78,9 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   html+='<div class="res-ampel '+r.ampel+'"><span class="res-dot"></span><div><b>Orientierung: '+esc(r.ampelLabel)+'</b>'
     +'<div style="color:var(--txt2,#8888a0);font-size:.92rem;margin-top:2px">Eine erste Einordnung auf Basis Ihrer Angaben – <strong>kein abschließendes Urteil</strong> und keine Produktempfehlung. Die Details klärt ein Berater mit Ihnen.</div></div></div>';
   html+='<p style="color:var(--txt2,#8888a0);line-height:1.6;margin:0 0 6px">Das sind die Punkte, die in Ihrer Lage typischerweise offen sind – und warum man sie einzeln anschauen sollte:</p>';
-  r.bloecke.forEach(function(b){ html+='<div class="res-block"><h3>'+esc(b.h)+'</h3><p>'+b.t+'</p></div>'; });
+  r.bloecke.forEach(function(b){ html+='<div class="res-block"><h2>'+esc(b.h)+'</h2><p>'+b.t+'</p></div>'; });
   // First-Principles: offen zeigen, was der Check NICHT wissen kann (Landkarte statt Urteil).
-  html+='<div class="res-block" style="background:transparent"><h3>Was dieser Check noch nicht weiß</h3>'
+  html+='<div class="res-block" style="background:transparent"><h2>Was dieser Check noch nicht weiß</h2>'
     +'<p>Wenige Fragen können Ihre Situation nur grob einordnen. Ihr genauer Beruf, bestehende Vertragsdetails, '
     +'Ihr Gesundheitszustand und Ihre Ziele fließen erst im persönlichen Gespräch ein. Deshalb ist das hier ein '
     +'Ausgangspunkt – ein freier Versicherungsmakler bestätigt oder verfeinert die Einordnung mit Ihnen.</p></div>';
@@ -90,15 +90,15 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   }
   // Nächster Schritt: bei Voranfrage -> Gesundheitsfragebogen; sonst -> einfaches Lead-Formular
   if(r.voranfrage){
-    html+='<div class="res-lead"><h3 style="margin:0 0 4px">Ihre echten Chancen klären lassen</h3>'
+    html+='<div class="res-lead"><h2 style="margin:0 0 4px">Ihre echten Chancen klären lassen</h2>'
       +'<p style="color:var(--txt2,#8888a0);margin:0 0 6px;font-size:.92rem">Wir fragen für Sie bei mehreren Versicherern vorab an, wie sie Ihre Situation einschätzen – <strong>mit Ihrem Gesundheitsprofil, aber ohne Ihren Namen</strong>. So kennen Sie Ihre Konditionen, bevor irgendwo ein Antrag steht. Ihre Kontaktdaten brauchen wir nur, um Ihnen Ihr Ergebnis mitzuteilen.</p>'
       +'<div style="display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;color:var(--txt2,#8888a0);margin:4px 0 10px"><span>✓ Kostenlos &amp; unverbindlich</span><span>✓ Keine Verpflichtung</span><span>✓ Daten verschlüsselt</span></div>'
       +'<a class="btn-primary btn-lg" style="width:100%;justify-content:center" href="/versicherungs-check/voranfrage/?type='+encodeURIComponent(type)+'"><span>Chancen kostenlos prüfen lassen</span></a></div>';
   } else {
-    html+='<div class="res-lead"><h3 style="margin:0 0 4px">Kostenlose Einordnung anfordern</h3>'
+    html+='<div class="res-lead"><h2 style="margin:0 0 4px">Kostenlose Einordnung anfordern</h2>'
       +'<p style="color:var(--txt2,#8888a0);margin:0;font-size:.92rem">Ein freier Versicherungsmakler meldet sich bei Ihnen – kostenlos und unverbindlich.</p>'
       +'<form id="leadform" novalidate>'
-      +'<input class="res-hp" type="text" name="botcheck" tabindex="-1" autocomplete="off">'
+      +'<input class="res-hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">'
       +'<label for="lf-name">Name</label><input id="lf-name" name="name" autocomplete="name" required data-plausi="name">'
       +'<label for="lf-email">E-Mail</label><input id="lf-email" name="email" type="email" autocomplete="email" required data-plausi="email">'
       +'<label for="lf-tel">Telefon (für Rückfragen)</label><input id="lf-tel" name="tel" type="tel" autocomplete="tel" required data-plausi="telefon">'

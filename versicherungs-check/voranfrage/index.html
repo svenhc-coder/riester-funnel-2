@@ -67,7 +67,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
   <!-- SCHRITT 1: Kontakt (sichert den Lead sofort) -->
   <form id="cform" novalidate>
-    <input class="hp" type="text" name="botcheck1" tabindex="-1" autocomplete="off">
+    <input class="hp" type="text" name="botcheck1" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="vf-step">
       <h2>1. Wie erreichen wir Sie?</h2>
       <p class="sub">Damit sich ein Berater mit Ihrer Einschätzung bei Ihnen melden kann.</p>
@@ -87,13 +87,13 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   <div id="step2">
     <div class="doneline" id="doneline">✓ Ihre Anfrage ist eingegangen – ein Berater meldet sich.</div>
     <form id="vform" novalidate>
-      <input class="hp" type="text" name="botcheck2" tabindex="-1" autocomplete="off">
+      <input class="hp" type="text" name="botcheck2" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="vf-step">
         <h2>2. Optional: Anonyme Voranfrage bei den Versicherern</h2>
         <p class="sub">Mit ein paar Gesundheitsangaben fragen wir – <strong>ohne Ihren Namen</strong> – bei mehreren Versicherern an, wie sie Ihre Situation einschätzen. So wissen Sie Ihre Chancen, ohne dass ein Antrag oder Eintrag entsteht. Sie können das auch überspringen und alles im Gespräch klären.</p>
         <div class="vf-row">
-          <div><label class="fl">Größe (cm)</label><input type="number" name="groesse" min="100" max="230" inputmode="numeric"></div>
-          <div><label class="fl">Gewicht (kg)</label><input type="number" name="gewicht" min="30" max="300" inputmode="numeric"></div>
+          <div><label class="fl" for="v-groesse">Größe (cm)</label><input type="number" id="v-groesse" name="groesse" min="100" max="230" inputmode="numeric"></div>
+          <div><label class="fl" for="v-gewicht">Gewicht (kg)</label><input type="number" id="v-gewicht" name="gewicht" min="30" max="300" inputmode="numeric"></div>
         </div>
         <div class="gitem"><div class="gq"><span class="lbl">Rauchen Sie?</span>
           <span class="toggle" data-field="raucher"><button type="button" data-v="ja">Ja</button><button type="button" data-v="nein">Nein</button></span></div></div>
@@ -102,10 +102,10 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
         <h2>Gesundheit</h2>
         <p class="sub">Bitte ehrlich und vollständig – nur so ist die Voranfrage aussagekräftig. Bei „Ja" hilft eine kurze Angabe (was, seit wann, ausgeheilt?).</p>
         <div id="gliste"></div>
-        <label class="fl" style="margin-top:14px">Wurden Sie in den letzten 5 Jahren untersucht, beraten oder behandelt (außer Vorsorge)? Wenn ja, kurz:</label>
-        <textarea name="behandlungen"></textarea>
-        <label class="fl">Nehmen Sie regelmäßig Medikamente (länger als 7 Tage)? Wenn ja, welche:</label>
-        <textarea name="medikamente"></textarea>
+        <label class="fl" for="v-behandlungen" style="margin-top:14px">Wurden Sie in den letzten 5 Jahren untersucht, beraten oder behandelt (außer Vorsorge)? Wenn ja, kurz:</label>
+        <textarea id="v-behandlungen" name="behandlungen"></textarea>
+        <label class="fl" for="v-medikamente">Nehmen Sie regelmäßig Medikamente (länger als 7 Tage)? Wenn ja, welche:</label>
+        <textarea id="v-medikamente" name="medikamente"></textarea>
         <div class="gitem"><div class="gq"><span class="lbl">Besteht eine Minderung der Erwerbsfähigkeit / Schwerbehinderung (GdB)?</span>
           <span class="toggle" data-field="erwerbsminderung"><button type="button" data-v="ja">Ja</button><button type="button" data-v="nein">Nein</button></span></div>
           <div class="gdetail" data-for="erwerbsminderung"><input type="text" name="erwerbsminderung_detail" placeholder="Grad in %, seit wann"></div></div>
@@ -184,10 +184,16 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   var state={};
   document.querySelectorAll('.toggle').forEach(function(tg){
     var field=tg.dataset.field;
+    // 11.10.2026 Audit WCAG 4.1.2/1.3.1: Ja/Nein als benannte Gruppe mit Zustand, Detailfeld mit Namen
+    var frage=(tg.parentNode.querySelector('.lbl')||{}).textContent||'';
+    tg.setAttribute('role','group'); tg.setAttribute('aria-label',frage);
+    tg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    var detIn=document.querySelector('.gdetail[data-for="'+field+'"] input');
+    if(detIn) detIn.setAttribute('aria-label',frage+' – '+detIn.getAttribute('placeholder'));
     tg.addEventListener('click',function(e){
       var b=e.target.closest('button'); if(!b)return;
       state[field]=b.dataset.v;
-      tg.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});
+      tg.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b); x.setAttribute('aria-pressed',x===b?'true':'false');});
       var det=document.querySelector('.gdetail[data-for="'+field+'"]');
       if(det) det.classList.toggle('show', b.dataset.v==='ja');
     });

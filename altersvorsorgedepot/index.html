@@ -68,12 +68,14 @@
     .result-form input::placeholder { color: rgba(200,200,220,0.4); }
     .result-form button { padding: 12px 24px; border-radius: 10px; font-weight: 700;
       font-size: 0.95rem; border: none; cursor: pointer;
-      background: var(--primary,#f97316); color: #fff; }
+      background: var(--primary,#f97316); color: #0a0a0f; }
     .result-form button:hover { opacity: 0.88; }
     .consent-note { font-size: 0.72rem; color: var(--txt2,#8888a0); text-align: center; margin-top: 10px; }
     .submit-success { display:none; text-align:center; color:#4ade80; font-weight:600; font-size:0.95rem; }
     /* Plausibilitaetspruefung (assets/js/plausi.js, 25.09.2026) */
-    .result-form .rf-field { width: 200px; }
+    .result-form .rf-field { width: 200px; text-align: left; }
+    .result-form .rf-field label { display:block; font-size:.8rem; color:var(--txt2,#a9a9bf); margin:0 0 4px; }  /* 11.10.2026 Audit WCAG 3.3.2 */
+    .result-form { align-items: flex-end; }
     .result-form input[type=tel] {
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px; padding: 12px 16px; color: var(--txt,#f2f2f2);
@@ -117,7 +119,7 @@
       .result-grid { grid-template-columns: 1fr 1fr; }
       .calc-card { padding: 24px 20px; }
       .result-panel { padding: 24px 20px; }
-      .result-form input { width: 100%; }
+      .result-form input, .result-form .rf-field { width: 100%; }
     }
   </style>
 <!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
@@ -183,17 +185,17 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
       <div class="calc-grid">
         <div class="calc-field">
-          <label>Monatlicher Eigenbeitrag</label>
+          <label for="sl-beitrag">Monatlicher Eigenbeitrag</label>
           <div class="field-value" id="val-beitrag">150 <span>€/Monat</span></div>
           <input type="range" id="sl-beitrag" min="10" max="200" value="150" step="5" oninput="update()">
         </div>
         <div class="calc-field">
-          <label>Ihr aktuelles Alter</label>
+          <label for="sl-alter">Ihr aktuelles Alter</label>
           <div class="field-value" id="val-alter">38 <span>Jahre</span></div>
           <input type="range" id="sl-alter" min="18" max="66" value="38" step="1" oninput="update()">
         </div>
         <div class="calc-field">
-          <label>Kindergeldberechtigte Kinder</label>
+          <label for="sl-kinder">Kindergeldberechtigte Kinder</label>
           <div class="field-value" id="val-kinder">1 <span>Kind</span></div>
           <input type="range" id="sl-kinder" min="0" max="5" value="1" step="1" oninput="update()">
         </div>
@@ -234,9 +236,9 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
         <div class="result-cta">
           <p>Kostenlose Einordnung: Was bedeutet das Altersvorsorgedepot für Ihren bestehenden Riester – und passen Ihre übrigen Versicherungen noch? Wir prüfen es neutral im unverbindlichen Termin.</p>
           <form class="result-form" id="avd-lead-form">
-            <div class="rf-field"><input type="text"  id="f-name"  name="name"    placeholder="Ihr Name" aria-label="Ihr Name" required autocomplete="name" maxlength="120" data-plausi="name"></div>
-            <div class="rf-field"><input type="email" id="f-email" name="email"   placeholder="E-Mail" aria-label="E-Mail" required autocomplete="email" maxlength="160" data-plausi="email"></div>
-            <div class="rf-field"><input type="tel"   id="f-tel"   name="telefon" placeholder="Telefon (für Rückfragen)" aria-label="Telefon (für Rückfragen)" required autocomplete="tel" maxlength="40" data-plausi="telefon"></div>
+            <div class="rf-field"><label for="f-name">Ihr Name</label><input type="text"  id="f-name"  name="name"    required autocomplete="name" maxlength="120" data-plausi="name"></div>
+            <div class="rf-field"><label for="f-email">E-Mail</label><input type="email" id="f-email" name="email"   required autocomplete="email" maxlength="160" data-plausi="email"></div>
+            <div class="rf-field"><label for="f-tel">Telefon (für Rückfragen)</label><input type="tel"   id="f-tel"   name="telefon" required autocomplete="tel" maxlength="40" data-plausi="telefon"></div>
             <button type="submit">Kostenlose Einordnung anfragen</button>
           </form>
           <p class="consent-note">

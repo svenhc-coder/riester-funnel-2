@@ -45,6 +45,7 @@
     .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     .consent { display: flex; gap: .6rem; align-items: flex-start; margin: 1.25rem 0 .5rem; font-size: .85rem; color: var(--txt2,#8888a0); }
     .consent input { width: auto; margin-top: .25rem; flex: 0 0 auto; }
+    .consent a { text-decoration: underline; text-underline-offset: 2px; }  /* 11.10.2026 Audit WCAG 1.4.1 */
     .submit { width: 100%; margin-top: 1.25rem; background: var(--primary); color: #000; font-weight: 700; font-size: 1.05rem; border: none; border-radius: var(--radius); padding: 1rem; cursor: pointer; transition: transform .2s, opacity .2s; }
     .submit:hover:not(:disabled) { transform: translateY(-2px); }
     .submit:disabled { opacity: .55; cursor: default; }
@@ -120,7 +121,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
           <label for="nachricht" id="nachricht-label">Ihre Ausgangslage <span class="opt">(optional)</span></label>
           <textarea id="nachricht" name="nachricht" placeholder="Kurz zu Ihrer Situation …"></textarea>
 
-          <div class="hp" aria-hidden="true"><label>Website<input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></label></div>
 
           <div class="consent">
             <input type="checkbox" id="consent" required>
