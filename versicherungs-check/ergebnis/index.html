@@ -59,7 +59,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
 <script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script src="/assets/js/state.js"></script>
-<script src="/assets/js/vf-checks.js"></script>
+<script src="/assets/js/vf-checks.js?v=20261011"></script>
 <script>
 (function(){
   var params=new URLSearchParams(window.location.search);
@@ -126,7 +126,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
     if(!document.getElementById('cons').checked){ msg.innerHTML='<span style="color:#ffb4a8">Bitte bestätigen Sie die Einwilligung.</span>'; return; }
     btn.disabled=true; btn.querySelector('span').textContent='Wird gesendet …';
     fetch('https://api.versicherungs-fuchs.online/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,email:email,answers:answers,
+      body:JSON.stringify({name:name,email:email,answers:window.vfOhneGesundheit(answers),   // Art. 9: ohne Gesundheitsangaben
         source:check.leadSource,ampel_status:r.ampel,legal_scope:'34d',voranfrage:!!r.voranfrage,
         phone:f.tel.value.trim(),
         extra:Object.assign({tel:f.tel.value.trim()}, window.vfExtra?window.vfExtra():{}, window.vfHerkunft?window.vfHerkunft():{})})})

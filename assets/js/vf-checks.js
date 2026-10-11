@@ -869,3 +869,15 @@ window.vfCheckQuestions = function(type, answers){
   if(typeof c.refine === 'function') list = c.refine(list, answers||{});
   return list;
 };
+
+/* Art. 9 DSGVO (Audit 10.10.2026): Gesundheits-, Rauch- und Zahnangaben aus den Checks bleiben im Browser. Sie gehen
+   nicht mit Name/E-Mail/Telefon an /api/lead - wie im PKV-Check ("NO health data ... by design"). Die Ergebnisseite
+   sagt dazu selbst: "Ihr Gesundheitszustand ... fliesst erst im persoenlichen Gespraech ein". Die anonyme Voranfrage
+   (Schritt 2 auf /versicherungs-check/voranfrage/) hat eine eigene ausdrueckliche Art.-9-Einwilligung und ist davon
+   unberuehrt. Neue Fragen mit Gesundheitsbezug hier eintragen; tools/pruefe_gesundheit.js prueft die Liste. */
+window.VF_GESUNDHEIT_FELDER = ['gesundheit', 'raucher', 'zahn_bedarf'];
+window.vfOhneGesundheit = function(answers){
+  var o = {};
+  Object.keys(answers || {}).forEach(function(k){ if (window.VF_GESUNDHEIT_FELDER.indexOf(k) < 0) o[k] = answers[k]; });
+  return o;
+};

@@ -127,7 +127,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 <script src="/assets/js/plausi-messung.js?v=1.1.0"></script>
 <script src="/assets/js/vf-ki-quelle.js?v=20261008"></script>
 <script src="/assets/js/state.js"></script>
-<script src="/assets/js/vf-checks.js?v=20260722d"></script>
+<script src="/assets/js/vf-checks.js?v=20261011"></script>
 <script>
 (function(){
   var params=new URLSearchParams(location.search);
@@ -154,7 +154,8 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
     if(!document.getElementById('c1').checked){ msg.innerHTML='<span style="color:#ffb4a8">Bitte bestätigen Sie die Einwilligung.</span>'; return; }
     btn.disabled=true; btn.querySelector('span').textContent='Wird gesendet …';
     fetch(API+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,email:email,answers:checkAns,source:(check&&check.leadSource||type),ampel_status:checkErg?checkErg.ampel:null,
+      body:JSON.stringify({name:name,email:email,answers:window.vfOhneGesundheit(checkAns),   // Art. 9: Gesundheit erst in Schritt 2 mit Einwilligung c2
+        source:(check&&check.leadSource||type),ampel_status:checkErg?checkErg.ampel:null,
         phone:(cf.tel.value||'').trim(),
         extra:Object.assign({tel:(cf.tel.value||'').trim(),request_id:REQUEST_ID}, extra(), window.vfHerkunft?window.vfHerkunft():{})})})
     .then(function(r){ if(!r.ok) throw new Error('status '+r.status); return r.json().catch(function(){return{};});}).then(function(){
