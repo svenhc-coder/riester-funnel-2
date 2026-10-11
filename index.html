@@ -321,7 +321,7 @@
     .module-card.coming-soon { opacity: 0.55; pointer-events: none; }
     .card-badge {
       display: inline-block;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
       padding: 3px 10px; border-radius: 6px; margin-bottom: 20px;
     }
     .badge-live { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
@@ -340,6 +340,7 @@
     .card-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.875rem; font-weight: 600; color: var(--primary);
+      min-height: 24px;   /* 11.10.2026 Audit WCAG 2.5.8 */
       transition: gap .2s;
     }
     .module-card:hover .card-link { gap: 10px; }
@@ -412,7 +413,7 @@
     }
     .news-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
     .news-tag {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
       color: var(--primary2); margin-bottom: 10px;
     }
     .news-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
@@ -521,7 +522,7 @@
       background: rgba(255,255,255,0.14); transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
-    .store-label { font-size: 10px; opacity: .7; }
+    .store-label { font-size: 12px; opacity: .7; }
     .store-name { font-size: 16px; font-weight: 700; }
     .app-fine { font-size: 0.75rem; color: var(--txt2,#a9a9bf); }
     /* Footer logo fix */
@@ -563,7 +564,9 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
 .vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
 header.vf-kopf{position:sticky;top:0;z-index:100}
-.funnel-question:focus{outline:none}</style>
+.funnel-question:focus{outline:none}
+/* Zielgroesse mind. 24 px (WCAG 2.5.8): Fussnavigation, Cookie-Einstellungen, Uebersicht im Fragen-Kopf */
+.footer-bottom-simple nav a,a.vf-cn-trigger,.funnel-exit{display:inline-flex;align-items:center;min-height:24px}</style>
 </head>
 <body>
 <!--email_off-->

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
-  <link rel="stylesheet" href="/assets/css/main.css?v=20261008">
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261011">
   <title>Altersvorsorgedepot 2027: Förderung &amp; Zulagen-Rechner | VersicherungsFuchs</title>
   <meta name="description" content="Das Altersvorsorgedepot (Riester-Nachfolge) startet zum 1. Januar 2027. Berechnen Sie Ihre staatliche Zulage – bis 540 € Grundzulage + 300 €/Kind. Und lassen Sie Ihren bestehenden Riester neutral einordnen. Stand Juli 2026.">
   <link rel="canonical" href="https://versicherungs-fuchs.online/altersvorsorgedepot/">
@@ -70,7 +70,7 @@
       font-size: 0.95rem; border: none; cursor: pointer;
       background: var(--primary,#f97316); color: #0a0a0f; }
     .result-form button:hover { opacity: 0.88; }
-    .consent-note { font-size: 0.72rem; color: var(--txt2,#8888a0); text-align: center; margin-top: 10px; }
+    .consent-note { font-size: 0.75rem; color: var(--txt2,#8888a0); text-align: center; margin-top: 10px; }
     .submit-success { display:none; text-align:center; color:#4ade80; font-weight:600; font-size:0.95rem; }
     /* Plausibilitaetspruefung (assets/js/plausi.js, 25.09.2026) */
     .result-form .rf-field { width: 200px; text-align: left; }
@@ -134,7 +134,9 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
 .vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
 header.vf-kopf{position:sticky;top:0;z-index:100}
-.funnel-question:focus{outline:none}</style>
+.funnel-question:focus{outline:none}
+/* Zielgroesse mind. 24 px (WCAG 2.5.8): Fussnavigation, Cookie-Einstellungen, Uebersicht im Fragen-Kopf */
+.footer-bottom-simple nav a,a.vf-cn-trigger,.funnel-exit{display:inline-flex;align-items:center;min-height:24px}</style>
 </head>
 <body>
 <!--email_off-->

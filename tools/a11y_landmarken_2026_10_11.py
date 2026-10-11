@@ -36,7 +36,9 @@ A11Y_CSS = ('<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf
             'color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}'
             '.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}\n'
             'header.vf-kopf{position:sticky;top:0;z-index:100}\n'
-            '.funnel-question:focus{outline:none}</style>\n')
+            '.funnel-question:focus{outline:none}\n'
+            '/* Zielgroesse mind. 24 px (WCAG 2.5.8): Fussnavigation, Cookie-Einstellungen, Uebersicht im Fragen-Kopf */\n'
+            '.footer-bottom-simple nav a,a.vf-cn-trigger,.funnel-exit{display:inline-flex;align-items:center;min-height:24px}</style>\n')
 SKIP = '<a class="vf-skip" href="#%s">Zum Inhalt springen</a>\n'
 
 
