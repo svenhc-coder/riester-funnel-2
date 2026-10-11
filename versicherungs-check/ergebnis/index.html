@@ -36,6 +36,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 </head>
 <body>
 <nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
@@ -119,7 +120,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
       body:JSON.stringify({name:name,email:email,answers:answers,
         source:check.leadSource,ampel_status:r.ampel,legal_scope:'34d',voranfrage:!!r.voranfrage,
         phone:f.tel.value.trim(),
-        extra:Object.assign({tel:f.tel.value.trim()}, window.vfExtra?window.vfExtra():{})})})
+        extra:Object.assign({tel:f.tel.value.trim()}, window.vfExtra?window.vfExtra():{}, window.vfHerkunft?window.vfHerkunft():{})})})
     .then(function(x){ if(!x.ok) throw new Error('status '+x.status); return x.json().catch(function(){return {};}); }).then(function(j){
       msg.innerHTML='<div class="res-vor" style="margin:0"><strong>Danke! Ihre Anfrage ist bei uns eingegangen.</strong>'
         +'<p style="color:var(--txt2,#8888a0);margin:.3em 0 0">Ein freier Versicherungsmakler meldet sich bei Ihnen.</p></div>';

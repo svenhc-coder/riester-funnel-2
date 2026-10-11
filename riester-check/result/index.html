@@ -76,6 +76,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 </head>
 <body>
 <div id="root">
@@ -195,7 +196,7 @@ var stripeInst = null, stripeEls = null;
       // KORREKTER ENDPOINT: /api/lead (singular) mit vollständigem Payload
       fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name:name,email:email,answers:answers,ampel_status:ampel,tier:'ki',source:'riester-check',
-          phone:tel, extra:{tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
+          phone:tel, extra:Object.assign({tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}, window.vfHerkunft?window.vfHerkunft():{})})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
       })
       .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
       .then(function(data){
@@ -285,7 +286,8 @@ var stripeInst = null, stripeEls = null;
     if(btn){btn.disabled=true;btn.querySelector('span').textContent='Lädt...';}
     fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:lead.name||'',email:lead.email,answers:vfGetAnswers(),
-        ampel_status:berechneAmpel(vfGetAnswers()),tier:tier,source:'result-upgrade'})
+        ampel_status:berechneAmpel(vfGetAnswers()),tier:tier,source:'result-upgrade',
+        extra:(window.vfHerkunft?window.vfHerkunft():{})})   // 11.10.2026 P0-2 Herkunft (vf-herkunft.js)
     })
     .then(function(r){return r.ok?r.json():Promise.reject('API-Fehler');})
     .then(function(data){

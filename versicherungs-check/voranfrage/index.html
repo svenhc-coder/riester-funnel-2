@@ -43,6 +43,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 </head>
 <body>
 <nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
@@ -146,7 +147,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     fetch(API+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:name,email:email,answers:checkAns,source:(check&&check.leadSource||type),ampel_status:checkErg?checkErg.ampel:null,
         phone:(cf.tel.value||'').trim(),
-        extra:Object.assign({tel:(cf.tel.value||'').trim(),request_id:REQUEST_ID}, extra())})})
+        extra:Object.assign({tel:(cf.tel.value||'').trim(),request_id:REQUEST_ID}, extra(), window.vfHerkunft?window.vfHerkunft():{})})})
     .then(function(r){ if(!r.ok) throw new Error('status '+r.status); return r.json().catch(function(){return{};});}).then(function(){
       // Lead gesichert -> Schritt 2 (optionaler Gesundheitsbogen) freigeben
       cf.querySelector('.vf-step').style.opacity='.55';

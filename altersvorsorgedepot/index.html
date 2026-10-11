@@ -126,6 +126,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 <style id="vf-h1-umbruch">/* 08.10.2026: "Altersvorsorgedepot" passte bei 320 px nicht in die Zeile. */
 .avd-hero h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}</style>
 </head>
@@ -379,7 +380,7 @@ function submitLead(e) {
     },
     ampel_status: 'yellow',
     phone: tel,
-    extra: { tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
+    extra: Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {})   // 08.10.2026 KI-Sichtbarkeit (vf-ki-quelle.js); 11.10.2026 P0-2 Herkunft (vf-herkunft.js)
   };
   fetch('https://api.versicherungs-fuchs.online/api/lead', {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
