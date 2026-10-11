@@ -74,7 +74,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
-<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011b"></script>
 </head>
 <body>
 <nav>
@@ -118,6 +118,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
             <label for="consent" style="margin:0;font-weight:400;">Ich bin einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert und verarbeitet werden. Weitere Infos in der <a href="/datenschutz">Datenschutzerklärung</a>.</label>
           </div>
 
+          <div data-vf-werbung="ca-werbung"></div>
           <button type="submit" class="submit" id="submit-btn">Kostenlose Einschätzung anfordern →</button>
           <p class="err" id="err"></p>
           <p class="trust">🔒 Datensparsam · DSGVO-konform · Keine Kosten, keine Verpflichtung</p>
@@ -204,7 +205,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
       phone: tel,
       // 08.10.2026 KI-Sichtbarkeit: erkannter KI-Assistent (assets/js/vf-ki-quelle.js), undefined faellt weg
       // 11.10.2026 P0-2: Herkunft (Klick-ID, utm, Einstiegsseite, Werbe-Einwilligung) aus assets/js/vf-herkunft.js
-      extra: Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {}),
+      extra: Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft(form) : {}),
       source: (check || 'allgemein') + '-check-anfrage'
     };
     fetch(API_URL + '/api/lead', {

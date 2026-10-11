@@ -76,7 +76,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
-<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011b"></script>
 </head>
 <body>
 <div id="root">
@@ -173,11 +173,13 @@ var stripeInst = null, stripeEls = null;
       +'<div class="lead-field"><label class="lead-label" for="inp-tel">Telefon (für Rückfragen)</label><input class="lead-input" type="tel" id="inp-tel" name="telefon" autocomplete="tel" placeholder="0151 …" required data-plausi="telefon"></div>'
       +'<label class="lead-consent"><input type="checkbox" id="inp-consent" required> <span>Ich bin einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage und Zusendung des Ergebnisses gespeichert und genutzt werden. Eine Weitergabe an Dritte erfolgt nicht. <a href="/datenschutz" target="_blank" style="color:var(--txt2,#8888a0);text-decoration:underline">Datenschutz</a></span></label>'
       +'<div id="lead-err" class="lead-error" style="display:none"></div>'
+      +'<div data-vf-werbung="rc-werbung"></div>'
       +'<button type="submit" class="btn-primary btn-lg" id="btn-submit"><span>Ergebnis anzeigen</span>'+A_SVG+'</button>'
       +'</form>'
       +'<p class="lead-disclaimer">'+SHIELD+' Keine Rechts- oder Finanzberatung. Kein Verkauf. Nur strukturierte Orientierung.</p>';
 
     var leadForm=document.getElementById('lead-form');
+    if(window.vfWerbungEinbauen)window.vfWerbungEinbauen(leadForm);   // 11.10.2026 freiwilliges Werbe-Haekchen
     // Plausi-Pruefung (Name/Mail/Telefon) VOR dem eigenen Submit-Handler anhaengen: das Formular
     // entsteht erst hier per innerHTML, der automatische Anschluss bei DOMContentLoaded sieht es nicht.
     if(window.IsuPlausi)IsuPlausi.anschliessen(leadForm);
@@ -196,7 +198,7 @@ var stripeInst = null, stripeEls = null;
       // KORREKTER ENDPOINT: /api/lead (singular) mit vollständigem Payload
       fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name:name,email:email,answers:answers,ampel_status:ampel,tier:'ki',source:'riester-check',
-          phone:tel, extra:Object.assign({tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}, window.vfHerkunft?window.vfHerkunft():{})})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
+          phone:tel, extra:Object.assign({tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}, window.vfHerkunft?window.vfHerkunft(leadForm):{})})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
       })
       .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
       .then(function(data){

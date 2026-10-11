@@ -10,7 +10,15 @@
    - landing_page: Einstiegsseite der Sitzung (vf_landing, nur Pfad, wie vf-checks.js) als Adresse ohne Query.
    - einwilligung_marketing: localStorage vf_cookie_consent (cookie-notice.js) 'accepted' -> true,
      'necessary' -> false, noch nicht entschieden -> weggelassen (das Dashboard leitet nie aus der Klick-ID ab).
-   Ruft nichts im Netz auf und setzt keine Cookies. */
+   Ruft nichts im Netz auf und setzt keine Cookies.
+
+   11.10.2026 (Sven, _briefings/EINWILLIGUNG-ADS-MESSUNG-FORMULAR-2026-10-11.md; Text-Entwurf, der Anwalt prueft vor dem
+   Live-Gang): freiwilliges Haekchen zur Werbe-Erfolgsmessung in jedem Lead-Formular.
+   - Platzhalter <div data-vf-werbung="ID"></div> direkt ueber dem Absende-Knopf; vfWerbungEinbauen(wurzel) fuellt ihn
+     (bei DOMContentLoaded automatisch, Seiten mit per JS gebauten Formularen rufen es nach dem Aufbau selbst auf).
+   - Nie Pflicht, nie vorausgewaehlt, speichert nichts auf dem Geraet, wirkt nur auf diese Anfrage.
+   - vfHerkunft(formular) liest das Haekchen dieses Formulars: einwilligung_marketing = true, wenn Haekchen gesetzt ODER
+     Banner 'accepted'; false nur ohne Haekchen bei 'necessary'; sonst weggelassen (vfEinwilligungFuerAnfrage). */
 (function () {
   'use strict';
   var IDS = ['gclid', 'gbraid', 'wbraid'], UTM = ['source', 'medium', 'campaign', 'content', 'term'];
@@ -50,7 +58,68 @@
   merken();
   try { window.addEventListener('vf-consent', merken); } catch (e) { /* alt */ }
 
-  window.vfHerkunft = function () {
+  // Freiwilliges Haekchen (11.10.2026): Regel und Formular-Wert
+  var HAEKCHEN = 'einwilligung_werbung';
+  function einwilligungFuerAnfrage(haekchen, banner) {
+    if (haekchen === true) return true;
+    if (banner === true) return true;
+    if (banner === false) return false;
+    return undefined;
+  }
+  function haekchenAus(quelle) {
+    if (quelle === true || quelle === false) return quelle;
+    try {
+      var el = quelle && quelle.querySelector ? quelle.querySelector('input[name="' + HAEKCHEN + '"]') : null;
+      return !!(el && el.checked);
+    } catch (e) { return false; }
+  }
+  window.vfEinwilligungFuerAnfrage = einwilligungFuerAnfrage;
+
+  var WERBUNG_TEXT = '<strong>Freiwillig:</strong> Meine Anfrage darf zur Erfolgsmessung unserer Google-Werbung genutzt werden. '
+    + 'Dazu übermitteln wir Google die Klick-Kennung meines Anzeigenklicks und, falls vorhanden, meine E-Mail-Adresse und '
+    + 'Telefonnummer in verschlüsselter (gehashter) Form. Die Beratung hängt nicht davon ab. Widerruf jederzeit per E-Mail. '
+    + '<a href="/datenschutz#google-ads-anfragen" target="_blank" rel="noopener">Mehr in der Datenschutzerklärung</a>';
+  var WERBUNG_STIL = '.vf-werbung{display:flex;gap:.6rem;align-items:flex-start;flex:0 0 100%;width:100%;box-sizing:border-box;'
+    + 'margin:.75rem 0 .25rem;text-align:left;font-size:.8rem;line-height:1.5;color:inherit}'
+    + '.vf-werbung input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;min-width:20px;margin:.1rem 0 0;padding:0;'
+    + 'accent-color:var(--primary,#f97316);cursor:pointer}'
+    + '.vf-werbung label{margin:0;font-weight:400;cursor:pointer;color:inherit}'
+    + '.vf-werbung a{color:inherit;text-decoration:underline;text-underline-offset:2px}'
+    + '.vf-werbung input[type=checkbox]:focus-visible,.vf-werbung a:focus-visible{outline:2px solid var(--primary,#f97316);'
+    + 'outline-offset:2px;border-radius:2px}';
+  function stil() {
+    if (typeof document === 'undefined' || document.getElementById('vf-werbung-stil')) return;
+    var s = document.createElement('style');
+    s.id = 'vf-werbung-stil';
+    s.textContent = WERBUNG_STIL;
+    (document.head || document.documentElement).appendChild(s);
+  }
+  /** Fuellt alle noch leeren Platzhalter [data-vf-werbung] unterhalb von wurzel (Standard: ganze Seite). */
+  function einbauen(wurzel) {
+    if (typeof document === 'undefined') return;
+    var d = wurzel && wurzel.querySelectorAll ? wurzel : document;
+    try {
+      var plaetze = d.querySelectorAll('[data-vf-werbung]');
+      if (!plaetze.length) return;
+      stil();
+      for (var i = 0; i < plaetze.length; i++) {
+        var p = plaetze[i];
+        if (p.getAttribute('data-vf-werbung-fertig')) continue;
+        var id = String(p.getAttribute('data-vf-werbung') || 'vf-werbung').replace(/[^\w-]/g, '') || 'vf-werbung';
+        p.className = (p.className ? p.className + ' ' : '') + 'vf-werbung';
+        p.innerHTML = '<input type="checkbox" id="' + id + '" name="' + HAEKCHEN + '" value="ja">'
+          + '<label for="' + id + '">' + WERBUNG_TEXT + '</label>';
+        p.setAttribute('data-vf-werbung-fertig', '1');
+      }
+    } catch (e) { /* ohne Haekchen bleibt das Formular voll nutzbar */ }
+  }
+  window.vfWerbungEinbauen = einbauen;
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { einbauen(); });
+    else einbauen();
+  }
+
+  window.vfHerkunft = function (formular) {
     var r = {};
     try {
       var m = marketing(), gemerkt = m === true ? json('vf_klick') : {};
@@ -61,7 +130,8 @@
       var pfad = lies('vf_landing') || location.pathname;
       if (typeof pfad !== 'string' || pfad.charAt(0) !== '/') pfad = location.pathname;
       r.landing_page = (location.origin + pfad.split('?')[0].split('#')[0]).slice(0, 500);
-      if (typeof m === 'boolean') r.einwilligung_marketing = m;
+      var ew = einwilligungFuerAnfrage(haekchenAus(formular), m);
+      if (typeof ew === 'boolean') r.einwilligung_marketing = ew;
     } catch (e) { /* nie den Lead blockieren */ }
     return r;
   };

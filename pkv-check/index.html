@@ -172,7 +172,7 @@
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
-<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011b"></script>
 </head>
 <body>
 
@@ -547,6 +547,7 @@ function showResult() {
     + '<div class="r-field"><input type="text" id="f-name" name="name" placeholder="Ihr Name" aria-label="Ihr Name" required autocomplete="name" data-plausi="name"></div>'
     + '<div class="r-field"><input type="email" id="f-email" name="email" placeholder="E-Mail-Adresse" aria-label="E-Mail-Adresse" required autocomplete="email" data-plausi="email"></div>'
     + '<div class="r-field"><input type="tel" id="f-tel" name="telefon" placeholder="Telefon (für Rückfragen)" aria-label="Telefon (für Rückfragen)" required autocomplete="tel" data-plausi="telefon"></div>'
+    + '<div data-vf-werbung="pkv-werbung"></div>'
     + '<button type="submit">Einordnung anfordern</button>'
     + '</form>'
     + '<div class="consent-row"><label><input type="checkbox" id="f-consent" required> '
@@ -558,6 +559,7 @@ function showResult() {
 
   S.tier = tier;
   document.getElementById('result-box').innerHTML = html;
+  if (window.vfWerbungEinbauen) window.vfWerbungEinbauen(document.getElementById('result-box'));   // 11.10.2026 freiwilliges Werbe-Haekchen
   // Plausi-Pruefung vor dem eigenen Submit-Handler anhaengen (Formular entsteht erst hier per innerHTML).
   var leadForm = document.getElementById('pkv-lead-form');
   if (window.IsuPlausi) IsuPlausi.anschliessen(leadForm);
@@ -597,7 +599,7 @@ function submitLead(e) {
       answers: { alter: alter, beitrag: beitrag, jahre_pkv: jahre, bap: S.bap, bei: S.bei, grund: S.grund },
       ampel_status: S.tier === 'high' ? 'red' : S.tier === 'medium' ? 'yellow' : 'green',
       phone:  tel,
-      extra:  Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {}),   // 08.10.2026 KI-Sichtbarkeit (vf-ki-quelle.js); 11.10.2026 P0-2 Herkunft (vf-herkunft.js)
+      extra:  Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft(document.getElementById('pkv-lead-form')) : {}),   // 08.10.2026 KI-Sichtbarkeit (vf-ki-quelle.js); 11.10.2026 P0-2 Herkunft (vf-herkunft.js)
       meta:   JSON.stringify({ alter: alter, beitrag: beitrag, bap: S.bap, bei: S.bei, grund: S.grund })
       // health fields intentionally omitted
     })
