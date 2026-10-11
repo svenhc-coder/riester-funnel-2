@@ -5,7 +5,9 @@
      nur cookielose Pings). Die Zustimmung hebt per consent update auf "granted".
    - Persistenz: localStorage 'vf_cookie_consent' = 'accepted' | 'necessary'
    - Widerruf: Link mit class="vf-cn-trigger" -> zuruecksetzen + neu laden
-   Im <head> steht nur der dataLayer-Stub mit Consent-Default "denied". */
+   Im <head> steht nur der dataLayer-Stub mit Consent-Default "denied".
+   Tastatur (11.10.2026, Audit WCAG 2.4.3): Der Hinweis steht direkt nach dem Skip-Link am Anfang des <body>, also frueh
+   in der Tab-Reihenfolge; Esc im Hinweis = "Nur notwendige"; nach der Wahl springt der Fokus auf den Skip-Link. */
 (function () {
   'use strict';
 
@@ -53,7 +55,8 @@
   function show() {
     if (BOX) return;
     BOX = build();
-    document.body.appendChild(BOX);
+    var skip = document.querySelector('.vf-skip');
+    document.body.insertBefore(BOX, skip ? skip.nextSibling : document.body.firstChild);
     requestAnimationFrame(function () {
       requestAnimationFrame(function () { if (BOX) BOX.classList.add('is-visible'); });
     });
@@ -64,9 +67,17 @@
       if (a === 'accept') { writeConsent('accepted');  updateConsent(true);  try { window.dispatchEvent(new Event('vf-consent')); } catch (err) {}  hide(); }
       else                { writeConsent('necessary'); updateConsent(false); hide(); }
     });
+    BOX.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' && e.key !== 'Esc') return;
+      e.preventDefault(); writeConsent('necessary'); updateConsent(false); hide();
+    });
   }
   function hide() {
     if (!BOX) return;
+    if (BOX.contains(document.activeElement)) {
+      var ziel = document.querySelector('.vf-skip') || document.querySelector('main');
+      if (ziel) { if (!ziel.hasAttribute('tabindex') && ziel.tagName === 'MAIN') ziel.setAttribute('tabindex', '-1'); try { ziel.focus({ preventScroll: true }); } catch (err) { ziel.focus(); } }
+    }
     BOX.classList.remove('is-visible');
     setTimeout(function () {
       if (BOX && BOX.parentNode) BOX.parentNode.removeChild(BOX);
