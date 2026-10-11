@@ -313,10 +313,18 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<!--email_off-->
+<a class="vf-skip" href="#article-main">Zum Inhalt springen</a>
 
-<nav>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
     <div class="nav-links">
@@ -326,6 +334,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
+</header>
 
 <div class="article-layout">
   <main class="article-main" id="article-main">
@@ -379,8 +388,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     <h2 class="app-title">Deep-Check kostenlos.<br>Alle Verträge immer im Blick.</h2>
     <p class="app-sub">Laden Sie Ihre Vertragsdaten hoch und erhalten Sie Ihren persönlichen Deep-Check kostenfrei – exklusiv für App-Nutzer.</p>
     <div class="app-store-row">
-      <a href="https://apps.apple.com/de/app/isurance/id1438875800" target="_blank" class="store-btn-lg">App Store</a>
-      <a href="https://play.google.com/store/apps/details?id=de.isurance.app" target="_blank" class="store-btn-lg">Google Play</a>
+      <a href="https://apps.apple.com/de/app/isurance/id1438875800" target="_blank" class="store-btn-lg" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=de.isurance.app" target="_blank" class="store-btn-lg" rel="noopener noreferrer">Google Play</a>
     </div>
   </div>
 </section>
@@ -388,7 +397,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <footer>
   <div class="footer-bottom-simple"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p>
     <p>© 2026 Versicherungsfuchs · Kein Beratungsersatz</p>
-    <nav>
+    <nav aria-label="Rechtliches">
       <a href="/">Start</a>
       <a href="/news/">Wissen</a>
       <a href="/riester-check/">Riester-Check</a>
@@ -681,5 +690,6 @@ init();
 
 <script src="/assets/js/smooth-scroll.js" defer></script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

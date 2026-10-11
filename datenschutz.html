@@ -68,10 +68,18 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <style id="vf-nav-schmal">/* 08.10.2026: eigene Inline-Nav war bei 320/375 px zu breit (horizontaler Ueberlauf). Unter 400 px entfaellt "Checks" (gleiches Ziel wie der CTA). */
 @media (max-width:400px){.nav-inner{padding:0 14px}.nav-logo img{height:40px;width:auto}.nav-links{gap:12px}.nav-links a[href="/versicherungs-check/"]:not(.nav-cta){display:none}}
 .page-wrap h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}</style>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
 
-<nav>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
     <div class="nav-links">
@@ -81,6 +89,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
+</header>
+<main id="main">
 
 <div class="page-wrap">
   <h1>Datenschutzerklärung</h1>
@@ -152,10 +162,10 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <h2>4. Weitergabe an Dritte</h2>
   <p>Eine Weitergabe Ihrer personenbezogenen Daten an Dritte erfolgt nur, soweit dies zur Vertragserfüllung erforderlich ist oder gesetzliche Verpflichtungen bestehen. Folgende Auftragsverarbeiter sind eingebunden:</p>
   <ul>
-    <li><strong>Stripe Inc.</strong> (Zahlungsabwicklung) – San Francisco, CA, USA. Stripe ist nach EU-US Data Privacy Framework zertifiziert. Datenschutz: <a href="https://stripe.com/de/privacy" target="_blank">stripe.com/de/privacy</a></li>
+    <li><strong>Stripe Inc.</strong> (Zahlungsabwicklung) – San Francisco, CA, USA. Stripe ist nach EU-US Data Privacy Framework zertifiziert. Datenschutz: <a href="https://stripe.com/de/privacy" target="_blank" rel="noopener noreferrer">stripe.com/de/privacy</a></li>
     <li><strong>Hetzner Online GmbH</strong> (Server-Hosting Backend) – 91710 Gunzenhausen, Deutschland. Serverstandort: Deutschland (DSGVO-konform).</li>
     <li><strong>Sevalla (Kinsta Inc.)</strong> (Frontend-Hosting) – 8605 Santa Monica Blvd #92581, West Hollywood, CA 90069, USA; Server-Standort Frankfurt am Main, Deutschland. Auftragsverarbeitungsvertrag nach Art. 28 DSGVO; Kinsta ist nach dem EU-US Data Privacy Framework zertifiziert.</li>
-    <li><strong>Anthropic PBC</strong> (KI-Analyse) – San Francisco, CA, USA. Für die KI-gestützte Analyse können anonymisierte Eingabedaten verarbeitet werden. Datenschutz: <a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a></li>
+    <li><strong>Anthropic PBC</strong> (KI-Analyse) – San Francisco, CA, USA. Für die KI-gestützte Analyse können anonymisierte Eingabedaten verarbeitet werden. Datenschutz: <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">anthropic.com/privacy</a></li>
   </ul>
   <p>Eine Weitergabe zu Werbezwecken oder an weitere Dritte findet nicht statt.</p>
   <!-- 19.09.2026 Gegencheck: das ProvenExpert-Siegel (vf-siegel.js, ab 900 px) lädt von s.provenexpert.net — fehlte hier, auf allen anderen Marken steht der Absatz -->
@@ -189,7 +199,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     <div class="right-item"><strong>Widerspruch</strong><span>Art. 21 DSGVO – Widerspruch gegen Verarbeitung</span></div>
   </div>
   <p>Zur Ausübung Ihrer Rechte wenden Sie sich an: <a href="mailto:info@isurance-group.de">info@isurance-group.de</a></p>
-  <p>Sie haben zudem das Recht, sich bei der zuständigen Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist die Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen: <a href="https://www.ldi.nrw.de" target="_blank">ldi.nrw.de</a></p>
+  <p>Sie haben zudem das Recht, sich bei der zuständigen Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist die Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen: <a href="https://www.ldi.nrw.de" target="_blank" rel="noopener noreferrer">ldi.nrw.de</a></p>
 
   <hr class="divider">
 
@@ -207,10 +217,12 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <p>Fachtexte und Ratgeberbeiträge entstehen unter Einsatz von KI und werden vor der Veröffentlichung fachlich geprüft. Die redaktionelle Verantwortung liegt bei uns. Die Auswertungen der Checks entstehen mit Unterstützung von Sprachmodellen der Anthropic PBC (siehe Abschnitt 4); die Einschätzung ist unverbindlich, eine abschließende Beurteilung erfolgt stets durch einen Menschen (siehe Abschnitt 7). Bilder werden auf dieser Website nicht mit KI erzeugt.</p>
 </div>
 
+</main>
+
 <footer>
   <div class="footer-bottom-simple"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p>
     <p>© 2026 Versicherungsfuchs · iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt)</p>
-    <nav>
+    <nav aria-label="Rechtliches">
       <a href="/">Start</a>
       <a href="/datenschutz">Datenschutz</a>
       <a href="/impressum">Impressum</a> <a href="/erstinformation">Erstinformation</a> <a href="/widerrufsbelehrung">Widerruf</a> <a href="/bildnachweis">Bildnachweis</a> <a href="#" class="vf-cn-trigger">Cookie-Einstellungen</a>
@@ -221,5 +233,6 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/smooth-scroll.js" defer></script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

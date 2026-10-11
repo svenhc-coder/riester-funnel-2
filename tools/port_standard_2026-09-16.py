@@ -36,6 +36,8 @@ import rechtliches as R  # noqa: E402
 sys.path.insert(0, HIER)
 # 08.10.2026: Schmale Bildschirme (vf-nav-schmal / vf-h1-umbruch) - eine Quelle, auch fuer neu erzeugte Rechtsseiten
 from schmale_bildschirme_2026_10_08 import schmal  # noqa: E402
+# 11.10.2026: Landmarken/Skip-Link/E-Mail-Klartext (Audit WCAG 2.4.1, Art. 13 DSGVO) - eine Quelle, auch fuer neue Rechtsseiten
+from a11y_landmarken_2026_10_11 import landmarken, email_klartext  # noqa: E402
 
 V = "20260916"
 B = {"name": "VersicherungsFuchs", "nap": None, "turnstile_sitekey": "", "domain": "versicherungs-fuchs.online"}
@@ -161,6 +163,7 @@ def datenschutz():
 def huelle():
     h = lese("impressum.html")
     kopf = h[:h.index('<div class="page-wrap">')]
+    kopf = re.sub(r'<main id="main">\s*$', '', kopf)  # <main> setzt landmarken() im Seiten-Lauf neu
     fuss = h[h.index("<footer>"):]
     return kopf, fuss
 
@@ -448,6 +451,7 @@ if __name__ == "__main__":
         t = aussagen(rel, t)
         t = ueberschriften(rel, t)
         t = schmal(rel, t)
+        t = email_klartext(rel, landmarken(rel, t))
         if t != alt: schreibe(rel, t)
     print("geaendert (%d):" % len(GEAENDERT))
     for g in GEAENDERT: print("  ", g)

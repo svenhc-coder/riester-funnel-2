@@ -67,10 +67,18 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <style id="vf-nav-schmal">/* 08.10.2026: eigene Inline-Nav war bei 320/375 px zu breit (horizontaler Ueberlauf). Unter 400 px entfaellt "Checks" (gleiches Ziel wie der CTA). */
 @media (max-width:400px){.nav-inner{padding:0 14px}.nav-logo img{height:40px;width:auto}.nav-links{gap:12px}.nav-links a[href="/versicherungs-check/"]:not(.nav-cta){display:none}}
 .page-wrap h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}</style>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
 
-<nav>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
     <div class="nav-links">
@@ -80,6 +88,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
+</header>
+<main id="main">
 
 <div class="page-wrap">
   <h1>Impressum</h1>
@@ -111,7 +121,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <h2>Zuständige Aufsichtsbehörde</h2>
   <p><strong>Bundesanstalt für Finanzdienstleistungsaufsicht</strong></p>
   <p>Graurheindorfer Straße 108, 53117 Bonn</p>
-  <p>Telefon: 0228 4108-0 · <a href="https://www.bafin.de" target="_blank">www.bafin.de</a></p>
+  <p>Telefon: 0228 4108-0 · <a href="https://www.bafin.de" target="_blank" rel="noopener noreferrer">www.bafin.de</a></p>
 
   <p>Die iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt) erbringt ihre Leistungen:</p>
   <p>– als Immobilien- und Finanzmakler mit Erlaubnis gemäß § 34c GewO<br>
@@ -128,7 +138,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
   <h2>Aufsichtsbehörde für die Gewerbeerlaubnis gemäß § 34d Abs. 1 GewO und § 34f Abs. 1, Satz 1, Nummern 1, 2 und 3 GewO</h2>
   <p>IHK Köln, Unter Sachsenhausen 10-26, 50667 Köln<br>
-     <a href="https://www.ihk-koeln.de/" target="_blank">www.ihk-koeln.de</a></p>
+     <a href="https://www.ihk-koeln.de/" target="_blank" rel="noopener noreferrer">www.ihk-koeln.de</a></p>
 
   <h2>Baufinanzierung – Immobiliardarlehensvermittlung (§ 34i GewO)</h2>
   <p>Die Vermittlung von Baufinanzierungen (Immobiliardarlehen) erfolgt durch Herrn Patrick Warych
@@ -151,7 +161,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
   <h2>Berufsrechtliche Regelungen</h2>
   <p>§ 34c GewO · § 34d GewO · § 34i GewO · §§ 59–68 VVG · VersVermV · ImmVermV · FinVermV</p>
-  <p>Einsehbar unter <a href="https://www.gesetze-im-internet.de" target="_blank">www.gesetze-im-internet.de</a>.</p>
+  <p>Einsehbar unter <a href="https://www.gesetze-im-internet.de" target="_blank" rel="noopener noreferrer">www.gesetze-im-internet.de</a>.</p>
 
   <hr class="divider">
 
@@ -166,7 +176,7 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <h2>Schlichtungsstelle</h2>
   <p>Versicherungsombudsmann e.V.<br>
      Leipziger Straße 121, 10117 Berlin<br>
-     Telefon: 0800 3696000 · <a href="https://www.versicherungsombudsmann.de" target="_blank">www.versicherungsombudsmann.de</a></p>
+     Telefon: 0800 3696000 · <a href="https://www.versicherungsombudsmann.de" target="_blank" rel="noopener noreferrer">www.versicherungsombudsmann.de</a></p>
 
   <p><strong>Ombudsmann Private Kranken- und Pflegeversicherung</strong><br>
      Postfach 06 02 22, 10052 Berlin · <a href="https://www.pkv-ombudsmann.de" target="_blank" rel="noopener">www.pkv-ombudsmann.de</a></p>
@@ -193,11 +203,11 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <div class="chip">Technik &amp; Infrastruktur</div>
   <h2>KI-gestützte Analyse</h2>
   <div class="note">
-    <p>Teile dieses Dienstes nutzen Technologien der <strong>Anthropic PBC</strong>, 548 Market St, PMB 90375, San Francisco, CA 94104-5401, USA (<a href="https://www.anthropic.com" target="_blank">anthropic.com</a>). Die KI-Analysen ersetzen keine Beratung durch einen zugelassenen Versicherungsvermittler oder Finanzberater.</p>
+    <p>Teile dieses Dienstes nutzen Technologien der <strong>Anthropic PBC</strong>, 548 Market St, PMB 90375, San Francisco, CA 94104-5401, USA (<a href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer">anthropic.com</a>). Die KI-Analysen ersetzen keine Beratung durch einen zugelassenen Versicherungsvermittler oder Finanzberater.</p>
   </div>
   <h2>Hosting</h2>
-  <p>Backend: Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen · <a href="https://www.hetzner.com" target="_blank">hetzner.com</a></p>
-  <p>Frontend: Sevalla (Kinsta Inc.), 8605 Santa Monica Blvd #92581, West Hollywood, CA 90069, USA; Server-Standort Frankfurt am Main · <a href="https://kinsta.com" target="_blank">kinsta.com</a></p>
+  <p>Backend: Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen · <a href="https://www.hetzner.com" target="_blank" rel="noopener noreferrer">hetzner.com</a></p>
+  <p>Frontend: Sevalla (Kinsta Inc.), 8605 Santa Monica Blvd #92581, West Hollywood, CA 90069, USA; Server-Standort Frankfurt am Main · <a href="https://kinsta.com" target="_blank" rel="noopener noreferrer">kinsta.com</a></p>
 
   <hr class="divider">
 
@@ -207,10 +217,12 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <p><strong>Urheberrecht:</strong> Die durch die Betreiber erstellten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung.</p>
 </div>
 
+</main>
+
 <footer>
   <div class="footer-bottom-simple"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p>
     <p>© 2026 Versicherungsfuchs · iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt)</p>
-    <nav>
+    <nav aria-label="Rechtliches">
       <a href="/">Start</a>
       <a href="/datenschutz">Datenschutz</a>
       <a href="/impressum">Impressum</a> <a href="/erstinformation">Erstinformation</a> <a href="/widerrufsbelehrung">Widerruf</a> <a href="/bildnachweis">Bildnachweis</a> <a href="#" class="vf-cn-trigger">Cookie-Einstellungen</a>
@@ -221,5 +233,6 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 
 <script src="/assets/js/smooth-scroll.js" defer></script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

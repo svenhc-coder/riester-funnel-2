@@ -23,16 +23,25 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation"><div class="nav-inner"><a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
   <div class="nav-links">
       <a href="/versicherungs-check/" style="color:var(--txt,#f2f2f2)">Checks</a>
       <a href="/news/">Wissen</a>
       <a href="/versicherungs-check/" class="nav-cta">Check starten</a>
     </div></div></nav>
+</header>
 
-<main class="page-wrap">
+<main class="page-wrap" id="main">
   <section class="check-hero"><div class="container"><div class="check-hero-inner" style="max-width:760px">
     <div class="check-hero-badge">Beamte · Lehrer · Referendare · §34d</div>
     <h1 class="check-hero-h1">Dienstunfähigkeit: die echte DU-Klausel entscheidet</h1>
@@ -81,5 +90,6 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   <div class="footer-links"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p><a href="/" class="footer-link">Start</a><a href="/versicherungs-check/" class="footer-link">Checks</a><a href="/news/" class="footer-link">Wissen</a><a href="mailto:info@isurance-group.de?subject=Anfrage%20Versicherungsfuchs" class="footer-link">Kontakt</a><a href="/impressum" class="footer-link">Impressum</a><a href="/datenschutz" class="footer-link">Datenschutz</a><a href="/erstinformation" class="footer-link">Erstinformation</a><a href="/widerrufsbelehrung" class="footer-link">Widerruf</a><a href="/bildnachweis" class="footer-link">Bildnachweis</a><a href="#" class="footer-link vf-cn-trigger">Cookie-Einstellungen</a></div>
 </div></div></footer>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

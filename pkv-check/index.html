@@ -173,10 +173,18 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
 
-<nav>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
     <div class="nav-links">
@@ -186,6 +194,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
+</header>
+<main id="main">
 
 <!-- deploy:2026-05-18b --><!-- deploy:2026-05-18b --><!-- ── HERO ──────────────────────────────────────────────────────────────────── -->
 <section class="pkv-hero">
@@ -404,6 +414,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
   </div>
 </section>
 
+</main>
+
 <footer class="footer"><div class="container">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -550,7 +562,7 @@ function showResult() {
     + '<button type="submit">Einordnung anfordern</button>'
     + '</form>'
     + '<div class="consent-row"><label><input type="checkbox" id="f-consent" required> '
-    + 'Ich stimme der <a href="/datenschutz" target="_blank" style="color:var(--primary)">Datenschutzerklärung</a> zu. '
+    + 'Ich stimme der <a href="/datenschutz" target="_blank" style="color:var(--primary)" rel="noopener noreferrer">Datenschutzerklärung</a> zu. '
     + 'Es werden ausschließlich Name, E-Mail und Telefonnummer gespeichert. Gesundheitsangaben werden nicht übermittelt.</label></div>'
     + '<div class="submit-err" id="submit-err" role="alert"></div>'
     + '<div class="submit-ok" id="submit-ok">✓ Anfrage erhalten — wir melden uns innerhalb von 24 Stunden.</div>'
@@ -644,5 +656,6 @@ function toggleFaq(el) {
 })();
 </script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

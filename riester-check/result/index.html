@@ -77,10 +77,18 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
+
 <div id="root">
-  <nav>
+  <header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo"><img src="/assets/img/logo.png" height="38" alt="VersicherungsFuchs"></a>
     <div class="nav-links">
@@ -90,7 +98,8 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
-  <main class="page-wrap">
+</header>
+  <main class="page-wrap" id="main">
     <div id="lead-gate" class="ergebnis-wrap">
       <div class="container"><div class="ergebnis-inner" id="lead-body"></div></div>
     </div>
@@ -171,7 +180,7 @@ var stripeInst = null, stripeEls = null;
       +'<div class="lead-field"><label class="lead-label" for="inp-name">Ihr Name</label><input class="lead-input" type="text" id="inp-name" name="name" autocomplete="name" placeholder="Vor- und Nachname" required data-plausi="name"></div>'
       +'<div class="lead-field"><label class="lead-label" for="inp-email">E-Mail-Adresse</label><input class="lead-input" type="email" id="inp-email" name="email" autocomplete="email" placeholder="ihre@email.de" required data-plausi="email"></div>'
       +'<div class="lead-field"><label class="lead-label" for="inp-tel">Telefon (für Rückfragen)</label><input class="lead-input" type="tel" id="inp-tel" name="telefon" autocomplete="tel" placeholder="0151 …" required data-plausi="telefon"></div>'
-      +'<label class="lead-consent"><input type="checkbox" id="inp-consent" required> <span>Ich bin einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage und Zusendung des Ergebnisses gespeichert und genutzt werden. Eine Weitergabe an Dritte erfolgt nicht. <a href="/datenschutz" target="_blank" style="color:var(--txt2,#8888a0);text-decoration:underline">Datenschutz</a></span></label>'
+      +'<label class="lead-consent"><input type="checkbox" id="inp-consent" required> <span>Ich bin einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage und Zusendung des Ergebnisses gespeichert und genutzt werden. Eine Weitergabe an Dritte erfolgt nicht. <a href="/datenschutz" target="_blank" style="color:var(--txt2,#8888a0);text-decoration:underline" rel="noopener noreferrer">Datenschutz</a></span></label>'
       +'<div id="lead-err" class="lead-error" style="display:none"></div>'
       +'<button type="submit" class="btn-primary btn-lg" id="btn-submit"><span>Ergebnis anzeigen</span>'+A_SVG+'</button>'
       +'</form>'
@@ -410,5 +419,6 @@ var stripeInst = null, stripeEls = null;
 })();
 </script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

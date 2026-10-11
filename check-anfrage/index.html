@@ -75,9 +75,17 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
-<nav>
+<!--email_off-->
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
   <div class="container">
     <a href="/" class="logo">Versicherungs<span>Fuchs</span></a>
     <div class="nav-links">
@@ -87,8 +95,9 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
     </div>
   </div>
 </nav>
+</header>
 
-<main>
+<main id="main">
   <div class="container">
     <p class="breadcrumb"><a href="/">Start</a> · <span id="crumb">Einschätzung anfordern</span></p>
 
@@ -247,5 +256,6 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 })();
 </script>
 <script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<!--/email_off-->
 </body>
 </html>

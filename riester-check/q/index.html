@@ -14,23 +14,29 @@ gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_pers
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261005"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}</style>
 </head>
 <body>
+<a class="vf-skip" href="#funnel-body">Zum Inhalt springen</a>
+
 <div id="root">
   <div class="funnel-wrap" id="funnel">
-    <div class="funnel-header">
+    <header class="funnel-header">
       <a href="/" class="funnel-logo"><img src="/assets/img/favicon.png" height="30" width="30" alt="VersicherungsFuchs"></a>
-      <button class="funnel-back" id="btn-back">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <button type="button" class="funnel-back" id="btn-back">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         <span>Zurück</span>
       </button>
       <div class="funnel-progress-wrap">
-        <div class="funnel-progress-bar"><div class="funnel-progress-fill" id="prog-fill"></div></div>
+        <div class="funnel-progress-bar" id="prog-bar" role="progressbar" aria-labelledby="prog-label" aria-valuemin="0" aria-valuemax="100"><div class="funnel-progress-fill" id="prog-fill"></div></div>
         <span class="funnel-progress-label" id="prog-label"></span>
       </div>
       <a href="/riester-check/" class="funnel-exit">&larr; Übersicht</a>
-    </div>
-    <div class="funnel-body" id="funnel-body"></div>
+    </header>
+    <main class="funnel-body" id="funnel-body"></main>
   </div>
 </div>
 <script src="/assets/js/animations.js"></script>
@@ -66,6 +72,8 @@ var QUESTIONS=[
   var pct      = Math.round((qIndex/total)*100);
   document.getElementById('prog-fill').style.width = pct+'%';
   document.getElementById('prog-label').textContent = 'Frage '+(qIndex+1)+' von '+total;
+  // 11.10.2026 Audit WCAG 4.1.2: Fortschritt als progressbar mit Wert
+  var bar=document.getElementById('prog-bar'); bar.setAttribute('aria-valuenow',pct); bar.setAttribute('aria-valuetext','Frage '+(qIndex+1)+' von '+total);
   document.title = 'Frage '+(qIndex+1)+' von '+total+' – Riester-Check';
 
   document.getElementById('btn-back').addEventListener('click',function(){
@@ -73,34 +81,46 @@ var QUESTIONS=[
     else{ sessionStorage.setItem('vf_dir','left'); window.location.href='/riester-check/q/?n='+(qIndex-1); }
   });
 
-  var hint = q.hint?'<p class="funnel-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> '+q.hint+'</p>':'';
+  var hint = q.hint?'<p class="funnel-hint" id="vf-hinweis"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> '+q.hint+'</p>':'';
   var opts = q.options.map(function(opt){
     var isSel=selected===opt.value;
-    return '<button class="funnel-option'+(isSel?' funnel-option-selected':'')+'" data-value="'+opt.value+'">'
-      +'<span class="funnel-option-radio">'+(isSel?'<span class="funnel-option-radio-inner"></span>':'')+'</span>'
+    return '<button type="button" role="radio" aria-checked="'+(isSel?'true':'false')+'" class="funnel-option'+(isSel?' funnel-option-selected':'')+'" data-value="'+opt.value+'">'
+      +'<span class="funnel-option-radio" aria-hidden="true">'+(isSel?'<span class="funnel-option-radio-inner"></span>':'')+'</span>'
       +'<span class="funnel-option-label">'+opt.label+'</span></button>';
   }).join('');
 
   var body = document.getElementById('funnel-body');
   body.innerHTML='<div class="funnel-question-num">Frage '+(qIndex+1)+' von '+total+'</div>'
-    +'<h2 class="funnel-question">'+q.question+'</h2>'
+    +'<h1 class="funnel-question" id="vf-frage" tabindex="-1">'+q.question+'</h1>'
     +hint
-    +'<div class="funnel-options" id="options">'+opts+'</div>'
-    +'<button class="btn-primary btn-lg funnel-next'+(selected?'':' funnel-next-disabled')+'" id="btn-next"'+(selected?'':' disabled')+'>'
+    +'<div class="funnel-options" id="options" role="radiogroup" aria-labelledby="vf-frage"'+(q.hint?' aria-describedby="vf-hinweis"':'')+'>'+opts+'</div>'
+    +'<button type="button" class="btn-primary btn-lg funnel-next'+(selected?'':' funnel-next-disabled')+'" id="btn-next"'+(selected?'':' disabled')+'>'
     +'<span>'+(qIndex===total-1?'Ergebnis anzeigen':'Weiter')+'</span>'
-    +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'
+    +'<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'
     +'</button>';
 
+  var imFluss=sessionStorage.getItem('vf_dir')!==null;
   var dir=sessionStorage.getItem('vf_dir')||'right';
   sessionStorage.removeItem('vf_dir');
   if(window.VF&&window.VF.funnelBuildIn){ VF.funnelBuildIn(body,dir); }
   else if(window.VF&&window.VF.slideIn){ VF.slideIn(body,dir); }
+
+  // 11.10.2026 Audit WCAG 2.4.3: Nach dem Fragenwechsel steht der Fokus auf der neuen Frage (Screenreader liest sie vor);
+  // Pfeiltasten wandern zwischen den Antworten, Leertaste/Enter waehlt.
+  var frage=document.getElementById('vf-frage');
+  if(qIndex>0||imFluss){ try{frage.focus({preventScroll:true});}catch(e){frage.focus();} }
+  document.getElementById('options').addEventListener('keydown',function(e){
+    var k=e.key; if(k!=='ArrowDown'&&k!=='ArrowUp'&&k!=='ArrowRight'&&k!=='ArrowLeft') return;
+    var bs=[].slice.call(document.querySelectorAll('.funnel-option')), i=bs.indexOf(document.activeElement); if(i<0) return;
+    e.preventDefault(); bs[(i+((k==='ArrowDown'||k==='ArrowRight')?1:-1)+bs.length)%bs.length].focus();
+  });
 
   document.getElementById('options').addEventListener('click',function(e){
     var btn=e.target.closest('.funnel-option'); if(!btn)return;
     selected=btn.dataset.value;
     document.querySelectorAll('.funnel-option').forEach(function(b){
       b.classList.toggle('funnel-option-selected',b.dataset.value===selected);
+      b.setAttribute('aria-checked',b.dataset.value===selected?'true':'false');
       b.querySelector('.funnel-option-radio').innerHTML=b.dataset.value===selected?'<span class="funnel-option-radio-inner"></span>':'';
     });
     var nxt=document.getElementById('btn-next');
