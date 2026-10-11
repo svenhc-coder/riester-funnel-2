@@ -21,8 +21,13 @@
   Content-Type: text/plain; charset=utf-8
 
 /pkv-check/*
+  ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
 
 # Statische Assets duerfen lang liegen bleiben - sie aendern sich selten.
+# 11.10.2026 (Audit): Treffen mehrere Regeln, haengt der Host die Werte an (live war es
+# "max-age=0, s-maxage=300, ..., public, max-age=31536000, immutable"). "! Cache-Control" loest den
+# Wert der /*-Regel, danach gilt nur der eigene. Nach dem Deploy mit curl -I pruefen.
 /assets/*
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
