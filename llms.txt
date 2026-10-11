@@ -11,7 +11,7 @@ VersicherungsFuchs bietet kostenlose, datenbasierte Selbst-Checks für die wicht
 - **Datenbasiert**: aktuelle Stichtags-Werte 2026, transparente Annahmen
 - **Schnell**: 3–5 Minuten pro Check
 - **DSGVO-konform**: optional anonym nutzbar
-- **Mobil-optimiert**: Dark-Theme, klare Sprache, Du-Form
+- **Mobil-optimiert**: Dark-Theme, klare Sprache, Sie-Form
 
 Anbieter: iSurance Gruppe (Versicherungsmakler nach § 34d GewO, Köln).
 
