@@ -29,6 +29,7 @@
     .nav-links { display: flex; gap: 1.5rem; }
     .nav-links a { color: var(--txt2,#8888a0); font-size: 0.9rem; }
     .nav-links a:hover { color: var(--txt,#f2f2f2); }
+    @media (max-width:400px) { .nav-links { gap: .8rem; } .nav-links a:not(.nav-cta) { display: none; } }  /* 11.10.2026 WCAG 1.4.10: Nav war bei 320 px 62 px zu breit */
     main { padding: 3.5rem 0; }
     .breadcrumb { font-size: 0.85rem; color: var(--txt2,#8888a0); margin-bottom: 1rem; }
     .breadcrumb a { color: var(--txt2,#8888a0); }

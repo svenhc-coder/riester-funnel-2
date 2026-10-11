@@ -129,6 +129,7 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
     .logo { font-weight: 700; font-size: 1.2rem; color: var(--txt,#f2f2f2); } .logo span { color: var(--primary); }
     .nav-links { display: flex; gap: 1.5rem; } .nav-links a { color: var(--txt2,#a9a9bf); font-size: 0.9rem; } .nav-links a:hover { color: var(--txt,#f2f2f2); }
+    @media (max-width:400px) { .nav-links { gap: .8rem; } .nav-links a:not(.nav-cta) { display: none; } }  /* 11.10.2026 WCAG 1.4.10: Nav war bei 320 px 62 px zu breit */
     main { padding: 4rem 0; }
     .breadcrumb { font-size: 0.85rem; color: var(--txt2,#a9a9bf); margin-bottom: 1rem; }
     h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.5rem; }
