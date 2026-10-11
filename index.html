@@ -181,7 +181,7 @@
     }
     /* Marke dreht sich um die EIGENE Achse (Mitte) — getrennt vom Hüpfen */
     .hero__mark {
-      width: 100%; max-height: 100%;
+      width: 100%; height: auto; max-height: 100%;
       object-fit: contain; display: block;
       filter: drop-shadow(0 0 22px rgba(249,115,22,0.22));
       transform-origin: 50% 50%;
@@ -609,7 +609,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
       <div class="hero__glow"></div>
       <div class="hero__mark-box" id="vf-mark">
         <span class="hero__ripple" aria-hidden="true"><span class="ring"></span><span class="ring"></span></span>
-        <span class="hero__hopper"><img class="hero__mark" src="/assets/img/favicon.png" alt="VersicherungsFuchs"></span>
+        <span class="hero__hopper"><img class="hero__mark" src="/assets/img/favicon.png" width="500" height="500" fetchpriority="high" alt="VersicherungsFuchs"></span>
       </div>
     </div>
 
@@ -660,8 +660,8 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
 <!-- Auszeichnungen (Sven 16.09.2026, 17.09. beide Siegel): Gut beraten 2022 Christian Schonauer + 2025 Patrick Warych; Fairness First 2024 nur als Text (DIND-Lizenz abgelaufen) -->
 <section class="vf-auszeichnungen" aria-label="Auszeichnungen" style="max-width:1100px;margin:0 auto;padding:18px 24px 6px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px">
-  <img src="/assets/img/siegel/gut-beraten-2022-christian-schonauer.webp" alt="Gut beraten 2022: Christian Schonauer — ausgezeichnet für engagierte Weiterbildung" width="720" height="234" loading="lazy" decoding="async" style="width:200px;height:auto">
-  <img src="/assets/img/siegel/gut-beraten-2025-patrick-warych.webp" alt="Gut beraten 2025: Patrick Warych — ausgezeichnet für engagierte Weiterbildung" width="720" height="234" loading="lazy" decoding="async" style="width:200px;height:auto">
+  <img src="/assets/img/siegel/gut-beraten-2022-christian-schonauer-400.webp" alt="Gut beraten 2022: Christian Schonauer — ausgezeichnet für engagierte Weiterbildung" width="400" height="130" loading="lazy" decoding="async" style="width:200px;height:auto">
+  <img src="/assets/img/siegel/gut-beraten-2025-patrick-warych-400.webp" alt="Gut beraten 2025: Patrick Warych — ausgezeichnet für engagierte Weiterbildung" width="400" height="130" loading="lazy" decoding="async" style="width:200px;height:auto">
   <p style="margin:0;font-size:.92rem;color:var(--muted,#5a6470)"><strong>Gut beraten 2022 und 2025</strong> (Initiative der deutschen Versicherungswirtschaft für nachgewiesene Weiterbildung) — Christian Schonauer und Patrick Warych · <strong>Fairness First 2024</strong> (Deutsches Institut für Nachhaltigkeit und Dienstleistung) für die iSurance Gruppe.</p>
 </section>
 
@@ -948,7 +948,6 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
 
 <!-- Hero Animation — only on homepage, non-render-blocking -->
-<script src="/config.js"></script>
 <script src="/assets/js/hero-fox.js" defer></script>
 <script src="/assets/js/scroll-reveal.js" defer></script>
 <script src="/assets/js/hero-fox3d.js" defer></script>
