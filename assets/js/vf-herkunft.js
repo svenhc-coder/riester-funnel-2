@@ -18,7 +18,11 @@
      (bei DOMContentLoaded automatisch, Seiten mit per JS gebauten Formularen rufen es nach dem Aufbau selbst auf).
    - Nie Pflicht, nie vorausgewaehlt, speichert nichts auf dem Geraet, wirkt nur auf diese Anfrage.
    - vfHerkunft(formular) liest das Haekchen dieses Formulars: einwilligung_marketing = true, wenn Haekchen gesetzt ODER
-     Banner 'accepted'; false nur ohne Haekchen bei 'necessary'; sonst weggelassen (vfEinwilligungFuerAnfrage). */
+     Banner 'accepted'; false nur ohne Haekchen bei 'necessary'; sonst weggelassen (vfEinwilligungFuerAnfrage).
+   - Einwilligungsnachweis (Art. 7 Abs. 1 DSGVO): einwilligung_quelle = 'formular' | 'banner' | 'formular,banner' (nur bei
+     einwilligung_marketing true); enthaelt sie 'formular', zusaetzlich einwilligung_marketing_text (exakter sichtbarer
+     Wortlaut ohne HTML, aus EINWILLIGUNG_TEXT - derselben Konstante, aus der das Haekchen gebaut wird) und
+     einwilligung_marketing_version ('2026-10'). */
 (function () {
   'use strict';
   var IDS = ['gclid', 'gbraid', 'wbraid'], UTM = ['source', 'medium', 'campaign', 'content', 'term'];
@@ -75,10 +79,27 @@
   }
   window.vfEinwilligungFuerAnfrage = einwilligungFuerAnfrage;
 
-  var WERBUNG_TEXT = '<strong>Freiwillig:</strong> Meine Anfrage darf zur Erfolgsmessung unserer Google-Werbung genutzt werden. '
-    + 'Dazu übermitteln wir Google die Klick-Kennung meines Anzeigenklicks und, falls vorhanden, meine E-Mail-Adresse und '
-    + 'Telefonnummer in verschlüsselter (gehashter) Form. Die Beratung hängt nicht davon ab. Widerruf jederzeit per E-Mail. '
-    + '<a href="/datenschutz#google-ads-anfragen" target="_blank" rel="noopener">Mehr in der Datenschutzerklärung</a>';
+  function einwilligungQuelle(haekchen, banner) {
+    var teile = [];
+    if (haekchen === true) teile.push('formular');
+    if (banner === true) teile.push('banner');
+    return teile.length ? teile.join(',') : undefined;
+  }
+  window.vfEinwilligungQuelle = einwilligungQuelle;
+
+  // Wortlaut: EINE Konstante fuer Anzeige und Nachweis (Text-Entwurf, der Anwalt prueft). Neue Fassung = neue Version.
+  var EINWILLIGUNG_VERSION = '2026-10';
+  var EINWILLIGUNG_TEXT = {
+    einleitung: 'Freiwillig:',
+    kern: 'Meine Anfrage darf zur Erfolgsmessung unserer Google-Werbung genutzt werden. Dazu übermitteln wir Google die '
+      + 'Klick-Kennung meines Anzeigenklicks und, falls vorhanden, meine E-Mail-Adresse und Telefonnummer in verschlüsselter '
+      + '(gehashter) Form. Die Beratung hängt nicht davon ab. Widerruf jederzeit per E-Mail.',
+    link: 'Mehr in der Datenschutzerklärung'
+  };
+  var EINWILLIGUNG_KLARTEXT = (EINWILLIGUNG_TEXT.einleitung + ' ' + EINWILLIGUNG_TEXT.kern + ' ' + EINWILLIGUNG_TEXT.link).slice(0, 1000);
+  window.vfEinwilligungText = { text: EINWILLIGUNG_KLARTEXT, version: EINWILLIGUNG_VERSION };
+  var WERBUNG_TEXT = '<strong>' + EINWILLIGUNG_TEXT.einleitung + '</strong> ' + EINWILLIGUNG_TEXT.kern + ' '
+    + '<a href="/datenschutz#google-ads-anfragen" target="_blank" rel="noopener">' + EINWILLIGUNG_TEXT.link + '</a>';
   var WERBUNG_STIL = '.vf-werbung{display:flex;gap:.6rem;align-items:flex-start;flex:0 0 100%;width:100%;box-sizing:border-box;'
     + 'margin:.75rem 0 .25rem;text-align:left;font-size:.8rem;line-height:1.5;color:inherit}'
     + '.vf-werbung input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;min-width:20px;margin:.1rem 0 0;padding:0;'
@@ -130,8 +151,16 @@
       var pfad = lies('vf_landing') || location.pathname;
       if (typeof pfad !== 'string' || pfad.charAt(0) !== '/') pfad = location.pathname;
       r.landing_page = (location.origin + pfad.split('?')[0].split('#')[0]).slice(0, 500);
-      var ew = einwilligungFuerAnfrage(haekchenAus(formular), m);
+      var hk = haekchenAus(formular), ew = einwilligungFuerAnfrage(hk, m);
       if (typeof ew === 'boolean') r.einwilligung_marketing = ew;
+      var quelle = ew === true ? einwilligungQuelle(hk, m) : undefined;
+      if (quelle) {
+        r.einwilligung_quelle = quelle;
+        if (quelle.split(',').indexOf('formular') !== -1) {
+          r.einwilligung_marketing_text = EINWILLIGUNG_KLARTEXT;
+          r.einwilligung_marketing_version = EINWILLIGUNG_VERSION;
+        }
+      }
     } catch (e) { /* nie den Lead blockieren */ }
     return r;
   };

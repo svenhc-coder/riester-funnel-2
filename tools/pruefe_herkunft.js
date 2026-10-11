@@ -30,7 +30,7 @@ assert.strictEqual(t.h().einwilligung_marketing, true);
 // 3. Folgeseite (Anfrage) ohne Parameter traegt Klick-ID, utm und Einstiegsseite weiter
 let f = lauf({ pathname: '/check-anfrage/', sitzung: t.sitzung, consent: 'accepted' });
 assert.deepStrictEqual(f.h(), { gclid: 'Cj0K_abc-1.2', utm: { source: 'google', medium: 'cpc', campaign: 'pkv' },
-  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true });
+  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true, einwilligung_quelle: 'banner' });
 // 4. Widerruf ("Nur notwendige") loescht die gemerkte Klick-ID
 f = lauf({ pathname: '/check-anfrage/', sitzung: t.sitzung, consent: 'necessary' });
 assert.ok(!('vf_klick' in t.sitzung), 'Widerruf loescht vf_klick');
@@ -44,7 +44,7 @@ t = lauf({ search: '?gclid=NEU', sitzung: { vf_klick: JSON.stringify({ gclid: 'A
 assert.strictEqual(t.h().gclid, 'ALT');
 // 7. Gesperrter/kaputter Speicher wirft nie
 t = lauf({ sitzung: { vf_klick: '{kaputt', vf_utm: '{kaputt' }, consent: 'accepted' });
-assert.deepStrictEqual(t.h(), { landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true });
+assert.deepStrictEqual(t.h(), { landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true, einwilligung_quelle: 'banner' });
 // 8. Freiwilliges Werbe-Haekchen (Sven 11.10.2026): true = Haekchen ODER Banner 'accepted', false nur ohne Haekchen bei
 //    'necessary', sonst weglassen. Das Haekchen wirkt nur auf diese Anfrage und speichert nichts.
 const formMit = (an) => ({ querySelector: (sel) => (sel === 'input[name="einwilligung_werbung"]' ? { checked: an } : null) });
@@ -63,6 +63,25 @@ const E = t.ctx.vfEinwilligungFuerAnfrage;
 assert.deepStrictEqual([E(true, undefined), E(true, false), E(false, true), E(false, false), E(false, undefined)],
   [true, true, true, false, undefined], 'Regel vfEinwilligungFuerAnfrage');
 assert.strictEqual(t.h({ querySelector: () => { throw new Error('x'); } }).einwilligung_marketing, true, 'kaputtes Formular wirft nie');
+// 8b. Einwilligungsnachweis: einwilligung_quelle formular/banner/formular,banner; Text + Fassung nur bei formular
+const TXT = t.ctx.vfEinwilligungText;
+assert.strictEqual(TXT.version, '2026-10');
+assert.ok(TXT.text.length <= 1000 && !/[<>]/.test(TXT.text), 'Text ohne HTML, max. 1000');
+assert.ok(/^Freiwillig: Meine Anfrage darf .* Widerruf jederzeit per E-Mail\. Mehr in der Datenschutzerklärung$/.test(TXT.text), 'sichtbarer Wortlaut');
+const Q = t.ctx.vfEinwilligungQuelle;
+assert.deepStrictEqual([Q(true, undefined), Q(false, true), Q(true, true), Q(false, false), Q(false, undefined)],
+  ['formular', 'banner', 'formular,banner', undefined, undefined], 'Regel vfEinwilligungQuelle');
+let n8 = lauf({ consent: 'accepted' }).h(formMit(true));
+assert.deepStrictEqual([n8.einwilligung_quelle, n8.einwilligung_marketing_text, n8.einwilligung_marketing_version], ['formular,banner', TXT.text, '2026-10'], 'beides');
+n8 = lauf({ consent: 'accepted' }).h(formMit(false));
+assert.strictEqual(n8.einwilligung_quelle, 'banner');
+assert.ok(!('einwilligung_marketing_text' in n8) && !('einwilligung_marketing_version' in n8), 'nur Banner -> kein Text');
+n8 = lauf({ consent: 'necessary' }).h(formMit(true));
+assert.deepStrictEqual([n8.einwilligung_quelle, n8.einwilligung_marketing_version], ['formular', '2026-10'], 'nur Haekchen');
+n8 = lauf({ consent: 'necessary' }).h(formMit(false));
+assert.ok(!('einwilligung_quelle' in n8) && !('einwilligung_marketing_text' in n8), 'false -> keine Nachweis-Felder');
+n8 = lauf({}).h(formMit(false));
+assert.ok(!('einwilligung_quelle' in n8) && !('einwilligung_marketing_version' in n8), 'keine Wahl -> keine Nachweis-Felder');
 // 9. Einbau: Platzhalter wird zum Haekchen - nie Pflicht, nie vorausgewaehlt, echtes label, Fokus-Stil, Link zum Absatz
 const platz = { attr: { 'data-vf-werbung': 'ca-werbung"><x' }, className: '', innerHTML: '',
   getAttribute(k) { return this.attr[k] ?? null; }, setAttribute(k, v) { this.attr[k] = v; } };
@@ -75,6 +94,10 @@ assert.ok(!/checked|required/.test(platz.innerHTML), 'nie vorausgewaehlt, nie Pf
 assert.ok(/<label for="ca-werbungx">/.test(platz.innerHTML) && /href="\/datenschutz#google-ads-anfragen"/.test(platz.innerHTML), 'label + Link');
 assert.ok(/Freiwillig:<\/strong> Meine Anfrage darf zur Erfolgsmessung unserer Google-Werbung genutzt werden\./.test(platz.innerHTML), 'Text');
 assert.ok(stile.length === 1 && /focus-visible\{outline:2px solid/.test(stile[0].textContent), 'sichtbarer Fokus');
+// angezeigter Text (ohne HTML) == gesendeter Nachweis-Text
+assert.strictEqual(platz.innerHTML.replace(/<input[^>]*>/, '').replace(/<[^>]+>/g, ''), t.ctx.vfEinwilligungText.text, 'Anzeige = Nachweis-Text');
+const quellcode = fs.readFileSync(path.join(wurzel, 'assets', 'js', 'vf-herkunft.js'), 'utf8');
+assert.strictEqual((quellcode.match(/Erfolgsmessung unserer Google-Werbung/g) || []).length, 1, 'Wortlaut nur einmal im Code');
 t.ctx.vfWerbungEinbauen(); assert.strictEqual(stile.length, 1, 'zweiter Lauf baut nichts doppelt');
 const ds = fs.readFileSync(path.join(wurzel, 'datenschutz.html'), 'utf8');
 assert.ok(/<h3 id="google-ads-anfragen">/.test(ds) && /SHA-256-Hashwert/.test(ds), 'Datenschutz-Absatz vorhanden');
@@ -102,4 +125,4 @@ for (const p of alle) {
   const h = fs.readFileSync(p, 'utf8');
   if (h.includes('cookie-notice.js')) assert.ok(h.includes('/assets/js/vf-herkunft.js?v='), path.relative(wurzel, p) + ': Skript fehlt');
 }
-console.log('OK vf-herkunft (9 Faelle inkl. Werbe-Haekchen + Einbindung in ' + seiten.length + ' Lead-Seiten)');
+console.log('OK vf-herkunft (10 Faelle inkl. Werbe-Haekchen und Einwilligungsnachweis + Einbindung in ' + seiten.length + ' Lead-Seiten)');
