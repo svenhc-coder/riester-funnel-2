@@ -232,8 +232,9 @@ var stripeInst = null, stripeEls = null;
     var steps=(empf.naechste_schritte||[]).map(function(s){return '<li class="ergebnis-step">'+CHK_SVG+'<span>'+s+'</span></li>';}).join('');
     var scoreCircle='<div id="score-circle" class="score-ring-wrap"><svg class="score-ring-svg" width="120" height="120" viewBox="0 0 120 120"><circle class="score-ring-track" cx="60" cy="60" r="42" stroke-width="8"/><circle class="score-ring-fill" cx="60" cy="60" r="42" stroke-width="8" transform="rotate(-90 60 60)"/><text class="score-ring-label" x="60" y="58" text-anchor="middle" dominant-baseline="middle">0</text><text class="score-ring-sublabel" x="60" y="74" text-anchor="middle" dominant-baseline="middle">/ 100</text></svg></div>';
     var dcgCards=[
-      {tier:'ki',price:'Kostenlos',name:'KI-Analyse Ihres Vertrags',featured:true,btn:'Kostenlos hochladen',fn:'scrollToUpload()',
-       features:['Upload Standmitteilung, Police oder Foto','KI-Analyse Ihrer tatsächlichen Vertragsdaten','Depot-Option 2027 im Vergleich','Ergebnis-PDF per E-Mail &middot; Datei danach gelöscht']},
+      // 12.10.2026 KI-PII: Upload-Detailpruefung (Vertragsauszuege ungeschwaerzt an eine US-KI) vorlaeufig deaktiviert.
+      {tier:'ki',price:'Kostenlos',name:'Persönliche Vertragsprüfung',featured:true,btn:'Persönlich prüfen lassen',fn:"window.location.href='mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung'",
+       features:['Die Detailprüfung per Upload ist vorübergehend deaktiviert – wir prüfen Ihren Vertrag gern persönlich.','Ein Experte sieht sich Ihre Unterlagen an','Depot-Option 2027 im Vergleich','Kostenlos und unverbindlich']},
       {tier:'deep',price:'Kostenlos',name:'Hilfe durch Experten-Netzwerk',featured:false,btn:'Hilfe anfragen',fn:"window.location.href='mailto:info@isurance-group.de?subject=Riester-Check%20Umsetzungshilfe'",
        features:['Vermittlung an freie Versicherungsmakler','Persönliche Beratung zur Umsetzung','Sie entscheiden frei &mdash; kein Verkauf','Kostenlos und unverbindlich']}
     ].map(function(c){
@@ -253,16 +254,13 @@ var stripeInst = null, stripeEls = null;
       +'<div class="ergebnis-section"><h3 class="ergebnis-section-title">Was das bedeutet</h3><p class="ergebnis-section-text">'+empf.was_bedeutet_das+'</p></div>'
       +'<div class="ergebnis-section"><h3 class="ergebnis-section-title">Mögliche nächste Schritte</h3><ul class="ergebnis-steps">'+steps+'</ul></div>'
       +'<div class="ergebnis-disclaimer"><p>Diese Einschätzung basiert auf Ihren Angaben im Quick-Check. Sie ersetzt keine Beratung und ist kein Rechts- oder Steuerurteil.</p></div>'
-      +'<div id="upload-section"><h3>&#10003; Zahlung erfolgreich – Dokument hochladen</h3>'
-      +'<p>Laden Sie jetzt Ihre Standmitteilung, Police oder ein Foto hoch (PDF, JPG, PNG, HEIC · max. 15 MB). Die Datei wird nach der Analyse automatisch gelöscht.</p>'
-      +'<div class="upload-zone" id="upload-zone" onclick="document.getElementById(\'file-input\').click()">'
-      +'<div style="font-size:32px;margin-bottom:8px">📄</div><div class="uz-text">Datei hier ablegen oder klicken zum Auswählen</div>'
-      +'<div class="uz-hint">PDF · JPG · PNG · HEIC · WebP · max. 15 MB</div>'
-      +'<input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.heic,.heif,.webp" onchange="uploadFile(this)"></div>'
-      +'<div id="upload-status"></div></div>'
+      // 12.10.2026 KI-PII: kein Upload-Feld mehr, nur der ehrliche Hinweis mit dem bestehenden Kontaktweg.
+      +'<div id="upload-section"><h3>Detailprüfung per Upload pausiert</h3>'
+      +'<p>Die Detailprüfung per Upload ist vorübergehend deaktiviert – wir prüfen Ihren Vertrag gern persönlich. Schreiben Sie uns kurz an <a href="mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung">info@isurance-group.de</a> &ndash; wir melden uns und besprechen Ihre Unterlagen direkt mit Ihnen.</p>'
+      +'<a href="mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung" class="btn-primary" style="display:inline-flex;cursor:pointer"><span>Persönlich prüfen lassen</span>'+A_SVG+'</a></div>'
       +'<div class="deep-check-gate"><div class="dcg-header"><div class="tb-label">Nächster Schritt</div>'
       +'<h2 class="dcg-title">Kostenlos vertiefen &mdash; und Hilfe bei der Umsetzung</h2>'
-      +'<p class="dcg-sub">Mit Ihren Vertragsunterlagen analysieren wir konkret: Kosten, Förderhistorie, Struktur, Depot-Option 2027 &ndash; kostenlos. Für die Umsetzung vermitteln wir Sie an unser Netzwerk freier Versicherungsmakler.</p></div>'
+      +'<p class="dcg-sub">Wir sehen uns Ihren Vertrag gern persönlich an: Kosten, Förderhistorie, Struktur, Depot-Option 2027 &ndash; kostenlos (die Detailprüfung per Upload ist vorübergehend deaktiviert). Für die Umsetzung vermitteln wir Sie an unser Netzwerk freier Versicherungsmakler.</p></div>'
       +'<div class="dcg-cards">'+dcgCards+'</div>'
       +'</div>'
       +'<div class="app-download-cta">'
@@ -367,7 +365,11 @@ var stripeInst = null, stripeEls = null;
     if(sec){sec.style.display='block';sec.scrollIntoView({behavior:'smooth',block:'center'});}
   }
 
+  // 12.10.2026 KI-PII: Upload deaktiviert - keine Datei verlaesst den Browser (das Backend lehnt ebenfalls ab).
   window.uploadFile=function(input){
+    if(input){try{input.value='';}catch(e){}}
+    _showUpload();
+    return;
     var file=input.files[0];if(!file)return;
     var statusEl=document.getElementById('upload-status'),zone=document.getElementById('upload-zone');
     var leadId=vfLeadId||sessionStorage.getItem('vf_lead_id');
@@ -395,7 +397,7 @@ var stripeInst = null, stripeEls = null;
   };
 })();
 </script>
-<script>function scrollToUpload(){var u=document.getElementById('file-input')||document.querySelector('.uz-hint');if(u){u.scrollIntoView({behavior:'smooth',block:'center'});}}</script>
+<script>function scrollToUpload(){var u=document.getElementById('upload-section');if(u){u.style.display='block';u.scrollIntoView({behavior:'smooth',block:'center'});}}</script>
 <script src="/assets/js/smooth-scroll.js" defer></script>
 <script>
 /* Google Ads: Conversion "VersicherungsFuchs - Check-Anfrage abgeschickt".
