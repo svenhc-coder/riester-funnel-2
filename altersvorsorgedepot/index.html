@@ -122,12 +122,12 @@
       .result-form input, .result-form .rf-field { width: 100%; }
     }
   </style>
-<!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
-     bleibt alles "denied" - keine Cookies, nur cookielose Pings. ads_data_redaction entfernt Klick-Kennungen. -->
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
-<script defer src="/assets/js/cookie-notice.js?v=20261011"></script>
+<script defer src="/assets/js/cookie-notice.js?v=20261012"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 <style id="vf-h1-umbruch">/* 08.10.2026: "Altersvorsorgedepot" passte bei 320 px nicht in die Zeile. */
 .avd-hero h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}</style>
@@ -450,7 +450,7 @@ update();
   };
 })();
 </script>
-<script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
 <!--/email_off-->
 </body>
 </html>

@@ -70,12 +70,12 @@
 .btn-primary,a.btn-primary,button.btn-primary,.nav-cta,.btn-cta,.cta-primary{color:#0a0a0f !important;}
 .btn-primary svg,.nav-cta svg{stroke:#0a0a0f !important;}
 </style>
-<!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
-     bleibt alles "denied" - keine Cookies, nur cookielose Pings. ads_data_redaction entfernt Klick-Kennungen. -->
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
-<script defer src="/assets/js/cookie-notice.js?v=20261011"></script>
+<script defer src="/assets/js/cookie-notice.js?v=20261012"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 <style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
 .vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
@@ -259,7 +259,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   };
 })();
 </script>
-<script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
 <!--/email_off-->
 </body>
 </html>

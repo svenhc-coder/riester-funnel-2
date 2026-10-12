@@ -551,12 +551,12 @@
 .btn-primary,a.btn-primary,button.btn-primary,.nav-cta,.btn-cta,.cta-primary{color:#0a0a0f !important;}
 .btn-primary svg,.nav-cta svg{stroke:#0a0a0f !important;}
 </style>
-<!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
-     bleibt alles "denied" - keine Cookies, nur cookielose Pings. ads_data_redaction entfernt Klick-Kennungen. -->
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
-<script defer src="/assets/js/cookie-notice.js?v=20261011"></script>
+<script defer src="/assets/js/cookie-notice.js?v=20261012"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 <style>#faq{max-width:840px;margin:0 auto;padding:40px 20px}#faq h2{margin-bottom:14px}#faq details{background:rgba(127,127,127,.07);border:1px solid rgba(127,127,127,.18);border-radius:12px;padding:4px 18px;margin-bottom:10px}#faq summary{cursor:pointer;font-weight:700;padding:13px 0}#faq details p{opacity:.85;padding:0 0 15px;margin:0;line-height:1.6}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was ist der Versicherungsfuchs?", "acceptedAnswer": {"@type": "Answer", "text": "Ein Prüf-Werkzeug der iSurance Gruppe (Ampel-Einordnung kostenlos): Die Checks zeigen in wenigen Minuten, wo Sie bei Riester, Berufsunfähigkeit, Rente oder Baufinanzierung stehen — verständlich und ohne Fachchinesisch. Dahinter steht ein unabhängiger Versicherungsmakler nach § 34d Abs. 1 GewO – frei in der Anbieterauswahl, an keinen Versicherer gebunden."}}, {"@type": "Question", "name": "Was kosten die Checks?", "acceptedAnswer": {"@type": "Answer", "text": "Nichts. Alle Checks sind kostenlos und unverbindlich. Wenn Sie danach eine Beratung möchten, ist auch die für Sie kostenfrei — als Makler werden wir über die Courtage vergütet, die im Versicherungsbeitrag ohnehin enthalten ist."}}, {"@type": "Question", "name": "Ersetzt ein Check die Beratung?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Ein Check ordnet Ihre Situation ein und zeigt, wo genaueres Hinsehen lohnt. Was in Ihrem Fall wirklich sinnvoll ist, hängt von Ihren bestehenden Verträgen ab — das klärt erst das Gespräch."}}, {"@type": "Question", "name": "Was passiert mit meinen Angaben?", "acceptedAnswer": {"@type": "Answer", "text": "Ihre Eingaben dienen der Auswertung Ihres Checks. Details stehen in der Datenschutzerklärung; Daten werden nicht verkauft und nicht an Dritte weitergegeben."}}, {"@type": "Question", "name": "Muss ich danach etwas abschließen?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Ein ehrlicher Check darf auch ergeben, dass alles passt oder ein Vertrag zu viel ist. Ob aus dem Ergebnis ein Gespräch wird, entscheiden Sie."}}]}</script>
@@ -956,9 +956,9 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 <script src="/assets/js/hero-fox3d.js" defer></script>
 
 <script src="/assets/js/smooth-scroll.js" defer></script>
-<script defer src="/assets/js/vf-messung.js?v=20261005"></script>
-<aside class="vf-siegel" aria-label="Kundenbewertungen auf ProvenExpert"><div id="proSealWidget"></div><a class="vf-pe-fallback" href="https://www.provenexpert.com/isurance/" rel="noopener" target="_blank"><b>Kundenbewertungen</b><span>auf ProvenExpert ansehen</span></a></aside>
-<script defer src="/assets/js/vf-siegel.js?v=2"></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
+<aside class="vf-siegel" aria-label="Kundenbewertungen auf ProvenExpert"><a class="vf-pe-fallback" href="https://www.provenexpert.com/isurance/" rel="noopener" target="_blank"><b>Kundenbewertungen</b><span>auf ProvenExpert ansehen</span></a></aside>
+<script defer src="/assets/js/vf-siegel.js?v=20261012"></script>
 <!--/email_off-->
 </body>
 </html>

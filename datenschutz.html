@@ -57,12 +57,12 @@
 .btn-primary,a.btn-primary,button.btn-primary,.nav-cta,.btn-cta,.cta-primary{color:#0a0a0f !important;}
 .btn-primary svg,.nav-cta svg{stroke:#0a0a0f !important;}
 </style>
-<!-- Consent ADVANCED (05.10.2026, Sven): Google Ads + GA4 laden sofort (assets/js/vf-messung.js); ohne Einwilligung
-     bleibt alles "denied" - keine Cookies, nur cookielose Pings. ads_data_redaction entfernt Klick-Kennungen. -->
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
-<script defer src="/assets/js/cookie-notice.js?v=20261011"></script>
+<script defer src="/assets/js/cookie-notice.js?v=20261012"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
 <style id="vf-rechtslinks">.page-wrap p a,.page-wrap li a{text-decoration:underline;text-underline-offset:2px}</style>
 <style id="vf-nav-schmal">/* 08.10.2026: eigene Inline-Nav war bei 320/375 px zu breit (horizontaler Ueberlauf). Unter 400 px entfaellt "Checks" (gleiches Ziel wie der CTA). */
@@ -96,7 +96,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
 <div class="page-wrap">
   <h1>Datenschutzerklärung</h1>
-  <p class="last-updated">Stand: September 2026</p>
+  <p class="last-updated">Stand: 12. Oktober 2026</p>
 
   <h2>1. Verantwortlicher</h2>
   <p>
@@ -138,14 +138,14 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   <hr class="divider">
 
   <h2>3. Cookies und Tracking</h2>
-  <p>Diese Website verwendet technisch notwendige Cookies sowie Session-Storage für die Funktionalität des Riester-Checks (Speicherung Ihrer Antworten während der Nutzung). Ihre Entscheidung im Cookie-Hinweis speichern wir im Browser (Schlüssel <code>vf_cookie_consent</code>, 12 Monate). Google-Cookies setzen wir nur, wenn Sie „Alle akzeptieren“ wählen. Ohne Ihre Einwilligung werden keine Cookies gesetzt; Google erhält dann nur anonyme Messsignale ohne Cookies (Abschnitt 3.1).</p>
+  <p>Diese Website verwendet technisch notwendige Cookies sowie Session-Storage für die Funktionalität der Checks (Speicherung Ihrer Antworten während der Nutzung). Ihre Entscheidung im Cookie-Hinweis speichern wir im Browser (Schlüssel <code>vf_cookie_consent</code>, 12 Monate; danach fragen wir erneut). Google-Dienste laden wir nur, wenn Sie „Alle akzeptieren“ wählen. Ohne Ihre Einwilligung wird keine Verbindung zu Google hergestellt, und es werden keine Analyse- oder Werbe-Cookies gesetzt (Abschnitt 3.1).</p>
 
-  <h3>3.1 Google Analytics 4 und Google Ads (Consent Mode)</h3>
+  <h3>3.1 Google Analytics 4 und Google Ads (nur mit Einwilligung)</h3>
   <p>Wir nutzen Google Analytics 4 (Statistik) und die Conversion-Messung von Google Ads (Anzeigen-Messung) der Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland.</p>
-  <p>Technisch ist der sogenannte Consent Mode aktiv. <strong>Standardmäßig ist alles auf „abgelehnt“ gesetzt.</strong></p>
+  <p>Technisch ist der sogenannte Consent Mode von Google in der Basis-Variante aktiv. <strong>Standardmäßig ist alles auf „abgelehnt“ gesetzt, und das Google-Tag wird erst nach Ihrer Zustimmung geladen.</strong></p>
   <ul>
-    <li><strong>Mit Ihrer Zustimmung</strong> im Banner setzt Google Cookies und misst Seitenaufrufe und Anfragen vollständig. Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO in Verbindung mit § 25 Abs. 1 TDDDG.</li>
-    <li><strong>Ohne Ihre Zustimmung</strong> werden keine Cookies gesetzt und keine Werbe- oder Analyse-Kennungen gespeichert. Das Google-Tag sendet dann nur cookielose Signale (zum Beispiel, dass eine Seite aufgerufen oder eine Anfrage abgesendet wurde, mit Zeitpunkt und technischen Browserangaben); Klick-Kennungen aus Anzeigen werden dabei entfernt. Google nutzt diese Signale, um die Wirkung von Anzeigen statistisch hochzurechnen, ohne Sie zu identifizieren. Rechtsgrundlage ist unser berechtigtes Interesse an der Messung des Erfolgs unserer Werbung (Art. 6 Abs. 1 lit. f DSGVO).</li>
+    <li><strong>Mit Ihrer Zustimmung</strong> („Alle akzeptieren“) laden wir das Google-Tag. Google setzt dann Cookies (Google Analytics: <code>_ga</code>, <code>_ga_…</code>; Google Ads: <code>_gcl_au</code>, bis 90 Tage) und erhält Angaben zu Ihrem Besuch: aufgerufene Seiten, gestartete Checks, abgeschickte Anfragen und bestätigte Zahlungen, dazu technische Angaben zu Browser und Gerät sowie Ihre IP-Adresse. Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO in Verbindung mit § 25 Abs. 1 TDDDG.</li>
+    <li><strong>Ohne Ihre Zustimmung</strong> („Nur notwendige“ oder solange Sie nichts auswählen) wird das Google-Tag nicht geladen. Es werden keine Daten an Google übermittelt, auch keine cookielosen Signale, und es werden keine Google-Cookies gesetzt. Was vor Ihrer Zustimmung auf der Seite geschieht, wird nicht gespeichert und nicht nachträglich an Google gesendet.</li>
   </ul>
   <p>Google kann Daten auch in den USA verarbeiten; Grundlage ist der Angemessenheitsbeschluss zum EU-US Data Privacy Framework, unter dem Google zertifiziert ist.</p>
 
@@ -153,7 +153,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   <p>Mit der Conversion-Messung von Google Ads sehen wir, ob ein Besuch über eine Google-Anzeige zu einer Anfrage geführt hat; nach Einwilligung setzt Google dafür ein Conversion-Cookie (Laufzeit bis 90 Tage). Mit Google Analytics 4 werten wir die Nutzung der Website statistisch aus (Seitenaufrufe, Start des Riester-Checks, abgeschickte Anfragen, bestätigte Zahlungen). Wir erhalten nur aggregierte Zahlen; Berichte enthalten keine Namen oder E-Mail-Adressen.</p>
 
   <h3>3.3 Widerruf</h3>
-  <p>Sie können Ihre Entscheidung jederzeit über den Link „Cookie-Einstellungen“ im Fußbereich ändern; die Seite lädt dann neu und fragt erneut. Bereits gesetzte Google-Cookies löschen Sie über die Website-Daten Ihres Browsers.</p>
+  <p>Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, über den Link „Cookie-Einstellungen“ im Fußbereich jeder Seite. Dabei löschen wir Ihre gespeicherte Wahl, beenden die Messung sofort, löschen die von Google auf dieser Website gesetzten Cookies (<code>_ga</code>, <code>_ga_…</code>, <code>_gcl_…</code>) und zeigen den Cookie-Hinweis erneut an. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.</p>
 
   <div class="box">
     <p><strong>Technisch notwendige Cookies:</strong> Diese Cookies sind für den Betrieb der Website erforderlich und können nicht deaktiviert werden. Sie speichern keine personenbezogenen Daten dauerhaft und werden nach Beendigung der Browsersitzung gelöscht.</p>
@@ -170,8 +170,8 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
     <li><strong>Anthropic PBC</strong> (KI-Analyse) – San Francisco, CA, USA. Für die KI-gestützte Analyse können anonymisierte Eingabedaten verarbeitet werden. Datenschutz: <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">anthropic.com/privacy</a></li>
   </ul>
   <p>Eine Weitergabe zu Werbezwecken oder an weitere Dritte findet nicht statt.</p>
-  <!-- 19.09.2026 Gegencheck: das ProvenExpert-Siegel (vf-siegel.js, ab 900 px) lädt von s.provenexpert.net — fehlte hier, auf allen anderen Marken steht der Absatz -->
-  <p><strong>Bewertungssiegel (ProvenExpert):</strong> Auf unseren Seiten zeigen wir ab Desktop-Breite unser Kundenbewertungs-Siegel der Expert Systems AG, Quedlinburger Str. 1, 10589 Berlin („ProvenExpert“). Das Siegel wird beim Aufruf der Seite von den Servern von ProvenExpert geladen; dabei erhält ProvenExpert Ihre IP-Adresse und technische Browserdaten. Es werden dadurch keine Cookies gesetzt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer nachprüfbaren Darstellung unserer Kundenbewertungen). Datenschutzhinweise von ProvenExpert: <a href="https://www.provenexpert.com/de-de/datenschutzbestimmungen/" target="_blank" rel="noopener">provenexpert.com/de-de/datenschutzbestimmungen</a>.</p>
+  <!-- 12.10.2026 Consent BASIC: vf-siegel.js laedt das ProvenExpert-Skript nicht mehr, es bleibt ein statischer Profil-Link -->
+  <p><strong>Bewertungssiegel (ProvenExpert):</strong> Ab Desktop-Breite blenden wir unten rechts einen Hinweis auf unsere Kundenbewertungen bei der Expert Systems AG, Quedlinburger Str. 1, 10589 Berlin („ProvenExpert“) ein. Das ist ein einfacher Link auf unser Profil: Beim Aufruf unserer Seiten werden keine Inhalte von ProvenExpert geladen und keine Daten an ProvenExpert übertragen. Erst wenn Sie den Link anklicken, öffnet sich die Website von ProvenExpert; dort gelten deren Datenschutzhinweise: <a href="https://www.provenexpert.com/de-de/datenschutzbestimmungen/" target="_blank" rel="noopener">provenexpert.com/de-de/datenschutzbestimmungen</a>.</p>
 
   <hr class="divider">
 
@@ -234,7 +234,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
 
 <script src="/assets/js/smooth-scroll.js" defer></script>
-<script defer src="/assets/js/vf-messung.js?v=20261005"></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
 <!--/email_off-->
 </body>
 </html>
