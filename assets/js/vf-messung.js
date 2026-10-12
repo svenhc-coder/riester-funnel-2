@@ -63,6 +63,8 @@
   }
   function ab() {
     ok = false; aus(true); zustand('denied'); if (!geladen) verwerfeEreignisse(); cookiesWeg();
+    /* gemerkte Anzeigen-Klick-ID (vf-herkunft.js, nur mit Einwilligung gespeichert) sofort mit loeschen */
+    try { sessionStorage.removeItem('vf_klick'); } catch (e) {}
   }
 
   window.vfEvent = function (name, params) {

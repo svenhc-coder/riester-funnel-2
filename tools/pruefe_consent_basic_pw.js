@@ -199,6 +199,7 @@ async function main() {
        gebuendelt mit kurzer Verzoegerung; erst abwarten, damit nur Requests NACH dem Widerruf zaehlen. */
     await link.scrollIntoViewIfNeeded(); await p.waitForTimeout(4000);
     const n0 = log.req.length;
+    await p.evaluate(() => sessionStorage.setItem('vf_klick', '{"gclid":"test"}'));   // gemerkte Klick-ID (vf-herkunft.js)
     await link.click();
     const banner = await p.locator('.vf-cn').isVisible().catch(() => false);
     const fokus = await p.evaluate(() => !!(document.activeElement && document.activeElement.closest('.vf-cn')));
@@ -223,6 +224,8 @@ async function main() {
     const nachher = (await c.cookies()).map(k => k.name).filter(n => /^(_ga|_gcl)/.test(n));
     const ls = await p.evaluate(() => Object.keys(localStorage).filter(k => /^(_ga|_gcl)/.test(k)));
     const dis = await p.evaluate(() => [window['ga-disable-G-VYF5P956SP'], window['ga-disable-AW-820163824']]);
+    const klick = await p.evaluate(() => sessionStorage.getItem('vf_klick'));
+    pruefe(klick === null, 'gemerkte Klick-ID vf_klick nach Widerruf: ' + (klick === null ? 'geloescht' : klick));
     pruefe(nachher.length === 0 && ls.length === 0, '_ga/_gcl-Cookies nach Widerruf: ' + (nachher.join(', ') || 'keine') + '; localStorage: ' + (ls.join(', ') || 'keine'));
     pruefe(dis[0] === true && dis[1] === true, 'ga-disable gesetzt: ' + JSON.stringify(dis));
     log.req.length = 0;
