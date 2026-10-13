@@ -37,10 +37,12 @@
     .plausi-meldung{margin:6px 0 0;font-size:.875rem;line-height:1.4;color:#ffb4a8;overflow-wrap:anywhere}
     [aria-invalid="true"]{border-color:#ef4444 !important;box-shadow:0 0 0 1px #ef4444}
   </style>
-<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
-     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
+<!-- 13.10.2026 Nachtaudit B (VF P1, Art. 9 DSGVO): Diese Seite ist nur bei einem Gesundheitshinweis erreichbar. Schon ihr
+     Aufruf verraet "hat Vorerkrankung" - deshalb hier KEINE Google-Messung, auch nicht mit Einwilligung: kein vf-messung.js,
+     kein gtag.js, kein page_view, keine Conversion, keine Klick-ID an das Lead-Backend. gtag/vfEvent sind No-ops.
+     no-referrer: die naechste Seite sieht diese Adresse nicht als document.referrer (sonst page_referrer an GA4). -->
+<meta name="referrer" content="no-referrer">
+<script>window.VF_KEINE_MESSUNG=true;window.gtag=function(){};window.vfEvent=function(){};window.vfAdsConversion=function(){};</script>
 <link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20260916">
 <script defer src="/assets/js/cookie-notice.js?v=20261012"></script>
 <script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
@@ -115,7 +117,9 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
       <div class="vf-step">
         <h2>Einwilligung Gesundheitsdaten</h2>
         <div class="consent"><input type="checkbox" id="c2">
-          <label for="c2"><strong>Gesundheitsdaten (Art. 9 DSGVO):</strong> Ich willige ausdrücklich ein, dass meine Gesundheitsangaben für eine <strong>anonymisierte Risiko-Voranfrage</strong> an spezialisierte Dienstleister und Versicherer weitergegeben werden. Mein Name wird dabei nicht übermittelt. Jederzeit widerrufbar.</label></div>
+          <!-- ENTWURF 13.10.2026 (Nachtaudit B, VF P1): Empfaenger + Speicherdauer + Widerrufsadresse ergaenzt. Wortlaut vom Anwalt pruefen
+               lassen: _briefings/NACHTAUDIT-2026-10-13/ANWALT-ENTWUERFE-BLOCK-I.md. Fassung = einwilligungen.text_version. -->
+          <label for="c2"><strong>Gesundheitsdaten (Art. 9 DSGVO):</strong> Ich willige ausdrücklich ein, dass die iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt), Fritz-Hecker-Straße 94, 50968 Köln (Betreiberin von VersicherungsFuchs), meine Gesundheitsangaben zusammen mit meinen Kontaktdaten in ihrem Kundensystem speichert, um für mich eine <strong>anonymisierte Risiko-Voranfrage</strong> zu stellen. Dafür gibt sie die Gesundheitsangaben ohne Namen und Kontaktdaten an einen spezialisierten Dienstleister für Risikovoranfragen und an Versicherer weiter. Kommt kein Vertrag zustande, werden die Gesundheitsangaben spätestens 6 Monate nach Abschluss der Voranfrage gelöscht. Die Einwilligung ist freiwillig und jederzeit mit Wirkung für die Zukunft widerrufbar, per E-Mail an <a href="mailto:info@isurance-group.de" style="color:var(--acc)">info@isurance-group.de</a>.</label></div>
         <div id="vmsg" style="margin-top:12px"></div>
         <button class="btn-primary btn-lg" id="vbtn" type="submit" style="margin-top:16px;width:100%"><span>Anonyme Voranfrage absenden</span></button>
       </div>
@@ -159,7 +163,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
       body:JSON.stringify({name:name,email:email,answers:window.vfOhneGesundheit(checkAns),   // Art. 9: Gesundheit erst in Schritt 2 mit Einwilligung c2
         source:(check&&check.leadSource||type),ampel_status:checkErg?checkErg.ampel:null,
         phone:(cf.tel.value||'').trim(),
-        extra:Object.assign({tel:(cf.tel.value||'').trim(),request_id:REQUEST_ID}, extra(), window.vfHerkunft?window.vfHerkunft():{})})})
+        extra:Object.assign({tel:(cf.tel.value||'').trim(),request_id:REQUEST_ID}, extra())})})   // 13.10.2026: ohne vfHerkunft (keine Klick-ID/Werbe-Einwilligung -> kein Ads-Upload aus dem Gesundheitsweg)
     .then(function(r){ if(!r.ok) throw new Error('status '+r.status); return r.json().catch(function(){return{};});}).then(function(){
       // Lead gesichert -> Schritt 2 (optionaler Gesundheitsbogen) freigeben
       cf.querySelector('.vf-step').style.opacity='.55';
@@ -220,7 +224,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
       gesundheit:{groesse_cm:parseInt(vf.groesse.value,10)||null, gewicht_kg:parseInt(vf.gewicht.value,10)||null,
         raucher: state.raucher==='ja', bereiche:bereiche,
         behandlungen_5j:(vf.behandlungen.value||'').trim(), medikamente_5j:(vf.medikamente.value||'').trim()},
-      einwilligungen:{datenverarbeitung:true, dvs_weiterleitung:true, gesundheitsdaten_art9:true, text_version:'v1'},
+      einwilligungen:{datenverarbeitung:true, dvs_weiterleitung:document.getElementById('c2').checked, gesundheitsdaten_art9:true, text_version:'v2-entwurf-20261013'},
       handoff:'dvs', source:(check&&check.leadSource||type)+'-voranfrage', utm:extra().utm||{}, landing_page:extra().landing_page};
     btn.disabled=true; btn.querySelector('span').textContent='Wird gesendet …';
     fetch(API+'/api/voranfrage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
@@ -237,30 +241,8 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
   });
 })();
 </script>
-<script>
-/* Google Ads: Conversion "VersicherungsFuchs - Check-Anfrage abgeschickt".
-   Statt jeden einzelnen fetch-Aufruf anzufassen, wird window.fetch einmal
-   umhuellt: jede erfolgreiche Antwort von /api/lead meldet die Conversion.
-   Das faengt alle Formularwege dieser Seite ab, auch kuenftige. */
-(function(){
-  if (window.__vfFetchHooked) return; window.__vfFetchHooked = true;
-  var orig = window.fetch;
-  if (typeof orig !== 'function') return;
-  window.fetch = function(){
-    var url = arguments[0];
-    var pfad = (typeof url === 'string' ? url : (url && url.url) || '');
-    var p = orig.apply(this, arguments);
-    if (pfad.indexOf('/api/lead') !== -1) {
-      p.then(function(r){
-        if (r && r.ok && typeof window.vfAdsConversion === 'function') window.vfAdsConversion();
-      }).catch(function(){ /* Netzfehler: keine Conversion, absichtlich still */ });
-    }
-    return p;
-  };
-})();
-</script>
+<!-- 13.10.2026: Ads-Conversion-Haken entfernt (keine Google-Messung auf der Voranfrage, siehe Kopf). -->
 <footer class="vf-fuss-mini"><style>.vf-fuss-mini{max-width:720px;margin:2.5rem auto 1.5rem;padding:0 1rem;text-align:center;font-size:.8rem;color:#8888a0}.vf-fuss-mini a{color:#a8a8bc;display:inline-flex;align-items:center;min-height:24px}</style><nav aria-label="Rechtliches"><a href="/datenschutz">Datenschutz</a> · <a href="/impressum">Impressum</a> · <a href="#" class="vf-cn-trigger">Cookie-Einstellungen</a></nav></footer>
-<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
 <!--/email_off-->
 </body>
 </html>

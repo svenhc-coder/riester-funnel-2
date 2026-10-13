@@ -11,6 +11,11 @@
    - Einwilligung: localStorage vf_cookie_consent = 'accepted' (cookie-notice.js verwaltet Ablauf nach 12 Monaten).
    Schluesselereignisse (in GA4 als Key Events markieren): check_start, submit_lead_form, purchase. */
 (function () {
+  /* 13.10.2026 Nachtaudit B (Art. 9): auf der Voranfrage (nur bei Gesundheitshinweis erreichbar) nie messen, auch mit Einwilligung. */
+  if (window.VF_KEINE_MESSUNG || /^\/versicherungs-check\/voranfrage(\/|$)/.test(location.pathname)) {
+    window.gtag = function () {}; window.vfEvent = function () {}; window.vfAdsConversion = function () {};
+    return;
+  }
   var AW = 'AW-820163824', GA = 'G-VYF5P956SP', KEY = 'vf_cookie_consent';
   var ok = false, geladen = false, convGesendet = false;
   var dl = window.dataLayer = window.dataLayer || [];

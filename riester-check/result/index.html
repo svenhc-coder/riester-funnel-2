@@ -181,7 +181,7 @@ var stripeInst = null, stripeEls = null;
       +'<div class="lead-field"><label class="lead-label" for="inp-name">Ihr Name</label><input class="lead-input" type="text" id="inp-name" name="name" autocomplete="name" placeholder="Vor- und Nachname" required data-plausi="name"></div>'
       +'<div class="lead-field"><label class="lead-label" for="inp-email">E-Mail-Adresse</label><input class="lead-input" type="email" id="inp-email" name="email" autocomplete="email" placeholder="ihre@email.de" required data-plausi="email"></div>'
       +'<div class="lead-field"><label class="lead-label" for="inp-tel">Telefon (für Rückfragen)</label><input class="lead-input" type="tel" id="inp-tel" name="telefon" autocomplete="tel" placeholder="0151 …" required data-plausi="telefon"></div>'
-      +'<label class="lead-consent"><input type="checkbox" id="inp-consent" required> <span>Ich bin einverstanden, dass meine Daten zur Bearbeitung meiner Anfrage und Zusendung des Ergebnisses gespeichert und genutzt werden. Eine Weitergabe an Dritte erfolgt nicht. <a href="/datenschutz" target="_blank" style="color:var(--txt2,#8888a0);text-decoration:underline" rel="noopener noreferrer">Datenschutz</a></span></label>'
+      +'<label class="lead-consent"><input type="checkbox" id="inp-consent" required> <span>Ich bin einverstanden, dass die iSurance Group (VersicherungsFuchs) meine Angaben speichert und nutzt, um meine Anfrage zu bearbeiten, mir das Ergebnis zu schicken und mich bei Rückfragen zu kontaktieren. Bitte ich um Hilfe bei der Umsetzung, gibt die iSurance Group meine Kontaktdaten und Angaben dafür an einen freien Versicherungsmakler aus ihrem Netzwerk weiter. Ein Verkauf meiner Daten oder eine Weitergabe zu Werbezwecken findet nicht statt. Widerruf jederzeit per E-Mail an info@isurance-group.de. <a href="/datenschutz" target="_blank" style="color:var(--txt2,#8888a0);text-decoration:underline" rel="noopener noreferrer">Datenschutz</a></span></label>'
       +'<div id="lead-err" class="lead-error" style="display:none"></div>'
       +'<button type="submit" class="btn-primary btn-lg" id="btn-submit"><span>Ergebnis anzeigen</span>'+A_SVG+'</button>'
       +'</form>'
@@ -204,12 +204,25 @@ var stripeInst = null, stripeEls = null;
       btn.disabled=true; btn.querySelector('span').textContent='Wird gesendet...';
 
       // KORREKTER ENDPOINT: /api/lead (singular) mit vollständigem Payload
-      fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:name,email:email,answers:answers,ampel_status:ampel,tier:'ki',source:'riester-check',
-          phone:tel, extra:Object.assign({tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}, window.vfHerkunft?window.vfHerkunft():{})})   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
-      })
-      .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
-      .then(function(data){
+      // 13.10.2026 Nachtaudit B (VF P1 stiller Lead-Verlust): ein zweiter Versuch nach 1,5 s; scheitert auch der,
+      // sieht der Kunde das Ergebnis MIT ehrlichem Hinweis + Alternativweg statt "per E-Mail zugeschickt".
+      var leadBody=JSON.stringify({name:name,email:email,answers:answers,ampel_status:ampel,tier:'ki',source:'riester-check',
+          phone:tel, extra:Object.assign({tel:tel, ki_quelle:(window.vfKiQuelle && window.vfKiQuelle()) || undefined}, window.vfHerkunft?window.vfHerkunft():{})});   // 08.10.2026 KI-Sichtbarkeit (assets/js/vf-ki-quelle.js)
+      function leadSenden(){
+        return fetch(API_URL+'/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:leadBody})
+          .then(function(r){return r.ok?r.json():Promise.reject(r.status);});
+      }
+      window.vfLeadErneut=function(){
+        var b=document.getElementById('lead-fehler-btn'); if(b){b.disabled=true;b.textContent='Wird gesendet ...';}
+        leadSenden().then(function(data){ leadOk(data); var f=document.getElementById('lead-fehler'); if(f) f.outerHTML='<div class="lead-ok-hinweis" role="status" style="border:1px solid rgba(34,197,94,.35);background:rgba(34,197,94,.08);border-radius:12px;padding:14px 18px;margin-bottom:20px">Danke – Ihre Anfrage ist jetzt bei uns eingegangen.</div>'; })
+          .catch(function(){ if(b){b.disabled=false;b.textContent='Erneut senden';} });
+      };
+      leadSenden()
+      .catch(function(){ return new Promise(function(res){setTimeout(res,1500);}).then(leadSenden); })
+      .then(function(data){ leadOk(data); showResult({name:name,email:email}); })
+      .catch(function(){ showResult({name:name,email:email,fehler:true}); });
+      function leadOk(data){
+        vfSaveLead({name:name,email:email,telefon:tel});
         // Conversion erst nach erfolgreicher Server-Antwort (vorher feuerte sie schon beim Klick).
         if(window.vfEvent)vfEvent('submit_lead_form',{source:'riester-check'});
         if(data.lead_id){
@@ -219,10 +232,7 @@ var stripeInst = null, stripeEls = null;
           sessionStorage.setItem('vf_cs',vfClientSecret||'');
           sessionStorage.setItem('vf_payment_id',vfPaymentId||'');
         }
-      }).catch(function(){});
-
-      vfSaveLead({name:name,email:email,telefon:tel});
-      setTimeout(function(){showResult({name:name,email:email});},700);
+      }
     });
   }
 
@@ -243,7 +253,13 @@ var stripeInst = null, stripeEls = null;
         +'</ul><button id="btn-'+c.tier+'" onclick="'+c.fn+'" class="'+(c.featured?'btn-primary':'btn-secondary')+'" style="width:100%;cursor:pointer"><span>'+c.btn+'</span>'+A_SVG+'</button></div>';
     }).join('');
 
-    document.getElementById('result-body').innerHTML=
+    // 13.10.2026: Fehlerhinweis, wenn /api/lead zweimal scheiterte - kein Lead gespeichert, keine Conversion, kein Mailversprechen.
+    var fehlerHinweis=lead.fehler?('<div id="lead-fehler" role="alert" style="border:1px solid rgba(239,68,68,.45);background:rgba(239,68,68,.08);border-radius:12px;padding:16px 20px;margin-bottom:24px;line-height:1.6">'
+      +'<strong>Ihre Anfrage ist leider nicht bei uns angekommen.</strong> Ihr Ergebnis sehen Sie unten, per E-Mail können wir es Ihnen deshalb aber nicht schicken. '
+      +'Schreiben Sie uns kurz an <a href="mailto:info@isurance-group.de?subject=Riester-Check%20Ergebnis" style="text-decoration:underline">info@isurance-group.de</a> '
+      +'oder rufen Sie an: <a href="tel:+492213791692" style="text-decoration:underline;white-space:nowrap">0221 3791692</a>. Wir melden uns.'
+      +'<div style="margin-top:12px"><button type="button" id="lead-fehler-btn" class="btn-secondary" onclick="window.vfLeadErneut&&window.vfLeadErneut()" style="cursor:pointer">Erneut senden</button></div></div>'):'';
+    document.getElementById('result-body').innerHTML=fehlerHinweis+
       (lead.name?'<p class="ergebnis-greeting">Ihre Einschätzung, '+lead.name+':</p>':'')
       +'<div class="ergebnis-ampel-card" style="background:'+cfg.bg+';border:1.5px solid '+cfg.border+';border-radius:14px;padding:24px 28px;display:flex;align-items:center;gap:28px;margin-bottom:24px;flex-wrap:wrap">'
       +scoreCircle
