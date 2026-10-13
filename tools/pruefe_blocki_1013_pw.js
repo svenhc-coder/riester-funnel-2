@@ -5,6 +5,7 @@
        /api/lead-Body ohne gclid/einwilligung_marketing; Folgeseite sieht die Voranfrage nicht als document.referrer.
    (B) Riester-Ergebnis: /api/lead antwortet 2x 500 -> ehrlicher Fehlerhinweis mit Mail/Telefon, kein Lead gespeichert,
        "Erneut senden" mit 200 -> Bestaetigung. Erfolgsfall: kein Fehlerhinweis.
+   Testdaten: Name "ZZTEST ...", Mail probe+vf@isurance-group.de (falls je ein Lead durchrutscht, ist er als Probe erkennbar).
    Exit-Code 0 = alles gruen. */
 const http = require('http'), fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
@@ -56,7 +57,11 @@ async function kontext(b, api) {
 
 async function main() {
   const b = await chromium.launch();
-  const srv = await server(); const BASE = 'http://localhost:' + srv.address().port;
+  /* LIVE_BASE=https://versicherungs-fuchs.online -> gegen live; api.versicherungs-fuchs.online bleibt IMMER gemockt (kein echter Lead),
+     Google-Pings werden mit 204 beantwortet (keine Testdaten in GA4/Ads). */
+  const srv = process.env.LIVE_BASE ? null : await server();
+  const BASE = process.env.LIVE_BASE ? process.env.LIVE_BASE.replace(/\/$/, '') : 'http://localhost:' + srv.address().port;
+  console.log('Basis: ' + BASE);
 
   console.log('\n(A) Voranfrage: nach "Alle akzeptieren" 0 Google-Requests');
   {
@@ -73,7 +78,7 @@ async function main() {
     pruefe(await p.evaluate(() => localStorage.getItem('vf_cookie_consent')) === 'accepted', 'Einwilligung steht auf "accepted"');
     pruefe(log.google.length === vorher, 'Voranfrage geladen: ' + (log.google.length - vorher) + ' Google-Requests (erwartet 0)');
     pruefe(await p.evaluate(() => !document.querySelector('script[src*="vf-messung"]') && !document.querySelector('script[src*="googletagmanager"]')), 'kein vf-messung.js / gtag.js im DOM');
-    await p.fill('#c-name', 'Martina Beispielfrau'); await p.fill('#c-tel', '0151 23456789'); await p.fill('#c-email', 'martina.beispielfrau@gmail.com');
+    await p.fill('#c-name', 'ZZTEST Probe Blocki'); await p.fill('#c-tel', '0151 23456789'); await p.fill('#c-email', 'probe+vf@isurance-group.de');
     await p.$eval('#c1', e => { e.checked = true; }); await p.click('#cbtn'); await p.waitForTimeout(2500);
     const lead = log.api.find(a => a.pfad === '/api/lead');
     pruefe(!!lead, 'Schritt 1 sendet /api/lead (gemockt)');
@@ -96,7 +101,7 @@ async function main() {
     await p.goto(BASE + '/riester-check/result/', { waitUntil: 'networkidle' });
     const nn = p.locator('.vf-cn button', { hasText: 'Nur notwendige' });
     if (await nn.isVisible().catch(() => false)) await nn.click();
-    await p.fill('#inp-name', 'Martina Beispielfrau'); await p.fill('#inp-email', 'martina.beispielfrau@gmail.com'); await p.fill('#inp-tel', '0151 23456789');
+    await p.fill('#inp-name', 'ZZTEST Probe Blocki'); await p.fill('#inp-email', 'probe+vf@isurance-group.de'); await p.fill('#inp-tel', '0151 23456789');
     await p.$eval('#inp-consent', e => { e.checked = true; }); await p.click('#btn-submit');
     await p.waitForSelector('#result-section', { state: 'visible', timeout: 10000 });
     return { c, log, p };
@@ -121,7 +126,7 @@ async function main() {
     pruefe(!/Eine Weitergabe an Dritte erfolgt nicht/.test(fs.readFileSync(path.join(ROOT, 'riester-check/result/index.html'), 'utf8')), 'Einwilligung ohne "Eine Weitergabe an Dritte erfolgt nicht"');
     await c.close();
   }
-  srv.close(); await b.close();
+  if (srv) srv.close(); await b.close();
   console.log(fehler ? '\n' + fehler + ' FEHLER' : '\nALLES GRUEN'); process.exit(fehler ? 1 : 0);
 }
 main().catch(e => { console.error(e); process.exit(2); });
