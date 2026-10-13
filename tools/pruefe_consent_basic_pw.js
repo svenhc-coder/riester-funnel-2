@@ -277,7 +277,9 @@ async function main() {
       await bannerKnopf(p, 'Alle akzeptieren'); await warteGoogle(p, log, 3);
       await lead(p); await lead(p); await p.waitForTimeout(4000);
       const z = await zaehle(p, log);
-      pruefe(z.dl === 1 && z.netz >= 1, seite + ' mit Einwilligung, 2x /api/lead: Conversion-Ereignisse ' + z.dl + ' (Netz-Requests mit Conversion-Label: ' + z.netz + ', Seite ' + new URL(p.url()).pathname + ')');
+      /* 13.10.2026 Nachtaudit B (Art. 9): Voranfrage misst NIE, auch nicht mit Einwilligung -> dort 0 erwartet */
+      if (/voranfrage/.test(seite)) pruefe(z.dl === 0 && z.netz === 0, seite + ' mit Einwilligung, 2x /api/lead: KEINE Conversion (Art. 9) - dataLayer ' + z.dl + ', Netz ' + z.netz);
+      else pruefe(z.dl === 1 && z.netz >= 1, seite + ' mit Einwilligung, 2x /api/lead: Conversion-Ereignisse ' + z.dl + ' (Netz-Requests mit Conversion-Label: ' + z.netz + ', Seite ' + new URL(p.url()).pathname + ')');
       await c.close();
     }
   }

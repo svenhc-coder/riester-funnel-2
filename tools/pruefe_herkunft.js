@@ -46,7 +46,9 @@ t = lauf({ sitzung: { vf_klick: '{kaputt', vf_utm: '{kaputt' }, consent: 'accept
 assert.deepStrictEqual(t.h(), { landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true });
 // Einbindung: jede Seite mit /api/lead laedt das Skript und legt vfHerkunft() in extra
 const seiten = ['check-anfrage/index.html', 'altersvorsorgedepot/index.html', 'pkv-check/index.html',
-  'riester-check/result/index.html', 'versicherungs-check/ergebnis/index.html', 'versicherungs-check/voranfrage/index.html'];
+  'riester-check/result/index.html', 'versicherungs-check/ergebnis/index.html'];
+// 13.10.2026 Nachtaudit B (Art. 9): die Voranfrage gibt KEINE Klick-ID/Werbe-Einwilligung weiter (kein Ads-Upload aus dem Gesundheitsweg)
+assert.ok(!/window\.vfHerkunft\s*\?\s*window\.vfHerkunft\(\)/.test(fs.readFileSync(path.join(wurzel, 'versicherungs-check/voranfrage/index.html'), 'utf8')), 'Voranfrage: kein vfHerkunft()');
 for (const seite of seiten) {
   const h = fs.readFileSync(path.join(wurzel, seite), 'utf8');
   assert.ok(/<script defer src="\/assets\/js\/vf-herkunft\.js\?v=[^"]+"><\/script>/.test(h), seite + ': Skript eingebunden');
