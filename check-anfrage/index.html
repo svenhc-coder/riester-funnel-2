@@ -122,7 +122,8 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
           <input type="tel" id="telefon" name="telefon" autocomplete="tel" placeholder="0151 …" required data-plausi="telefon">
 
           <label for="nachricht" id="nachricht-label">Ihre Ausgangslage <span class="opt">(optional)</span></label>
-          <textarea id="nachricht" name="nachricht" placeholder="Kurz zu Ihrer Situation …"></textarea>
+          <textarea id="nachricht" name="nachricht" placeholder="Kurz zu Ihrer Situation …" aria-describedby="nachricht-hinweis"></textarea>
+          <p class="opt" id="nachricht-hinweis" style="margin:4px 0 12px;font-size:.85rem">Bitte hier keine Angaben zu Ihrer Gesundheit eintragen – die besprechen wir persönlich.</p>
 
           <div class="hp" aria-hidden="true"><label>Website<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></label></div>
 
