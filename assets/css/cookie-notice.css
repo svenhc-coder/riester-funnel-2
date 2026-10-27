@@ -16,4 +16,13 @@
 .vf-cn__btn--accept:hover{filter:brightness(1.07)}
 .vf-cn__btn--reject{background:#f1f1f4;color:#1b1b1f;border-color:rgba(0,0,0,.1)}
 .vf-cn__btn--reject:hover{background:#e6e6ea}
+.vf-cn__btn--settings{background:transparent;color:#1b1b1f;border-color:rgba(0,0,0,.25)}
+.vf-cn__btn--settings:hover{background:#f1f1f4}
+.vf-cn__btn--save{width:100%;margin-top:.8rem;background:#1b1b1f;color:#fff}
+.vf-cn__panel{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,.1)}
+.vf-cn__panel[hidden]{display:none}
+.vf-cn__row{margin:0 0 .7rem;font-size:.82rem;line-height:1.5;color:#4a4a52}
+.vf-cn__check{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
+.vf-cn__check input{margin-top:.2rem;width:1.1rem;height:1.1rem;flex:none}
+.vf-cn{max-height:calc(100vh - 2rem);overflow-y:auto}
 @media (prefers-reduced-motion:reduce){.vf-cn{transition:none}}

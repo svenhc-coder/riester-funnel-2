@@ -14,7 +14,7 @@
   var mount = document.getElementById('vf-fox3d');
   if (!mount) return;
 
-  var THREE_URL = 'https://unpkg.com/three@0.128.0/build/three.min.js';
+  var THREE_URL = '/assets/js/vendor/three-0.128.0.min.js';   // 27.10.2026: selbst gehostet (vorher unpkg.com: IP an Dritte, kein SRI)
   var started = false;
 
   function ensureThree(cb) {

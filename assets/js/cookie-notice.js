@@ -1,5 +1,6 @@
 /* VersicherungsFuchs Cookie-Hinweis - TDDDG-konform (§ 25 TDDDG, DSK 2023).
-   - "Nur notwendige" und "Alle akzeptieren" gleichberechtigt auf der ersten Ebene
+   - "Alle akzeptieren", "Nur notwendige" und "Einstellungen" gleichberechtigt auf der ersten Ebene (27.10.2026: Einstellungen
+     zeigt die Kategorien; "Auswahl speichern" setzt dieselbe Wahl wie die beiden anderen Knoepfe)
    - Eine Stufe: Marketing (Google Ads Conversion-Messung + Google Analytics 4) - Consent Mode BASIC (12.10.2026,
      Sven, Task a0d3d60a): assets/js/vf-messung.js laedt die Google-Tags erst nach "Alle akzeptieren" (Ereignis
      'vf-consent'); vorher geht kein Aufruf an Google. Alle gtag-Aufrufe macht vf-messung.js, nicht diese Datei.
@@ -50,16 +51,32 @@
       + '    dabei setzt Google Cookies und erhält Angaben zu Ihrem Besuch.'
       + '    Ohne Zustimmung laden wir keine Google-Dienste und setzen keine Analyse- oder Werbe-Cookies.'
       + '    Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ im Fußbereich ändern. Details in der'
-      + '    <a href="/datenschutz">Datenschutzerklärung</a>.'
+      + '    <a href="/datenschutz">Datenschutzerklärung</a> und <a href="/cookie-richtlinie">Cookie-Richtlinie</a>.'
       + '  </p>'
       + '  <div class="vf-cn__actions">'
       + '    <button type="button" class="vf-cn__btn vf-cn__btn--accept" data-vf-cn="accept">Alle akzeptieren</button>'
       + '    <button type="button" class="vf-cn__btn vf-cn__btn--reject" data-vf-cn="reject">Nur notwendige</button>'
+      + '    <button type="button" class="vf-cn__btn vf-cn__btn--settings" data-vf-cn="settings" aria-expanded="false" aria-controls="vf-cn-panel">Einstellungen</button>'
+      + '  </div>'
+      + '  <div class="vf-cn__panel" id="vf-cn-panel" hidden>'
+      + '    <p class="vf-cn__row"><strong>Notwendig</strong> (immer aktiv): speichert Ihre Wahl und Ihre Antworten im Check im Browser. Keine Weitergabe an Google.</p>'
+      + '    <label class="vf-cn__row vf-cn__check"><input type="checkbox" id="vf-cn-google"><span><strong>Statistik &amp; Anzeigen-Messung (Google)</strong>: Google Analytics 4 und Google Ads, nur mit Ihrer Zustimmung. Google setzt dann Cookies und erhält Angaben zu Ihrem Besuch.</span></label>'
+      + '    <button type="button" class="vf-cn__btn vf-cn__btn--save" data-vf-cn="save">Auswahl speichern</button>'
       + '  </div>'
       + '</div>';
     return el;
   }
+  function umschalten() {
+    var p = BOX && BOX.querySelector('#vf-cn-panel'), b = BOX && BOX.querySelector('[data-vf-cn="settings"]');
+    if (!p || !b) return;
+    var auf = p.hasAttribute('hidden');
+    if (auf) p.removeAttribute('hidden'); else p.setAttribute('hidden', '');
+    b.setAttribute('aria-expanded', auf ? 'true' : 'false');
+    if (auf) { var c = p.querySelector('input'); if (c) try { c.focus({ preventScroll: true }); } catch (err) { c.focus(); } }
+  }
   function waehle(a) {
+    if (a === 'settings') { umschalten(); return; }
+    if (a === 'save') { var g = BOX && BOX.querySelector('#vf-cn-google'); a = g && g.checked ? 'accept' : 'reject'; }
     if (a === 'accept') { writeConsent('accepted'); melde('vf-consent'); }
     else { writeConsent('necessary'); melde('vf-consent-widerruf'); }
     hide();

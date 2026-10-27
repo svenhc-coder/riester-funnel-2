@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie-Richtlinie – Versicherungsfuchs</title>
+  <meta name="description" content="Welche Cookies und Browser-Speicher die Website des Versicherungsfuchs nutzt, wozu und wie lange. Google nur mit Ihrer Zustimmung.">
+  <link rel="canonical" href="https://versicherungs-fuchs.online/cookie-richtlinie">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --border: rgba(255,255,255,0.08);
+      --text: #f1f1f1;
+      --muted: #888;
+      --primary: #f97316;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--txt,#f2f2f2); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo img { display: block; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--txt2,#a9a9bf); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--txt,#f2f2f2); }
+    .nav-cta { background: var(--primary); color: #fff !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; font-size: 0.85rem !important; }
+    .nav-cta:hover { background: #ea6c0a !important; }
+
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 80px 24px 120px; }
+    h1 { font-size: 2rem; font-weight: 800; margin-bottom: 48px; }
+    h2 { font-size: 1.1rem; font-weight: 700; color: var(--txt,#f2f2f2); margin: 40px 0 12px; }
+    p { color: #ccc; margin-bottom: 8px; font-size: 0.95rem; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .chip { display: inline-block; background: rgba(249,115,22,0.12); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 0.05em; }
+    .note { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 24px 0; }
+    .note p { margin: 0; font-size: 0.88rem; color: var(--txt2,#a9a9bf); }
+
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; }
+    .footer-bottom-simple { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-bottom-simple p { color: var(--txt2,#a9a9bf); font-size: 0.8rem; margin: 0; }
+    .footer-bottom-simple nav { background: none; border: none; position: static; }
+    .footer-bottom-simple nav a { color: var(--txt2,#a9a9bf); font-size: 0.8rem; text-decoration: none; margin-left: 20px; }
+    .footer-bottom-simple nav a:hover { color: var(--txt,#f2f2f2); }
+  
+    /* ── Cookie Banner ── */
+
+  </style>
+<style>
+/* CTA-Kontrast (Sven 07-23): weisse Schrift auf Orange erreichte nur 2.6 statt 4.5 (WCAG AA).
+   Markenfarbe bleibt, Schrift wird dunkel -> ~7.5. Auch BFSG-relevant. */
+.btn-primary,a.btn-primary,button.btn-primary,.nav-cta,.btn-cta,.cta-primary{color:#0a0a0f !important;}
+.btn-primary svg,.nav-cta svg{stroke:#0a0a0f !important;}
+</style>
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
+<link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20261027">
+<script defer src="/assets/js/cookie-notice.js?v=20261027"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-rechtslinks">.page-wrap p a,.page-wrap li a{text-decoration:underline;text-underline-offset:2px}</style>
+<style id="vf-nav-schmal">/* 08.10.2026: eigene Inline-Nav war bei 320/375 px zu breit (horizontaler Ueberlauf). Unter 400 px entfaellt "Checks" (gleiches Ziel wie der CTA). */
+@media (max-width:400px){.nav-inner{padding:0 14px}.nav-logo img{height:40px;width:auto}.nav-links{gap:12px}.nav-links a[href="/versicherungs-check/"]:not(.nav-cta){display:none}}
+.page-wrap h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}</style>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}
+/* Zielgroesse mind. 24 px (WCAG 2.5.8): Fussnavigation, Cookie-Einstellungen, Uebersicht im Fragen-Kopf */
+.footer-bottom-simple nav a,a.vf-cn-trigger,.funnel-exit{display:inline-flex;align-items:center;min-height:24px}.vf-tab-wrap{overflow-x:auto;margin:12px 0 24px}.vf-tab{border-collapse:collapse;width:100%;min-width:560px;font-size:.88rem}.vf-tab th,.vf-tab td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}.vf-tab th{background:var(--surface)}</style>
+</head>
+<body>
+
+<a class="vf-skip" href="#main">Zum Inhalt springen</a>
+
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/assets/img/logo-header@2x.png" width="121" height="52" alt="VersicherungsFuchs"></a>
+    <div class="nav-links">
+      <a href="/versicherungs-check/">Checks</a>
+      <a href="/news/">Wissen</a>
+      <a href="/versicherungs-check/" class="nav-cta">Check starten</a>
+    </div>
+  </div>
+</nav>
+</header>
+<main id="main">
+
+<div class="page-wrap">
+  <h1>Cookie-Richtlinie</h1>
+  <p>Stand: 27.10.2026. Diese Seite zeigt, was die Website im Browser speichert, wozu und wie lange. Die Rechtsgrundlagen und die Empfänger stehen in der <a href="/datenschutz#3-cookies-und-tracking">Datenschutzerklärung (Abschnitt 3)</a>.</p>
+
+  <h2>Ihre Wahl</h2>
+  <p>Beim ersten Besuch fragen wir Sie mit dem Cookie-Hinweis. „Alle akzeptieren“, „Nur notwendige“ und „Einstellungen“ stehen gleichberechtigt nebeneinander. Ohne Ihre Zustimmung laden wir keine Google-Dienste und setzen keine Analyse- oder Werbe-Cookies. Ihre Wahl können Sie jederzeit ändern: über „Cookie-Einstellungen“ im Fußbereich jeder Seite.</p>
+
+  <h2>Notwendig (immer aktiv)</h2>
+  <div class="vf-tab-wrap"><table class="vf-tab">
+    <thead><tr><th>Name</th><th>Zweck</th><th>Speicherort</th><th>Dauer</th></tr></thead>
+    <tbody>
+      <tr><td>vf_cookie_consent</td><td>Merkt sich Ihre Wahl im Cookie-Hinweis (alle akzeptiert / nur notwendige).</td><td>localStorage dieser Website</td><td>12 Monate, danach fragen wir erneut</td></tr>
+      <tr><td>vf_cookie_consent_at</td><td>Zeitpunkt Ihrer Wahl, damit die Frist von 12 Monaten berechnet werden kann.</td><td>localStorage dieser Website</td><td>12 Monate</td></tr>
+      <tr><td>Antworten im Check, Kontaktangaben (z. B. VF_ANSWERS)</td><td>Hält Ihre Antworten und Angaben während des Checks vor.</td><td>sessionStorage dieser Website</td><td>bis zum Schließen des Browser-Tabs</td></tr>
+      <tr><td>vf_utm, vf_ref, vf_landing</td><td>Merkt sich für die Dauer der Sitzung, über welchen Weg Sie auf die Seite kamen (Auswertung der Anfrage-Herkunft ohne Google).</td><td>sessionStorage dieser Website</td><td>bis zum Schließen des Browser-Tabs</td></tr>
+      <tr><td>Cloudflare-Sicherheitscookies (__cf_bm, cf_clearance)</td><td>Schutz vor automatisierten Zugriffen und Angriffen; werden nur gesetzt, wenn Cloudflare eine Prüfung ausführt.</td><td>Cookie (Cloudflare, Inc., USA)</td><td>30 Minuten bzw. bis zu 12 Monate</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Statistik und Anzeigen-Messung (nur mit Ihrer Zustimmung)</h2>
+  <p>Diese Einträge entstehen erst, wenn Sie „Alle akzeptieren“ wählen (oder in den Einstellungen Google freigeben). Ohne Zustimmung wird keine Verbindung zu Google aufgebaut. Mit Ihrer Zustimmung verbindet sich Ihr Browser mit Servern von Google (u. a. googletagmanager.com, google-analytics.com, doubleclick.net).</p>
+  <div class="vf-tab-wrap"><table class="vf-tab">
+    <thead><tr><th>Name</th><th>Zweck</th><th>Anbieter</th><th>Dauer</th></tr></thead>
+    <tbody>
+      <tr><td>_ga, _ga_&lt;ID&gt;</td><td>Google Analytics 4: unterscheidet Besucher und wertet die Nutzung statistisch aus (Seitenaufrufe, Start des Checks, abgeschickte Anfragen).</td><td>Google Ireland Ltd.</td><td>bis zu 2 Jahre (Voreinstellung von Google)</td></tr>
+      <tr><td>_gcl_au</td><td>Google Ads: ordnet eine Anfrage einer Google-Anzeige zu (Conversion-Messung).</td><td>Google Ireland Ltd.</td><td>bis zu 90 Tage</td></tr>
+      <tr><td>_gcl_ls</td><td>Google Ads: Zwischenspeicher der Anzeigen-Zuordnung (Conversion-Messung).</td><td>localStorage dieser Website (Google Ireland Ltd.)</td><td>bis Sie Ihre Wahl widerrufen oder die Website-Daten löschen</td></tr>
+      <tr><td>vf_klick</td><td>Merkt sich die Anzeigen-Klick-ID für die Zuordnung der Anfrage zur Anzeige.</td><td>sessionStorage dieser Website</td><td>bis zum Schließen des Browser-Tabs</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Widerruf</h2>
+  <p>Mit „Cookie-Einstellungen“ im Fußbereich löschen wir Ihre gespeicherte Wahl, beenden die Messung sofort und entfernen die von Google auf dieser Website gesetzten Cookies und Speichereinträge. Ihre Zustimmung kann auch im Browser selbst gelöscht werden (Website-Daten löschen).</p>
+
+  <h2>Kontakt</h2>
+  <p>Fragen zu dieser Richtlinie: <a href="mailto:info@isurance-group.de">info@isurance-group.de</a></p>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-bottom-simple"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p>
+    <p>© 2026 Versicherungsfuchs · iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt)</p>
+    <nav aria-label="Rechtliches">
+      <a href="/">Start</a>
+      <a href="/datenschutz">Datenschutz</a>
+      <a href="/impressum">Impressum</a> <a href="/erstinformation">Erstinformation</a> <a href="/widerrufsbelehrung">Widerruf</a> <a href="/bildnachweis">Bildnachweis</a> <a href="/cookie-richtlinie">Cookie-Richtlinie</a> <a href="#" class="vf-cn-trigger">Cookie-Einstellungen</a>
+    </nav>
+  </div>
+</footer>
+
+
+<script src="/assets/js/smooth-scroll.js" defer></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script></body>
+</html>

@@ -879,5 +879,8 @@ window.VF_GESUNDHEIT_FELDER = ['gesundheit', 'raucher', 'zahn_bedarf'];
 window.vfOhneGesundheit = function(answers){
   var o = {};
   Object.keys(answers || {}).forEach(function(k){ if (window.VF_GESUNDHEIT_FELDER.indexOf(k) < 0) o[k] = answers[k]; });
+  /* 27.10.2026 (Sicherheitspruefung): Der Wert 'voranfrage' bei zielbild heisst "Ich habe eine Vorerkrankung" und waere selbst eine
+     Gesundheitsangabe. Ohne ausdrueckliche Einwilligung geht nur der neutrale Wert 'klaerung' mit (Gespraech zur Klaerung gewuenscht). */
+  if (o.zielbild === 'voranfrage') o.zielbild = 'klaerung';
   return o;
 };
