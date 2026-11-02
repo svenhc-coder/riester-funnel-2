@@ -52,7 +52,7 @@ Anbieter: iSurance Gruppe (Versicherungsmakler nach § 34d GewO, Köln).
 ### Altersvorsorgedepot & Riester-Reform 2027
 - URL: [https://versicherungs-fuchs.online/altersvorsorgedepot/](https://versicherungs-fuchs.online/altersvorsorgedepot/)
 - Frage: Was bedeutet die Riester-Reform / das Altersvorsorgedepot ab 2027 für meinen bestehenden Riester? Behalten oder wechseln? Wie hoch ist die Zulage?
-- Fakten (Stand Juli 2026): Reform 2026 von Bundestag und Bundesrat beschlossen; das Altersvorsorgedepot startet zum 1. Januar 2027. Grundzulage 50 % auf Beiträge bis 360 EUR + 25 % bis 1.800 EUR (max. 540 EUR/Jahr), 300 EUR Kinderzulage je Kind, 200 EUR einmaliger Berufseinsteiger-Bonus (unter 25). Bestehende Riester-Verträge laufen weiter (keine automatische Kündigung/Umwandlung); ab 2027 keine neuen Riester-Abschlüsse.
+- Fakten (Stand 02.11.2026, geprüft gegen Bundesregierung): Reform vom Bundestag am 27.03.2026 beschlossen, Bundesrat 08.05.2026, Ende Mai 2026 in Kraft; das Altersvorsorgedepot startet zum 1. Januar 2027. Grundzulage 50 % auf Beiträge bis 360 EUR + 25 % bis 1.800 EUR (max. 540 EUR/Jahr), 300 EUR Kinderzulage je Kind, 200 EUR einmaliger Berufseinsteiger-Bonus (unter 25). Bestehende Riester-Verträge laufen weiter (keine automatische Kündigung/Umwandlung); ab 2027 keine neuen Riester-Abschlüsse.
 - Enthält: faktischer Zulagen-Rechner + neutrale Einordnung des bestehenden Riester (keine Wechsel-Empfehlung).
 
 ### Vorsorge-Check-Hub (alle Checks an einem Ort, NEU 2026)
