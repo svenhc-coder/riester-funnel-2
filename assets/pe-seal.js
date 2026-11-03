@@ -36,7 +36,6 @@
     var a = document.createElement("a");
     a.className = "pe-seal";
     a.href = PE.url; a.target = "_blank"; a.rel = "noopener";
-    a.setAttribute("aria-label", "Kundenbewertungen der iSurance Gruppe auf ProvenExpert: " + PE.s + " von 5, " + PE.n + " Bewertungen, Stand " + PE.stand);
     a.title = "Bewertungen der iSurance Gruppe auf ProvenExpert, Stand " + PE.stand;
     var st = a.style;
     st.position = "fixed"; st.left = "16px"; st.bottom = "16px"; st.zIndex = "40";
@@ -53,7 +52,7 @@
     kopf.appendChild(note);
     karte.appendChild(kopf);
     karte.appendChild(zeile(PE.n + " Bewertungen" + (PE.rec ? " · " + PE.rec + " % Weiterempfehlung" : ""), "margin-top:6px;font-weight:600"));
-    var marke = zeile("auf ProvenExpert · Gruppe iSurance", "margin-top:2px;font-size:11px;font-weight:500;opacity:.85");
+    var marke = zeile("auf ProvenExpert · Gruppe iSurance", "margin-top:2px;font-size:11px;font-weight:500");
     karte.appendChild(marke);
 
     var chip = document.createElement("span");
