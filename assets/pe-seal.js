@@ -50,16 +50,22 @@
     a.appendChild(note);
     document.body.appendChild(a);
 
-    var SPERR = '[id*="cookie" i],[class*="cookie" i],[id*="consent" i],[class*="consent" i],[role="dialog"],[aria-modal="true"]';
-    function verdeckt() {
-      var r = a.getBoundingClientRect(), l = document.querySelectorAll(SPERR);
-      for (var i = 0; i < l.length; i++) {
-        var e = l[i];
-        if (e === a || e.contains(a)) continue;
+    /* Kandidaten: alle sichtbaren fixed/sticky-Elemente (Banner, Leisten, Dialoge), Liste wird alle 1,2 s neu aufgebaut */
+    var kand = [];
+    function sammeln() {
+      var k = [], all = document.body.getElementsByTagName("*");
+      for (var i = 0; i < all.length; i++) {
+        var e = all[i];
+        if (e === a || a.contains(e) || e.contains(a)) continue;
         var cs = getComputedStyle(e);
-        if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) continue;
-        if (cs.position !== "fixed" && cs.position !== "sticky") continue;
-        var b = e.getBoundingClientRect();
+        if ((cs.position === "fixed" || cs.position === "sticky") && cs.display !== "none" && cs.visibility !== "hidden" && parseFloat(cs.opacity) !== 0) k.push(e);
+      }
+      kand = k;
+    }
+    function verdeckt() {
+      var r = a.getBoundingClientRect();
+      for (var i = 0; i < kand.length; i++) {
+        var b = kand[i].getBoundingClientRect();
         if (b.width < 2 || b.height < 2) continue;
         if (b.left < r.right + 6 && b.right > r.left - 6 && b.top < r.bottom + 6 && b.bottom > r.top - 6) return true;
       }
@@ -76,10 +82,10 @@
       if (soll) { st.visibility = "visible"; st.pointerEvents = "auto"; st.opacity = "1"; }
       else { st.opacity = "0"; st.pointerEvents = "none"; st.visibility = "hidden"; }
     }
-    pruefen();
+    sammeln(); pruefen();
     window.addEventListener("scroll", pruefen, { passive: true });
     window.addEventListener("resize", pruefen, { passive: true });
-    setInterval(pruefen, 1200);   /* Banner kann spaeter erscheinen/verschwinden */
+    setInterval(function () { sammeln(); pruefen(); }, 1200);   /* Banner kann spaeter erscheinen/verschwinden */
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bauen);
   else bauen();
