@@ -535,3 +535,11 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
 /* Lange Komposita in Check-Ueberschriften (08.10.2026): "Berufsunfaehigkeitsversicherung" bei 34 px passt nicht
    in 272 px -> bu-check.html war bei 320 px 535 px breit. Silbentrennung, notfalls Umbruch im Wort. */
 .check-hero-h1{-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+
+/* 05.11.2026 Wortmarke: Das Logo-Bild zeigte "ersicherungsFuchs" (der Fuchs ist das V). Jetzt Fuchs-Zeichen + Text "VersicherungsFuchs". */
+.nav-logo{gap:9px;}
+.nav-logo img{height:32px;width:auto;}
+.nav-wort{font-size:19px;font-weight:300;letter-spacing:.01em;color:#c9a87c;white-space:nowrap;line-height:1;}
+.footer-wort{display:inline-flex;align-items:center;gap:7px;color:#c9a87c;font-size:15px;font-weight:300;}
+.footer-wort img{height:24px;width:auto;}
+@media (max-width:520px){.nav-wort{font-size:16px}.nav-logo img{height:28px}}
