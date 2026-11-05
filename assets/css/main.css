@@ -543,3 +543,6 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
 .footer-wort{display:inline-flex;align-items:center;gap:7px;color:#c9a87c;font-size:15px;font-weight:300;}
 .footer-wort img{height:24px;width:auto;}
 @media (max-width:520px){.nav-wort{font-size:16px}.nav-logo img{height:28px}}
+
+/* 05.11.2026 Auszeichnungen-Reihe: ab Desktop Siegel und Text in EINER Zeile (vorher brach der Text unter die Siegel, Reihe wirkte ungleich) */
+@media (min-width: 900px){.vf-auszeichnungen{flex-wrap:nowrap!important;align-items:center}.vf-auszeichnungen img{flex:0 0 auto;width:170px!important}.vf-auszeichnungen p{flex:1 1 auto;min-width:0}}
