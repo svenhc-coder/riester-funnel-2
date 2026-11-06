@@ -1,4 +1,4 @@
-/* Bewertungs-Chip (Gruppe iSurance, ProvenExpert-Hauptprofil). v6 06.11.2026 (Sven: mobil nur Stern + Zahl, schmal, verdeckt nichts; Desktop unveraendert). v5 (Text-Ausweichen) war messbar nie sichtbar. v4 05.11.2026 (Sven 04.11. 22:44: "klein, erst nach Scrollen").
+/* Bewertungs-Chip (Gruppe iSurance, ProvenExpert-Hauptprofil). v6.1 06.11.2026 (Sven: mobil nur Stern + Zahl, schmal, verdeckt nichts; Desktop unveraendert). v5 (Text-Ausweichen) war messbar nie sichtbar. v4 05.11.2026 (Sven 04.11. 22:44: "klein, erst nach Scrollen").
    Eigenes Element, KEIN Drittanbieter-Aufruf: keine Daten gehen an ProvenExpert, bis der Besucher den Link anklickt.
    Zahlen stammen vom oeffentlichen Profil https://www.provenexpert.com/isurance/ (Stand siehe PE.stand);
    Pflege: /opt/scripts/pe_zahlen_sync.py (--check/--apply). Kein aggregateRating-Schema.
@@ -79,7 +79,9 @@
       if (mobil) {
         /* v6: unter 900 px NICHT schwebend (Messung 06.11.: v5 mit Text-Ausweichen war nie sichtbar). Der Chip steht im Fluss am Seitenende
            (im Footer), verdeckt damit nichts und bleibt anklickbar. */
-        if (!a.__statisch) { (document.querySelector("footer") || document.body).appendChild(a); a.__statisch = true; }
+        if (!a.__statisch) { var fz = document.querySelectorAll("footer"), ziel = document.body;
+          for (var f = fz.length - 1; f >= 0; f--) { if (!fz[f].closest("article,section,aside,main,header")) { ziel = fz[f]; break; } }   /* Seitenfuss, nicht ein Footer in einer Karte/einem Artikel */
+          ziel.appendChild(a); a.__statisch = true; }
         st.position = "static"; st.display = "inline-flex"; st.margin = "10px 16px 18px"; st.left = ""; st.bottom = ""; st.zIndex = "auto";
         st.padding = "3px 7px"; st.gap = "4px"; st.font = "700 11px/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
         st.opacity = "1"; st.visibility = "visible"; st.pointerEvents = "auto"; st.transition = "none";
