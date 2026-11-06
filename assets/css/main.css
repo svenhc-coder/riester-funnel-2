@@ -546,3 +546,6 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
 
 /* 05.11.2026 Auszeichnungen-Reihe: ab Desktop Siegel und Text in EINER Zeile (vorher brach der Text unter die Siegel, Reihe wirkte ungleich) */
 @media (min-width: 900px){.vf-auszeichnungen{flex-wrap:nowrap!important;align-items:center}.vf-auszeichnungen img{flex:0 0 auto;width:170px!important}.vf-auszeichnungen p{flex:1 1 auto;min-width:0}}
+
+/* Mobil (06.11.2026): wie auf der Startseite nur den CTA zeigen. Der spaetere nachgezogen-Block (.nav-links{display:flex}) hob die Regel unter 640 px auf, die Check-Seiten liefen bei 320 px 51 px ueber. */
+@media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
