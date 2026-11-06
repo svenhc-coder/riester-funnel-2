@@ -1,4 +1,4 @@
-/* Bewertungs-Chip (Gruppe iSurance, ProvenExpert-Hauptprofil). v4 05.11.2026 (Sven 04.11. 22:44: "klein, erst nach Scrollen").
+/* Bewertungs-Chip (Gruppe iSurance, ProvenExpert-Hauptprofil). v6 06.11.2026 (Sven: mobil nur Stern + Zahl, schmal, verdeckt nichts; Desktop unveraendert). v5 (Text-Ausweichen) war messbar nie sichtbar. v4 05.11.2026 (Sven 04.11. 22:44: "klein, erst nach Scrollen").
    Eigenes Element, KEIN Drittanbieter-Aufruf: keine Daten gehen an ProvenExpert, bis der Besucher den Link anklickt.
    Zahlen stammen vom oeffentlichen Profil https://www.provenexpert.com/isurance/ (Stand siehe PE.stand);
    Pflege: /opt/scripts/pe_zahlen_sync.py (--check/--apply). Kein aggregateRating-Schema.
@@ -6,6 +6,7 @@
    Styles per CSSOM (kein <style>-Element), damit strenge CSP (style-src) nicht blockt. position:fixed -> kein CLS.
    v4: nur noch kleiner Chip (Stern + Note), ueberall gleich. Erscheint erst, wenn der erste Bildschirm weggescrollt ist.
    Bleibt anklickbar. Wird ausgeblendet, solange er ein Cookie-/Einwilligungs-Banner oder eine Dialog-Ebene ueberdecken wuerde.
+   v6: unter 900 px nur Stern + Zahl (11 px), im Seitenfluss am Ende (Footer) statt schwebend, damit nichts verdeckt wird.
    prefers-reduced-motion: ohne Einblend-Animation. Das ORIGINAL-ProvenExpert-Widget (v3) wird nicht mehr geladen. */
 (function () {
   "use strict";
@@ -73,8 +74,25 @@
     }
     var sichtbar = null;
     function pruefen() {
-      /* mobil bleibt Luft fuer klebende CTA-/Navigationsleisten, am Desktop ganz unten links */
-      st.bottom = window.innerWidth >= 900 ? "14px" : "84px";
+      var mobil = window.innerWidth < 900;
+      var sv = a.firstChild; if (sv && sv.setAttribute) { var sz = mobil ? "11" : "13"; sv.setAttribute("width", sz); sv.setAttribute("height", sz); }
+      if (mobil) {
+        /* v6: unter 900 px NICHT schwebend (Messung 06.11.: v5 mit Text-Ausweichen war nie sichtbar). Der Chip steht im Fluss am Seitenende
+           (im Footer), verdeckt damit nichts und bleibt anklickbar. */
+        if (!a.__statisch) { (document.querySelector("footer") || document.body).appendChild(a); a.__statisch = true; }
+        st.position = "static"; st.display = "inline-flex"; st.margin = "10px 16px 18px"; st.left = ""; st.bottom = ""; st.zIndex = "auto";
+        st.padding = "3px 7px"; st.gap = "4px"; st.font = "700 11px/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+        st.opacity = "1"; st.visibility = "visible"; st.pointerEvents = "auto"; st.transition = "none";
+        sichtbar = null; return;
+      }
+      if (a.__statisch) {   /* zurueck zum schwebenden Desktop-Chip */
+        document.body.appendChild(a); a.__statisch = false;
+        st.position = "fixed"; st.margin = "0"; st.zIndex = "30"; st.opacity = "0"; st.visibility = "hidden"; st.pointerEvents = "none";
+        if (!reduziert) st.transition = "opacity .25s ease";
+        sichtbar = null;
+      }
+      st.bottom = "14px"; st.left = "12px"; st.padding = "4px 9px"; st.gap = "5px";
+      st.font = "700 12px/1 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
       var soll = (window.pageYOffset || document.documentElement.scrollTop || 0) > window.innerHeight * 0.9;
       if (soll) soll = !verdeckt();
       if (soll === sichtbar) return;
