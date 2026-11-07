@@ -543,6 +543,10 @@
 .vf-fox3d-band{display:flex;align-items:center;justify-content:center;padding:24px 24px 0;}
 .vf-fox3d{width:min(420px,72vw);aspect-ratio:1;pointer-events:none;}
 @media (prefers-reduced-motion:reduce){.vf-fox3d-band{display:none;}}
+.btn-rotate{display:inline-grid;justify-items:center;align-items:center}
+.btn-rotate>span{grid-area:1/1;visibility:hidden;text-align:center}
+.btn-rotate>span.is-aktiv{visibility:visible}
+/* 07.11.2026: Stapel statt Nebeneinander - vf-cta.js setzt nur is-aktiv; ohne diese Regeln standen alle drei Texte hintereinander im Knopf */
 </style>
   <script>(function(){if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;var d=document.documentElement;d.classList.add('vf-anim');setTimeout(function(){d.classList.add('vf-anim-done');},3000);})();</script>
 <style>
