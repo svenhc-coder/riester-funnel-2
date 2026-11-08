@@ -15,6 +15,10 @@
   'use strict';
 
   var KEY = 'vf_cookie_consent', KEY_AT = 'vf_cookie_consent_at', JAHR = 365 * 24 * 3600 * 1000;
+  /* Art.-7-Nachweis (08.11.2026): Wortlaut des Banners + Version gehen mit jedem Lead mit (assets/js/vf-herkunft.js:
+     einwilligung_quelle / _marketing_text / _marketing_version). Aendert sich der Banner-Text: Text UND Version anpassen
+     (tools/pruefe_einwilligungsnachweis.py bricht sonst). */
+  window.VF_EINWILLIGUNG = { version: 'vf-cookie-v1', text: 'Mit Ihrer Zustimmung laden wir Google Analytics (Statistik) und die Anzeigen-Messung von Google Ads; dabei setzt Google Cookies und erhält Angaben zu Ihrem Besuch. Ohne Zustimmung laden wir keine Google-Dienste und setzen keine Analyse- oder Werbe-Cookies. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ im Fußbereich ändern. Details in der Datenschutzerklärung und Cookie-Richtlinie.' };
   var BOX = null;
 
   function loeschen() {

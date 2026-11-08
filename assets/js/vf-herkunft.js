@@ -62,6 +62,12 @@
       if (typeof pfad !== 'string' || pfad.charAt(0) !== '/') pfad = location.pathname;
       r.landing_page = (location.origin + pfad.split('?')[0].split('#')[0]).slice(0, 500);
       if (typeof m === 'boolean') r.einwilligung_marketing = m;
+      // Art.-7-Nachweis (08.11.2026): nur bei getroffener Wahl; Wortlaut/Version aus cookie-notice.js (window.VF_EINWILLIGUNG)
+      if (typeof m === 'boolean' && window.VF_EINWILLIGUNG) {
+        r.einwilligung_quelle = 'banner';
+        r.einwilligung_marketing_text = String(window.VF_EINWILLIGUNG.text || '').slice(0, 600);
+        r.einwilligung_marketing_version = String(window.VF_EINWILLIGUNG.version || '').slice(0, 40);
+      }
     } catch (e) { /* nie den Lead blockieren */ }
     return r;
   };
