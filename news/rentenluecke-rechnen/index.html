@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rentenlücke realistisch rechnen — statt schätzen – Versicherungsfuchs</title>
+  <meta name="description" content="Die Zahl auf der Renteninformation ist brutto und ohne Kaufkraftverlust. So kommen Sie auf einen belastbaren Betrag.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://versicherungs-fuchs.online/news/rentenluecke-rechnen/">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/png">
+
+  <meta property="og:title" content="Rentenlücke realistisch rechnen — statt schätzen – Versicherungsfuchs">
+  <meta property="og:description" content="Die Zahl auf der Renteninformation ist brutto und ohne Kaufkraftverlust. So kommen Sie auf einen belastbaren Betrag.">
+  <meta property="og:image" content="https://versicherungs-fuchs.online/assets/img/og-image.png">
+  <meta property="og:type" content="article">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0a0a0f; --bg2:#111118; --bg3:#1a1a26;
+      --border:rgba(255,255,255,0.08); --text:#e8e8f0; --muted:#8888aa;
+      --primary:#f97316; --primary2:#fb923c; --accent:#6366f1;
+      --radius:12px; --font:'Inter',system-ui,-apple-system,sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--txt,#f2f2f2); font-family:var(--font); line-height:1.6; min-height:100vh; }
+    a { color:inherit; text-decoration:none; }
+
+    nav {
+      position:sticky; top:0; z-index:100;
+      background:rgba(10,10,15,0.85); backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border); padding:0 24px;
+    }
+    .nav-inner {
+      max-width:1100px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between; height:60px;
+    }
+    .nav-logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:1rem; }
+    .nav-logo svg { width:28px; height:28px; }
+    .nav-links { display:flex; align-items:center; gap:8px; }
+    .nav-links a {
+      padding:6px 14px; border-radius:8px; font-size:0.875rem; color:var(--txt2,#8888a0);
+      transition:color .2s,background .2s;
+    }
+    .nav-links a:hover { color:var(--txt,#f2f2f2); background:rgba(255,255,255,0.06); }
+    .nav-cta { background:var(--primary)!important; color:#fff!important; font-weight:600; }
+
+    .article-layout {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 320px;
+      gap:40px; padding:60px 24px 80px;
+    }
+
+    .article-main {}
+
+    .article-breadcrumb {
+      font-size:0.8rem; color:var(--txt2,#8888a0); margin-bottom:32px;
+      display:flex; align-items:center; gap:6px;
+    }
+    .article-breadcrumb a:hover { color:var(--txt,#f2f2f2); }
+    .article-breadcrumb span { color:var(--txt2,#8888a0); }
+
+    .article-tag {
+      font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+      color:var(--primary2); margin-bottom:16px; display:block;
+    }
+    .article-title {
+      font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:800;
+      letter-spacing:-0.03em; line-height:1.2; margin-bottom:20px;
+    }
+    .article-meta {
+      display:flex; align-items:center; gap:16px;
+      font-size:0.8rem; color:var(--txt2,#8888a0);
+      padding:16px 0; border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border); margin-bottom:40px;
+    }
+    .meta-pill {
+      display:inline-flex; align-items:center; gap:5px;
+    }
+    .meta-pill svg { width:13px; height:13px; stroke:var(--txt2,#8888a0); }
+
+    /* Article body typography */
+    .article-body h2 {
+      font-size:1.4rem; font-weight:800; letter-spacing:-0.02em;
+      margin:40px 0 16px; color:var(--txt,#f2f2f2);
+    }
+    .article-body h3 {
+      font-size:1.1rem; font-weight:700;
+      margin:28px 0 12px; color:var(--txt,#f2f2f2);
+    }
+    .article-body p {
+      font-size:1rem; color:rgba(232,232,240,0.85);
+      line-height:1.8; margin-bottom:20px;
+    }
+    .article-body strong { color:var(--txt,#f2f2f2); font-weight:700; }
+    .article-body em { color:var(--primary2); font-style:normal; }
+
+    .article-body .info-box {
+      background:var(--bg2); border:1px solid var(--border);
+      border-left:3px solid var(--primary);
+      border-radius:var(--radius); padding:20px 24px; margin:28px 0;
+    }
+    .article-body .info-box strong {
+      display:block; font-size:0.8rem; text-transform:uppercase;
+      letter-spacing:.06em; color:var(--primary2); margin-bottom:8px;
+    }
+    .article-body .info-box p { margin:0; font-size:0.9rem; }
+
+    .article-body .warn-box {
+      background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2);
+      border-radius:var(--radius); padding:20px 24px; margin:28px 0;
+    }
+    .article-body .warn-box strong {
+      display:block; font-size:0.8rem; text-transform:uppercase;
+      letter-spacing:.06em; color:#ef4444; margin-bottom:8px;
+    }
+    .article-body .warn-box p { margin:0; font-size:0.9rem; color:rgba(232,232,240,0.8); }
+
+    .article-body ul, .article-body ol {
+      padding-left:20px; margin-bottom:20px;
+    }
+    .article-body li { font-size:1rem; color:rgba(232,232,240,0.85); line-height:1.7; margin-bottom:6px; }
+
+    /* Table */
+    .article-body table {
+      width:100%; border-collapse:collapse; margin:28px 0;
+      font-size:0.875rem;
+    }
+    .article-body th {
+      background:var(--bg2); border:1px solid var(--border);
+      padding:10px 14px; text-align:left; font-weight:700;
+      font-size:0.75rem; text-transform:uppercase; letter-spacing:.05em;
+      color:var(--txt2,#8888a0);
+    }
+    .article-body td {
+      border:1px solid var(--border); padding:10px 14px;
+      color:rgba(232,232,240,0.85);
+    }
+    .article-body tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+
+    /* Key takeaways */
+    .takeaways {
+      background:linear-gradient(135deg,rgba(249,115,22,0.06),var(--bg2));
+      border:1px solid rgba(249,115,22,0.2); border-radius:var(--radius);
+      padding:28px 32px; margin:40px 0;
+    }
+    .takeaways h4 {
+      font-size:0.8rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.06em; color:var(--primary2); margin-bottom:16px;
+    }
+    .takeaways ul { list-style:none; padding:0; }
+    .takeaways li {
+      font-size:0.9rem; color:var(--txt,#f2f2f2);
+      padding:8px 0 8px 24px; position:relative; border-bottom:1px solid var(--border);
+    }
+    .takeaways li:last-child { border-bottom:none; }
+    .takeaways li::before {
+      content:"→"; position:absolute; left:0; color:var(--primary);
+      font-weight:700;
+    }
+
+    /* Disclaimer */
+    .article-disclaimer {
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--radius); padding:16px 20px;
+      font-size:0.8rem; color:var(--txt2,#8888a0); margin-top:40px;
+      line-height:1.6;
+    }
+
+    /* CTA in article */
+    .article-cta {
+      background:linear-gradient(135deg,rgba(249,115,22,0.08),var(--bg2));
+      border:1px solid rgba(249,115,22,0.25); border-radius:var(--radius);
+      padding:32px; margin:40px 0; text-align:center;
+    }
+    .article-cta h3 { font-size:1.1rem; font-weight:800; margin-bottom:8px; }
+    .article-cta p { color:var(--txt2,#8888a0); font-size:0.875rem; margin-bottom:20px; }
+    .btn-primary {
+      background:var(--primary); color:#fff; font-weight:700;
+      padding:12px 28px; border-radius:10px; display:inline-block;
+      transition:background .2s,transform .15s;
+    }
+    .btn-primary:hover { background:var(--primary2); transform:translateY(-1px); }
+
+    /* Sidebar */
+    .article-sidebar {}
+    .sidebar-widget {
+      background:var(--bg2); border:1px solid var(--border);
+      border-radius:var(--radius); padding:24px; margin-bottom:20px;
+    }
+    .sidebar-widget h5 {
+      font-size:0.75rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.06em; color:var(--txt2,#8888a0); margin-bottom:16px;
+    }
+    .sidebar-link {
+      display:block; padding:10px 0;
+      border-bottom:1px solid var(--border);
+      font-size:0.85rem; transition:color .2s;
+    }
+    .sidebar-link:last-child { border-bottom:none; }
+    .sidebar-link:hover { color:var(--primary2); }
+    .sidebar-link .stag {
+      display:block; font-size:0.75rem; color:var(--txt2,#8888a0);
+      margin-top:2px;
+    }
+    .sidebar-cta-box {
+      background:linear-gradient(135deg,rgba(249,115,22,0.1),var(--bg2));
+      border:1px solid rgba(249,115,22,0.25); border-radius:var(--radius);
+      padding:24px; text-align:center;
+    }
+    .sidebar-cta-box h5 { color:var(--txt,#f2f2f2); font-size:1rem; margin-bottom:8px; }
+    .sidebar-cta-box p { font-size:0.8rem; color:var(--txt2,#8888a0); margin-bottom:16px; }
+    .sidebar-cta-box a {
+      background:var(--primary); color:#fff; font-weight:700;
+      padding:10px 20px; border-radius:8px; display:block;
+      transition:background .2s; font-size:0.875rem;
+    }
+    .sidebar-cta-box a:hover { background:var(--primary2); }
+
+    /* Loading state */
+    .loading-art {
+      text-align:center; padding:80px 24px; color:var(--txt2,#8888a0);
+    }
+    .spinner {
+      width:32px; height:32px; border:3px solid var(--border);
+      border-top-color:var(--primary); border-radius:50%;
+      animation:spin .8s linear infinite; margin:0 auto 16px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    footer {
+      background:var(--bg); border-top:1px solid var(--border);
+      padding:32px 24px;
+    }
+    .footer-bottom-simple {
+      max-width:1100px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:12px;
+    }
+    .footer-bottom-simple p { font-size:0.8rem; color:var(--txt2,#8888a0); }
+    .footer-bottom-simple nav a {
+      font-size:0.8rem; color:var(--txt2,#8888a0); margin-left:16px; transition:color .2s;
+    }
+    .footer-bottom-simple nav a:hover { color:var(--txt,#f2f2f2); }
+
+    @media (max-width:800px) {
+      .article-layout { grid-template-columns:1fr; }
+      .article-sidebar { display:none; }
+      .nav-links a:not(.nav-cta) { display:none; }
+    }
+  
+    .nav-logo img { height: 52px; width: auto; display: block; }
+  
+    /* ── App Section ── */
+    .app-section {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(10,10,15,0) 60%);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .app-section-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+    .app-badge {
+      display: inline-block; background: rgba(249,115,22,0.12);
+      border: 1px solid rgba(249,115,22,0.3); color: #fb923c;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; padding: 6px 16px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .app-title {
+      font-size: clamp(1.5rem,3.5vw,2.2rem); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 14px;
+    }
+    .app-sub { color: var(--txt2,#8888a0); font-size: 1rem; line-height: 1.7; margin-bottom: 28px; }
+    .app-benefits {
+      display: flex; flex-wrap: wrap; gap: 10px 20px;
+      justify-content: center; margin-bottom: 32px;
+    }
+    .app-benefit { display: flex; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 600; }
+    .app-benefit-icon { color: #f97316; font-weight: 800; }
+    .app-store-row {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .store-btn-lg {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--txt,#f2f2f2); padding: 14px 26px; border-radius: 14px;
+      text-decoration: none; transition: background .2s, transform .15s, box-shadow .2s;
+      min-width: 160px;
+    }
+    .store-btn-lg:hover {
+      background: rgba(255,255,255,0.14); transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .store-label { font-size: 12px; opacity: .7; }
+    .store-name { font-size: 16px; font-weight: 700; }
+    .app-fine { font-size: 0.75rem; color: var(--txt2,#8888a0); }
+    /* Footer logo fix */
+    .footer-logo, img.footer-logo { height: 48px !important; width: auto !important; max-width: 200px; display: block; }
+    .nav-logo img { height: 52px !important; width: auto; }
+
+  
+    /* ── Cookie Banner ── */
+
+  </style>
+<style>
+/* CTA-Kontrast (Sven 07-23): weisse Schrift auf Orange erreichte nur 2.6 statt 4.5 (WCAG AA).
+   Markenfarbe bleibt, Schrift wird dunkel -> ~7.5. Auch BFSG-relevant. */
+.btn-primary,a.btn-primary,button.btn-primary,.nav-cta,.btn-cta,.cta-primary{color:#0a0a0f !important;}
+.btn-primary svg,.nav-cta svg{stroke:#0a0a0f !important;}
+</style>
+<!-- Consent BASIC (12.10.2026, Sven, Task a0d3d60a): hier nur dataLayer-Stub + consent default - kein Request an Google.
+     Google Ads + GA4 laedt assets/js/vf-messung.js erst nach "Alle akzeptieren"; Ereignisse vorher werden verworfen. -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});gtag('set','ads_data_redaction',true);</script>
+<link rel="stylesheet" href="/assets/css/cookie-notice.css?v=20261027">
+<script defer src="/assets/js/cookie-notice.js?v=20261027"></script>
+<script defer src="/assets/js/vf-herkunft.js?v=20261011"></script>
+<style id="vf-a11y">/* 11.10.2026 Audit WCAG 2.4.1: Skip-Link, Kopf-Landmarke klebt wie zuvor die Navigation */
+.vf-skip{position:absolute;left:12px;top:-200px;z-index:10001;padding:12px 18px;border-radius:10px;background:#f97316;color:#0a0a0f;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-decoration:none}.vf-skip:focus{top:12px;outline:3px solid #f2f2f2;outline-offset:2px}
+header.vf-kopf{position:sticky;top:0;z-index:100}
+.funnel-question:focus{outline:none}
+/* Zielgroesse mind. 24 px (WCAG 2.5.8): Fussnavigation, Cookie-Einstellungen, Uebersicht im Fragen-Kopf */
+.footer-bottom-simple nav a,a.vf-cn-trigger,.funnel-exit{display:inline-flex;align-items:center;min-height:24px}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Rentenlücke realistisch rechnen — statt schätzen", "description": "Die Zahl auf der Renteninformation ist brutto und ohne Kaufkraftverlust. So kommen Sie auf einen belastbaren Betrag.", "datePublished": "2026-07-29", "dateModified": "2026-07-29", "inLanguage": "de", "mainEntityOfPage": "https://versicherungs-fuchs.online/news/rentenluecke-rechnen/", "url": "https://versicherungs-fuchs.online/news/rentenluecke-rechnen/", "author": {"@type": "Organization", "name": "Versicherungsfuchs-Redaktion", "url": "https://versicherungs-fuchs.online/"}, "publisher": {"@type": "Organization", "name": "Versicherungsfuchs", "url": "https://versicherungs-fuchs.online/"}}</script>
+</head>
+<body>
+<!--email_off-->
+<a class="vf-skip" href="#article-main">Zum Inhalt springen</a>
+
+
+<header class="vf-kopf">
+<nav aria-label="Hauptnavigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="VersicherungsFuchs"><img src="/assets/img/vf-mark-64.png" width="32" height="32" alt=""><span class="nav-wort">VersicherungsFuchs</span></a>
+    <div class="nav-links">
+      <a href="/versicherungs-check/">Checks</a>
+      <a href="/news/" style="color:var(--txt,#f2f2f2)">Wissen</a>
+      <a href="/versicherungs-check/" class="nav-cta">Check starten</a>
+    </div>
+  </div>
+</nav>
+</header>
+
+<div class="article-layout">
+  <main class="article-main" id="article-main"><div class="article-breadcrumb"><a href="/">Start</a> <span>›</span> <a href="/news/">Wissen</a> <span>›</span> <span style="color:var(--txt,#f2f2f2)">Altersvorsorge</span></div><span class="article-tag">Altersvorsorge</span><h1 class="article-title">Rentenlücke realistisch rechnen — statt schätzen</h1><div class="article-meta"><span class="meta-pill">6 min Lesezeit</span><span class="meta-pill">Stand: 29. Juli 2026</span><span style="margin-left:auto;font-size:0.75rem;color:var(--txt2,#8888a0);">Kein Beratungsersatz</span></div><div class="article-body"><p>Die j&auml;hrliche Renteninformation nennt einen Betrag. Wer damit rechnet, rechnet fast immer zu optimistisch &mdash; aus drei Gr&uuml;nden, die alle in dieselbe Richtung wirken.</p><h2>Drei Abz&uuml;ge, die in der Zahl nicht stehen</h2><ul><li><strong>Brutto statt netto:</strong> Von der gesetzlichen Rente gehen Beitr&auml;ge zur Kranken- und Pflegeversicherung ab, dazu je nach H&ouml;he Steuern.</li><li><strong>Kaufkraft:</strong> Der Betrag ist in heutigem Geld ausgewiesen. Bei zwei Prozent Inflation entspricht er in drei&szlig;ig Jahren rund der H&auml;lfte.</li><li><strong>Hochrechnung auf Basis der Vergangenheit:</strong> Unterstellt wird ein Verdienstverlauf wie bisher &mdash; Teilzeit, Elternzeit oder Selbstst&auml;ndigkeit ver&auml;ndern das erheblich.</li></ul><h2>So kommen Sie auf eine belastbare Zahl</h2><p>Setzen Sie nicht am Rentenbetrag an, sondern am Bedarf. Rechnen Sie Ihre heutigen monatlichen Ausgaben zusammen und streichen Sie, was im Ruhestand wegf&auml;llt &mdash; Pendeln, Tilgung eines abbezahlten Kredits, Beitr&auml;ge zur Arbeitskraftabsicherung. Addieren Sie, was hinzukommt: Gesundheit, mehr Freizeit.</p><div class="info-box"><strong>Ein grober Anhaltspunkt, kein Ersatz f&uuml;r die Rechnung</strong><p>Verbreitet ist die Annahme, dass rund 80 Prozent des letzten Nettoeinkommens den gewohnten Lebensstandard tragen. Das ist ein Ausgangspunkt f&uuml;r die erste Einordnung &mdash; Ihre tats&auml;chliche L&uuml;cke ergibt sich aus Ihren Zahlen, nicht aus einer Quote.</p></div><h2>Was auf der Habenseite steht</h2><p>Zur gesetzlichen Rente kommen betriebliche Anwartschaften, gef&ouml;rderte Vertr&auml;ge wie Riester oder Basisrente, private Vertr&auml;ge und Kapitalanlagen. Erst die Summe aller Bausteine gegen den ermittelten Bedarf ergibt die tats&auml;chliche L&uuml;cke &mdash; h&auml;ufig ist sie kleiner als bef&uuml;rchtet, aber selten null.</p><h2>Die Reihenfolge, die sich bew&auml;hrt hat</h2><ul><li>Bedarf im Ruhestand bestimmen</li><li>Alle vorhandenen Anwartschaften zusammentragen</li><li>Differenz bilden und auf heutige Kaufkraft umrechnen</li><li>Erst danach &uuml;ber Produkte sprechen</li></ul><p>Der Renten-Check f&uuml;hrt durch diese Reihenfolge. Er verkauft nichts &mdash; er sagt Ihnen, wie gro&szlig; die L&uuml;cke ist und welche Bausteine sie bereits abdecken.</p></div><div class="article-disclaimer"><strong>Hinweis:</strong> Dieser Artikel dient der allgemeinen Information und stellt keine Anlage-, Rechts- oder Steuerberatung dar. Alle Angaben ohne Gewähr. Für individuelle Beratung wenden Sie sich an einen zugelassenen Finanzberater.</div></main>
+
+  <aside class="article-sidebar">
+    <div class="sidebar-cta-box">
+      <h5>Ihren Vertrag prüfen</h5>
+      <p>Kostenloser Riester-Check in ca. 3 Minuten. Keine Anmeldung.</p>
+      <a href="/riester-check/start/">Jetzt starten</a>
+    </div>
+
+    <div class="sidebar-widget">
+      <h5>Weitere Artikel</h5>
+      <a href="/news/article/?id=riester-kostenstruktur" class="sidebar-link">
+        Kostenstruktur in Riester-Verträgen
+        <span class="stag">Vertragsanalyse · 7 min</span>
+      </a>
+      <a href="/news/article/?id=riester-foerderung" class="sidebar-link">
+        Riester-Förderung 2026: Wer bekommt wie viel?
+        <span class="stag">Riester · 4 min</span>
+      </a>
+      <a href="/news/article/?id=riester-vs-etf" class="sidebar-link">
+        Rürup vs. Riester vs. ETF-Depot
+        <span class="stag">Altersvorsorge · 9 min</span>
+      </a>
+      <a href="/news/article/?id=riester-kuendigung" class="sidebar-link">
+        Riester kündigen: Was passiert mit den Zulagen?
+        <span class="stag">Vertragsanalyse · 6 min</span>
+      </a>
+    </div>
+
+    <div class="sidebar-widget">
+      <h5>Info</h5>
+      <p style="font-size:0.8rem;color:var(--txt2,#8888a0);line-height:1.6;">
+        Alle Artikel dienen der allgemeinen Information und stellen keine Beratung dar. 
+        Kein Ersatz für individuelle Fachberatung.
+      </p>
+    </div>
+  </aside>
+</div>
+
+
+<section class="app-section" id="app-download">
+  <div class="app-section-inner">
+    <div class="app-badge">📱 Die App – kostenlos</div>
+    <h2 class="app-title">Deep-Check kostenlos.<br>Alle Verträge immer im Blick.</h2>
+    <p class="app-sub">Laden Sie Ihre Vertragsdaten hoch und erhalten Sie Ihren persönlichen Deep-Check kostenfrei – exklusiv für App-Nutzer.</p>
+    <div class="app-store-row">
+      <a href="https://apps.apple.com/de/app/isurance/id1438875800" target="_blank" class="store-btn-lg" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=de.isurance.app" target="_blank" class="store-btn-lg" rel="noopener noreferrer">Google Play</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom-simple"><p class="vf-ki" style="flex-basis:100%;width:100%;margin:0 0 4px;font-size:.8rem;line-height:1.5;color:var(--txt2,#a9a9bf)">Teile der Inhalte auf dieser Seite wurden mit KI-Unterstützung erstellt und redaktionell geprüft. <a href="/datenschutz#ki" style="color:inherit;text-decoration:underline;text-underline-offset:2px;margin:0">Mehr zum KI-Einsatz</a></p>
+    <p>© 2026 Versicherungsfuchs · Kein Beratungsersatz</p>
+    <nav aria-label="Rechtliches">
+      <a href="/">Start</a>
+      <a href="/news/">Wissen</a>
+      <a href="/riester-check/">Riester-Check</a>
+      <a href="mailto:info@isurance-group.de?subject=Anfrage%20Versicherungsfuchs">Kontakt</a>
+            <a href="/datenschutz">Datenschutz</a>
+        <a href="/impressum">Impressum</a> <a href="/erstinformation">Erstinformation</a> <a href="/widerrufsbelehrung">Widerruf</a> <a href="/bildnachweis">Bildnachweis</a> <a href="/cookie-richtlinie">Cookie-Richtlinie</a> <a href="#" class="vf-cn-trigger">Cookie-Einstellungen</a>
+    </nav>
+  </div>
+</footer>
+
+
+
+
+<script src="/assets/js/smooth-scroll.js" defer></script>
+<script defer src="/assets/js/vf-messung.js?v=20261012"></script>
+<!--/email_off-->
+<script defer src="/assets/pe-seal.js?v=20261106c" data-farbe="#f97316" data-text="#1a0f05"></script>
+</body>
+</html>

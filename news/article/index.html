@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Artikel – Versicherungsfuchs</title>
   <meta name="description" id="page-desc" content="Neutrale Analyse von Versicherungs- und Vorsorgethemen.">
-  <meta name="robots" content="index,follow">
+  <meta name="robots" content="noindex,follow">
   <link rel="canonical" id="page-canonical" href="https://versicherungs-fuchs.online/news/article/">
   <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 
@@ -596,7 +596,7 @@ function renderArticle(art, id) {
   document.getElementById('page-desc').content = art.title;
   document.getElementById('og-title').content = art.title;
   document.getElementById('og-desc').content = art.title;
-  const canon = 'https://versicherungs-fuchs.online/news/article/?id=' + id;
+  const canon = 'https://versicherungs-fuchs.online/news/' + id + '/';
   document.getElementById('page-canonical').href = canon;
 
   // Schema.org Article
