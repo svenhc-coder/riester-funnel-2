@@ -138,3 +138,6 @@ Inhalte sind unter https://versicherungs-fuchs.online frei zugänglich (Allow f�
 - [Erstinformation](https://versicherungs-fuchs.online/erstinformation)
 - [Datenschutz](https://versicherungs-fuchs.online/datenschutz)
 - [Bildnachweis](https://versicherungs-fuchs.online/bildnachweis)
+
+## Herausgeber
+- iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt), Köln; Versicherungsmakler nach § 34d Abs. 1 GewO, Vermittlerregister D-FRY2-GTB6R-98; Geschäftsführer Christian Schonauer, Sven Cramer -> https://versicherungs-fuchs.online/ueber-uns/
