@@ -46,3 +46,4 @@ Allow: /
 
 User-agent: CCBot
 Allow: /
+Sitemap: https://versicherungs-fuchs.online/sitemap-bilder.xml
