@@ -113,7 +113,7 @@ async function main() {
     pruefe(log.api.filter(a => a.pfad === '/api/lead').length === 2, 'zwei Versuche an /api/lead');
     pruefe(await p.locator('#lead-fehler').isVisible(), 'Fehlerhinweis sichtbar');
     const t = await p.locator('#lead-fehler').innerText();
-    pruefe(/info@isurance-group\.de/.test(t) && /0221 3791692/.test(t), 'Hinweis nennt Mail und Telefon');
+    pruefe(/info@isurance-group\.de/.test(t) && /0221 16829452/.test(t), 'Hinweis nennt Mail und Telefon');
     pruefe(await p.evaluate(() => !sessionStorage.getItem('vf_lead')), 'kein Lead als "gesendet" gespeichert');
     fail = false; await p.click('#lead-fehler-btn'); await p.waitForTimeout(1500);
     pruefe(await p.locator('.lead-ok-hinweis').isVisible(), '"Erneut senden" mit 200 -> Bestaetigung');
