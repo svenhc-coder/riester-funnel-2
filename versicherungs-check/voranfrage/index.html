@@ -89,7 +89,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
 
   <!-- SCHRITT 2: Gesundheitsangaben (optional, für die anonyme Voranfrage) -->
   <div id="step2">
-    <div class="doneline" id="doneline">✓ Ihre Anfrage ist eingegangen – ein Berater meldet sich.</div>
+    <div class="doneline" id="doneline">✓ Danke! Ihre Anfrage ist bei uns angekommen.</div>
     <form id="vform" novalidate>
       <input class="hp" type="text" name="botcheck2" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="vf-step">
@@ -236,7 +236,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
         window.scrollTo(0,0);
       }).catch(function(){
         btn.disabled=false; btn.querySelector('span').textContent='Anonyme Voranfrage absenden';
-        msg.innerHTML='<span style="color:#ffb4a8">Senden nicht möglich. Ihre Kontaktanfrage ist aber bereits eingegangen – wir melden uns.</span>';
+        msg.innerHTML='<span style="color:#ffb4a8">Senden nicht möglich. Ihre Kontaktanfrage ist aber bereits eingegangen.</span>';
       });
   });
 })();

@@ -259,7 +259,7 @@ var stripeInst = null, stripeEls = null;
     var fehlerHinweis=lead.fehler?('<div id="lead-fehler" role="alert" style="border:1px solid rgba(239,68,68,.45);background:rgba(239,68,68,.08);border-radius:12px;padding:16px 20px;margin-bottom:24px;line-height:1.6">'
       +'<strong>Ihre Anfrage ist leider nicht bei uns angekommen.</strong> Ihr Ergebnis sehen Sie unten, per E-Mail können wir es Ihnen deshalb aber nicht schicken. '
       +'Schreiben Sie uns kurz an <a href="mailto:info@isurance-group.de?subject=Riester-Check%20Ergebnis" style="text-decoration:underline">info@isurance-group.de</a> '
-      +'oder rufen Sie an: <a href="tel:+4922116829452" style="text-decoration:underline;white-space:nowrap">0221 16829452</a>. Wir melden uns.'
+      +'oder rufen Sie an: <a href="tel:+4922116829452" style="text-decoration:underline;white-space:nowrap">0221 16829452</a>.'
       +'<div style="margin-top:12px"><button type="button" id="lead-fehler-btn" class="btn-secondary" onclick="window.vfLeadErneut&&window.vfLeadErneut()" style="cursor:pointer">Erneut senden</button></div></div>'):'';
     document.getElementById('result-body').innerHTML=fehlerHinweis+
       (lead.name?'<p class="ergebnis-greeting">Ihre Einschätzung, '+lead.name+':</p>':'')
@@ -274,7 +274,7 @@ var stripeInst = null, stripeEls = null;
       +'<div class="ergebnis-disclaimer"><p>Diese Einschätzung basiert auf Ihren Angaben im Quick-Check. Sie ersetzt keine Beratung und ist kein Rechts- oder Steuerurteil.</p></div>'
       // 12.10.2026 KI-PII: kein Upload-Feld mehr, nur der ehrliche Hinweis mit dem bestehenden Kontaktweg.
       +'<div id="upload-section"><h3>Detailprüfung per Upload pausiert</h3>'
-      +'<p>Die Detailprüfung per Upload ist vorübergehend deaktiviert – wir prüfen Ihren Vertrag gern persönlich. Schreiben Sie uns kurz an <a href="mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung">info@isurance-group.de</a> &ndash; wir melden uns und besprechen Ihre Unterlagen direkt mit Ihnen.</p>'
+      +'<p>Die Detailprüfung per Upload ist vorübergehend deaktiviert – wir prüfen Ihren Vertrag gern persönlich. Schreiben Sie uns kurz an <a href="mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung">info@isurance-group.de</a> &ndash; wir besprechen Ihre Unterlagen direkt mit Ihnen.</p>'
       +'<a href="mailto:info@isurance-group.de?subject=Riester-Check%20pers%C3%B6nliche%20Pr%C3%BCfung" class="btn-primary" style="display:inline-flex;cursor:pointer"><span>Persönlich prüfen lassen</span>'+A_SVG+'</a></div>'
       +'<div class="deep-check-gate"><div class="dcg-header"><div class="tb-label">Nächster Schritt</div>'
       +'<h2 class="dcg-title">Kostenlos vertiefen &mdash; und Hilfe bei der Umsetzung</h2>'
@@ -404,7 +404,7 @@ var stripeInst = null, stripeEls = null;
       zone.style.opacity='';zone.style.pointerEvents='';
       statusEl.className='ok';
       statusEl.textContent=data.status==='needs_ocr'
-        ?'✓ Datei empfangen. Gescanntes Dokument – wir verarbeiten es manuell und melden uns per E-Mail.'
+        ?'✓ Datei empfangen. Gescanntes Dokument – wir verarbeiten es manuell.'
         :'✓ Datei hochgeladen und wird analysiert. Das Ergebnis erhalten Sie per E-Mail.';
     })
     .catch(function(err){
