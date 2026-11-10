@@ -98,7 +98,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
       +'<a class="btn-primary btn-lg" style="width:100%;justify-content:center" href="/versicherungs-check/voranfrage/?type='+encodeURIComponent(type)+'"><span>Chancen kostenlos prüfen lassen</span></a></div>';
   } else {
     html+='<div class="res-lead"><h2 style="margin:0 0 4px">Kostenlose Einordnung anfordern</h2>'
-      +'<p style="color:var(--txt2,#8888a0);margin:0;font-size:.92rem">Ein freier Versicherungsmakler meldet sich bei Ihnen – kostenlos und unverbindlich.</p>'
+      +'<p style="color:var(--txt2,#8888a0);margin:0;font-size:.92rem">Ein freier Versicherungsmakler berät Sie – kostenlos und unverbindlich.</p>'
       +'<form id="leadform" novalidate>'
       +'<input class="res-hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">'
       +'<label for="lf-name">Name</label><input id="lf-name" name="name" autocomplete="name" required data-plausi="name">'
@@ -134,7 +134,7 @@ header.vf-kopf{position:sticky;top:0;z-index:100}
         extra:Object.assign({tel:f.tel.value.trim()}, window.vfExtra?window.vfExtra():{}, window.vfHerkunft?window.vfHerkunft():{})})})
     .then(function(x){ if(!x.ok) throw new Error('status '+x.status); return x.json().catch(function(){return {};}); }).then(function(j){
       msg.innerHTML='<div class="res-vor" style="margin:0"><strong>Danke! Ihre Anfrage ist bei uns eingegangen.</strong>'
-        +'<p style="color:var(--txt2,#8888a0);margin:.3em 0 0">Ein freier Versicherungsmakler meldet sich bei Ihnen.</p></div>';
+        +'<p style="color:var(--txt2,#8888a0);margin:.3em 0 0">Danke! Ihre Anfrage ist bei uns angekommen.</p></div>';
       f.querySelector('#lead-btn').style.display='none';
     }).catch(function(){
       btn.disabled=false; btn.querySelector('span').textContent='Jetzt anfordern';
