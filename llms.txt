@@ -33,7 +33,7 @@ Anbieter: iSurance Gruppe (Versicherungsmakler nach § 34d GewO, Köln).
 - Frage: Brauche ich eine Berufsunfähigkeitsversicherung? Wie hoch? Welche Stolperfallen?
 - 10 Fragen, 4 Minuten, Sofort-Ergebnis
 - Themen: Bedarfs-Höhe (70-80 % vom Netto), Anbieter-Vergleich, Bedingungs-Qualität, Gesundheitsprüfung, Stolperfallen
-- Wichtigste Zahlen 2026: 1 von 4 Erwerbstätigen wird BU. 32 % wegen psychischer Erkrankung. Durchschnittliche gesetzliche EM-Rente ~850 €.
+- Wichtigste Zahlen 2026: Statistisch wird jeder Vierte im Arbeitsleben mindestens einmal berufsunfähig (DAV/GDV). 32 % wegen psychischer Erkrankung. Durchschnittliche gesetzliche EM-Rente ~850 €.
 
 ### Baufi-Check (NEU 2026)
 - URL: [https://versicherungs-fuchs.online/baufi-check](https://versicherungs-fuchs.online/baufi-check/)
