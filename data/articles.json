@@ -21,42 +21,12 @@
       "featured": false
     },
     {
-      "id": "riester-vs-etf",
-      "tag": "Altersvorsorge",
-      "category": "altersvorsorge",
-      "title": "Rürup vs. Riester vs. ETF-Depot: Strukturierter Vergleich",
-      "excerpt": "Welche Sparform passt zu welcher Lebenssituation? Steuerliche Aspekte, Flexibilität und Renditeerwartungen im Überblick.",
-      "date": "2026-04-15",
-      "readtime": "9 min",
-      "featured": false
-    },
-    {
-      "id": "riester-foerderung",
-      "tag": "Riester",
-      "category": "riester",
-      "title": "Riester-Förderung 2026: Wer bekommt wie viel?",
-      "excerpt": "Grundzulage, Kinderzulage, Sonderausgabenabzug – eine aktuelle Übersicht ohne Werbung.",
-      "date": "2026-03-20",
-      "readtime": "4 min",
-      "featured": false
-    },
-    {
       "id": "riester-kuendigung",
       "tag": "Vertragsanalyse",
       "category": "riester",
       "title": "Riester kündigen, ruhen lassen oder behalten",
       "excerpt": "Kündigen, beitragsfrei stellen oder behalten? Was mit Zulagen und Steuervorteilen passiert und woran Sie die Entscheidung festmachen.",
       "date": "2026-11-12",
-      "readtime": "6 min",
-      "featured": false
-    },
-    {
-      "id": "basisrente-riester-vergleich",
-      "tag": "Altersvorsorge",
-      "category": "altersvorsorge",
-      "title": "Basisrente für Selbstständige: Alternative zu Riester?",
-      "excerpt": "Selbstständige sind von Riester ausgeschlossen – was die Basisrente leistet und wo die Grenzen liegen.",
-      "date": "2026-02-18",
       "readtime": "6 min",
       "featured": false
     },
