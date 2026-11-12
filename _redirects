@@ -33,3 +33,6 @@ https://www.versicherungs-fuchs.online/*   https://versicherungs-fuchs.online/:s
 /riester-check.html     /riester-check/     301
 /news.html              /news/              301
 /article.html           /news/              301
+# TEST 12.11.2026 (wird entfernt): Weiterleitung ohne Slash -> mit Slash, nur an Wegwerf-Seite
+/zz-slashtest        /zz-slashtest/        301
+/zz-slashtest/index.html   /zz-slashtest/   301
