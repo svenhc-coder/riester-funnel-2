@@ -54,7 +54,8 @@
     var r = {};
     try {
       var m = marketing(), gemerkt = m === true ? json('vf_klick') : {};
-      IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k]; if (v) r[k] = v; });
+      // 12.11.2026: Klick-IDs nur mit ausdruecklicher Marketing-Einwilligung (vorher gingen IDs der aktuellen URL auch ohne Wahl mit)
+      if (m === true) IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k]; if (v) r[k] = v; });
       var u = Object.keys(utmHier).length ? utmHier : json('vf_utm'), utm = {};
       UTM.forEach(function (k) { if (u[k]) utm[k] = String(u[k]).slice(0, 160); });
       if (Object.keys(utm).length) r.utm = utm;
@@ -62,6 +63,8 @@
       if (typeof pfad !== 'string' || pfad.charAt(0) !== '/') pfad = location.pathname;
       r.landing_page = (location.origin + pfad.split('?')[0].split('#')[0]).slice(0, 500);
       if (typeof m === 'boolean') r.einwilligung_marketing = m;
+      // Banner-Stand fehlt nie (wie CS/MH/B): granted | denied | unbeantwortet
+      r.einwilligung_status = m === true ? 'granted' : m === false ? 'denied' : 'unbeantwortet';
       // Art.-7-Nachweis (08.11.2026): nur bei getroffener Wahl; Wortlaut/Version aus cookie-notice.js (window.VF_EINWILLIGUNG)
       if (typeof m === 'boolean' && window.VF_EINWILLIGUNG) {
         r.einwilligung_quelle = 'banner';

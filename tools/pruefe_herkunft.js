@@ -16,34 +16,36 @@ function lauf({ search = '', pathname = '/pkv-check/', sitzung = {}, consent = n
   vm.runInNewContext(code, ctx);
   return { h: () => JSON.parse(JSON.stringify(ctx.vfHerkunft())), sitzung, lokal, hoerer };
 }
-// 1. Ads-Klick ohne Banner-Entscheidung: Klick-ID der Seite geht mit, nichts gemerkt, keine Einwilligung behauptet
+// 1. Ads-Klick ohne Banner-Entscheidung (12.11.2026): KEINE Klick-ID im Lead, nichts gemerkt, Status 'unbeantwortet' (fehlt nie)
 let t = lauf({ search: '?gclid=Cj0K_abc-1.2&utm_source=google&utm_medium=cpc&utm_campaign=pkv' });
-assert.deepStrictEqual(t.h(), { gclid: 'Cj0K_abc-1.2', utm: { source: 'google', medium: 'cpc', campaign: 'pkv' },
-  landing_page: 'https://versicherungs-fuchs.online/pkv-check/' });
+assert.deepStrictEqual(t.h(), { utm: { source: 'google', medium: 'cpc', campaign: 'pkv' },
+  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_status: 'unbeantwortet' });
 assert.ok(!('vf_klick' in t.sitzung), 'ohne Einwilligung nichts gemerkt');
 assert.strictEqual(t.sitzung.vf_landing, '/pkv-check/');
 // 2. Zustimmung per Banner auf der Einstiegsseite -> gemerkt, einwilligung_marketing true
 t.lokal.vf_cookie_consent = 'accepted'; t.hoerer['vf-consent']();
 assert.strictEqual(t.sitzung.vf_klick, JSON.stringify({ gclid: 'Cj0K_abc-1.2' }));
 assert.strictEqual(t.h().einwilligung_marketing, true);
+assert.strictEqual(t.h().einwilligung_status, 'granted');
+assert.strictEqual(t.h().gclid, 'Cj0K_abc-1.2', 'mit Zustimmung geht die Klick-ID der Seite mit');
 // 3. Folgeseite (Anfrage) ohne Parameter traegt Klick-ID, utm und Einstiegsseite weiter
 let f = lauf({ pathname: '/check-anfrage/', sitzung: t.sitzung, consent: 'accepted' });
 assert.deepStrictEqual(f.h(), { gclid: 'Cj0K_abc-1.2', utm: { source: 'google', medium: 'cpc', campaign: 'pkv' },
-  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true });
+  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true, einwilligung_status: 'granted' });
 // 4. Widerruf ("Nur notwendige") loescht die gemerkte Klick-ID
 f = lauf({ pathname: '/check-anfrage/', sitzung: t.sitzung, consent: 'necessary' });
 assert.ok(!('vf_klick' in t.sitzung), 'Widerruf loescht vf_klick');
 assert.deepStrictEqual(f.h(), { utm: { source: 'google', medium: 'cpc', campaign: 'pkv' },
-  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: false });
+  landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: false, einwilligung_status: 'denied' });
 // 5. Bereinigung: nur [A-Za-z0-9_.-], max. 200 Zeichen; gbraid/wbraid
-t = lauf({ search: '?gbraid=0AA%3Cscript%3E&wbraid=' + 'x'.repeat(300) });
+t = lauf({ search: '?gbraid=0AA%3Cscript%3E&wbraid=' + 'x'.repeat(300), consent: 'accepted' });
 assert.deepStrictEqual([t.h().gbraid, t.h().wbraid.length], ['0AAscript', 200]);
 // 6. Erstkontakt gewinnt bei gemerkter Klick-ID
 t = lauf({ search: '?gclid=NEU', sitzung: { vf_klick: JSON.stringify({ gclid: 'ALT' }) }, consent: 'accepted' });
 assert.strictEqual(t.h().gclid, 'ALT');
 // 7. Gesperrter/kaputter Speicher wirft nie
 t = lauf({ sitzung: { vf_klick: '{kaputt', vf_utm: '{kaputt' }, consent: 'accepted' });
-assert.deepStrictEqual(t.h(), { landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true });
+assert.deepStrictEqual(t.h(), { landing_page: 'https://versicherungs-fuchs.online/pkv-check/', einwilligung_marketing: true, einwilligung_status: 'granted' });
 // Einbindung: jede Seite mit /api/lead laedt das Skript und legt vfHerkunft() in extra
 const seiten = ['check-anfrage/index.html', 'altersvorsorgedepot/index.html', 'pkv-check/index.html',
   'riester-check/result/index.html', 'versicherungs-check/ergebnis/index.html'];
