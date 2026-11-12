@@ -61,17 +61,25 @@ def seite(a):
     desc = beschreibung(a)
     url = "%s/news/%s/" % (BASIS, a["id"])
     g = geruest
-    g = re.sub(r'<title id="page-title">.*?</title>', '<title>%s – Versicherungsfuchs</title>' % H.escape(titel), g, 1, flags=re.S)
+    # 12.11.2026: Marken-Anhang nur, wenn der Titel dadurch nicht ueber 65 Zeichen waechst (Google schneidet sonst ab)
+    anhang = " – Versicherungsfuchs" if len(titel) + len(" – Versicherungsfuchs") <= 65 else ""
+    g = re.sub(r'<title id="page-title">.*?</title>', lambda m: '<title>%s%s</title>' % (H.escape(titel), anhang), g, 1, flags=re.S)
     g = re.sub(r'<meta name="description" id="page-desc" content="[^"]*">', '<meta name="description" content="%s">' % H.escape(desc, quote=True), g, 1)
     g = re.sub(r'<meta name="robots" content="[^"]*">', '<meta name="robots" content="index,follow,max-image-preview:large">', g, 1)
     g = re.sub(r'<link rel="canonical" id="page-canonical" href="[^"]*">', '<link rel="canonical" href="%s">' % url, g, 1)
-    g = re.sub(r'<meta property="og:title" id="og-title" content="[^"]*">', '<meta property="og:title" content="%s – Versicherungsfuchs">' % H.escape(titel, quote=True), g, 1)
+    g = re.sub(r'<meta property="og:title" id="og-title" content="[^"]*">', '<meta property="og:title" content="%s%s">' % (H.escape(titel, quote=True), anhang), g, 1)
     g = re.sub(r'<meta property="og:description" id="og-desc" content="[^"]*">', '<meta property="og:description" content="%s">' % H.escape(desc, quote=True), g, 1)
     schema = {"@context": "https://schema.org", "@type": "Article", "headline": titel, "description": desc, "datePublished": a["date"],
               "dateModified": a["date"], "inLanguage": "de", "mainEntityOfPage": url, "url": url,
               "author": {"@type": "Organization", "name": "Versicherungsfuchs-Redaktion", "url": BASIS + "/"},
               "publisher": {"@type": "Organization", "name": "Versicherungsfuchs", "url": BASIS + "/"}}
     g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(schema, ensure_ascii=False), 1)
+    # 12.11.2026: BreadcrumbList passend zur sichtbaren Brotkrumen-Zeile (Start > Wissen > Artikel)
+    krumen = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Start", "item": BASIS + "/"},
+        {"@type": "ListItem", "position": 2, "name": "Wissen", "item": BASIS + "/news/"},
+        {"@type": "ListItem", "position": 3, "name": a["tag"], "item": url}]}
+    g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(krumen, ensure_ascii=False), 1)
     fq = re.findall(r'<details class="faq-item"><summary>(.*?)</summary><p>(.*?)</p></details>', a["body"], re.S)[:7]
     if fq:
         faqs = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
