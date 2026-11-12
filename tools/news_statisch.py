@@ -56,6 +56,15 @@ else:
     s0, s1 = skript.start(), skript.end()
 geruest = t[:s0] + t[s1:]
 
+FIRMA = {"@type": "Organization", "name": "iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt)", "url": BASIS + "/impressum/"}
+# 12.11.2026 (Sven E-04: nur Geschaeftsfuehrer als Autoren): Angaben exakt aus dem Impressum, keine persoenlichen Nummern
+AUTORENBOX = (
+    '<aside class="article-autor" aria-label="Verantwortlich für den Inhalt" style="margin:1.6rem 0 0;padding:1rem 1.2rem;border:1px solid rgba(255,255,255,.14);border-radius:12px;font-size:.88rem;line-height:1.55">'
+    '<strong>Verantwortlich für den Inhalt:</strong> Christian Schonauer und Sven Cramer, Geschäftsführer der iSurance Finanz- und '
+    'Versicherungsvermittlungs UG (haftungsbeschränkt). Versicherungsmakler mit Erlaubnis nach § 34d Abs. 1 GewO, '
+    'Vermittlerregister-Nr. D-FRY2-GTB6R-98 (Registerstelle: DIHK e.V.). <a href="/impressum/">Impressum</a></aside>'
+)
+
 def seite(a):
     titel = a["title"]
     desc = beschreibung(a)
@@ -71,7 +80,7 @@ def seite(a):
     g = re.sub(r'<meta property="og:description" id="og-desc" content="[^"]*">', '<meta property="og:description" content="%s">' % H.escape(desc, quote=True), g, 1)
     schema = {"@context": "https://schema.org", "@type": "Article", "headline": titel, "description": desc, "datePublished": a["date"],
               "dateModified": a["date"], "inLanguage": "de", "mainEntityOfPage": url, "url": url,
-              "author": {"@type": "Organization", "name": "Versicherungsfuchs-Redaktion", "url": BASIS + "/"},
+              "author": [{"@type": "Person", "name": n, "jobTitle": "Geschäftsführer", "worksFor": FIRMA} for n in ("Christian Schonauer", "Sven Cramer")],
               "publisher": {"@type": "Organization", "name": "Versicherungsfuchs", "url": BASIS + "/"}}
     g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(schema, ensure_ascii=False), 1)
     # 12.11.2026: BreadcrumbList passend zur sichtbaren Brotkrumen-Zeile (Start > Wissen > Artikel)
@@ -91,7 +100,7 @@ def seite(a):
         '<span class="article-tag">%s</span><h1 class="article-title">%s</h1>'
         '<div class="article-meta"><span class="meta-pill">%s Lesezeit</span><span class="meta-pill">Stand: %s</span>'
         '<span style="margin-left:auto;font-size:0.75rem;color:var(--txt2,#8888a0);">Kein Beratungsersatz</span></div>'
-        '<div class="article-body">%s</div>'
+        '<div class="article-body">%s</div>' + AUTORENBOX +
         '<div class="article-disclaimer"><strong>Hinweis:</strong> Dieser Artikel dient der allgemeinen Information und stellt keine Anlage-, Rechts- oder '
         'Steuerberatung dar. Alle Angaben ohne Gewähr. Für individuelle Beratung wenden Sie sich an einen zugelassenen Finanzberater.</div>'
     ) % (H.escape(a["tag"]), H.escape(a["tag"]), H.escape(titel), H.escape(a["readtime"]), monat(a["date"]), a["body"])
