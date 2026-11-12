@@ -133,9 +133,10 @@
     f.appendChild(el('h3', { text: 'Ergebnis mit einem Berater besprechen' }));
     f.appendChild(el('p', { class: 'am-hint', text: 'Kostenlos und unverbindlich. Wir sehen dabei Ihr Ergebnis, damit Sie nichts doppelt erklären müssen. Bitte keine Angaben zur Gesundheit.' }));
     var feld = function (id, label, typ, ac, pflicht) { return [el('label', { for: id, text: label }), el('input', { type: typ, id: id, name: id, autocomplete: ac, required: pflicht ? true : false })]; };
-    feld('am-name', 'Name', 'text', 'name', true).forEach(function (n) { f.appendChild(n); });
-    feld('am-email', 'E-Mail-Adresse', 'email', 'email', true).forEach(function (n) { f.appendChild(n); });
+    feld('am-name', 'Name *', 'text', 'name', true).forEach(function (n) { f.appendChild(n); });
+    feld('am-email', 'E-Mail-Adresse *', 'email', 'email', true).forEach(function (n) { f.appendChild(n); });
     feld('am-tel', 'Telefon (optional, für Rückfragen)', 'tel', 'tel', false).forEach(function (n) { f.appendChild(n); });
+    f.appendChild(el('p', { class: 'am-hint', text: 'Mit * markierte Felder sind Pflicht. Die Telefonnummer ist freiwillig.' }));
     f.appendChild(el('div', { class: 'am-hp', 'aria-hidden': 'true' }, [el('label', { for: 'am-website', text: 'Website' }), el('input', { type: 'text', id: 'am-website', name: 'website', tabindex: '-1', autocomplete: 'off' })]));
     f.appendChild(el('label', { class: 'am-opt am-chk', for: 'am-consent' }, [el('input', { type: 'checkbox', id: 'am-consent' }), el('span', {}, ['Ich bin einverstanden, dass meine Angaben und mein Ergebnis zur Bearbeitung meiner Anfrage gespeichert und verarbeitet werden. Mehr in der ', el('a', { href: '/datenschutz', text: 'Datenschutzerklärung' }), '.'])]));
     var fehler = el('p', { class: 'am-fehler', role: 'alert', hidden: true });
