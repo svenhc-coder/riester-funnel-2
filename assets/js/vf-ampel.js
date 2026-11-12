@@ -124,19 +124,29 @@
     ]));
     return w;
   }
+  function turnstileLaden(fertig) {
+    if (window.turnstile) return fertig();
+    var s = document.createElement('script'); s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true; s.onload = fertig; document.head.appendChild(s);
+  }
   function leadForm(r) {
     var f = el('form', { class: 'am-lead', novalidate: true });
     f.appendChild(el('h3', { text: 'Ergebnis mit einem Berater besprechen' }));
     f.appendChild(el('p', { class: 'am-hint', text: 'Kostenlos und unverbindlich. Wir sehen dabei Ihr Ergebnis, damit Sie nichts doppelt erklären müssen. Bitte keine Angaben zur Gesundheit.' }));
     var feld = function (id, label, typ, ac, pflicht) { return [el('label', { for: id, text: label }), el('input', { type: typ, id: id, name: id, autocomplete: ac, required: pflicht ? true : false })]; };
     feld('am-name', 'Name', 'text', 'name', true).forEach(function (n) { f.appendChild(n); });
-    feld('am-email', 'E-Mail-Adresse', 'email', 'email', false).forEach(function (n) { f.appendChild(n); });
-    feld('am-tel', 'Telefon', 'tel', 'tel', false).forEach(function (n) { f.appendChild(n); });
-    f.appendChild(el('p', { class: 'am-hint', text: 'E-Mail oder Telefon genügt.' }));
+    feld('am-email', 'E-Mail-Adresse', 'email', 'email', true).forEach(function (n) { f.appendChild(n); });
+    feld('am-tel', 'Telefon (optional, für Rückfragen)', 'tel', 'tel', false).forEach(function (n) { f.appendChild(n); });
     f.appendChild(el('div', { class: 'am-hp', 'aria-hidden': 'true' }, [el('label', { for: 'am-website', text: 'Website' }), el('input', { type: 'text', id: 'am-website', name: 'website', tabindex: '-1', autocomplete: 'off' })]));
     f.appendChild(el('label', { class: 'am-opt am-chk', for: 'am-consent' }, [el('input', { type: 'checkbox', id: 'am-consent' }), el('span', {}, ['Ich bin einverstanden, dass meine Angaben und mein Ergebnis zur Bearbeitung meiner Anfrage gespeichert und verarbeitet werden. Mehr in der ', el('a', { href: '/datenschutz', text: 'Datenschutzerklärung' }), '.'])]));
     var fehler = el('p', { class: 'am-fehler', role: 'alert', hidden: true });
     var btn = el('button', { type: 'submit', class: 'am-btn am-prim', text: 'Anfrage senden' });
+    var tsToken = '';
+    var tsKey = root.getAttribute('data-turnstile-sitekey') || '';
+    if (tsKey) {
+      var tsBox = el('div', { class: 'am-ts' });
+      f.appendChild(tsBox);
+      turnstileLaden(function () { try { window.turnstile.render(tsBox, { sitekey: tsKey, callback: function (t) { tsToken = t; }, 'expired-callback': function () { tsToken = ''; }, 'error-callback': function () { tsToken = ''; } }); } catch (x) { /* Fehlermeldung beim Senden */ } });
+    }
     f.appendChild(fehler); f.appendChild(btn);
     f.addEventListener('submit', function (ev) {
       ev.preventDefault(); fehler.hidden = true;
@@ -144,22 +154,22 @@
       var name = document.getElementById('am-name').value.trim(), mail = document.getElementById('am-email').value.trim(), tel = document.getElementById('am-tel').value.trim();
       var melde = function (t) { fehler.textContent = t; fehler.hidden = false; };
       if (!name) return melde('Bitte geben Sie Ihren Namen an.');
-      if (!mail && !tel) return melde('Bitte geben Sie E-Mail oder Telefon an.');
-      if (mail && mail.indexOf('@') < 1) return melde('Bitte geben Sie eine gültige E-Mail-Adresse an.');
+      if (!mail || mail.indexOf('@') < 1) return melde('Bitte geben Sie eine gültige E-Mail-Adresse an.');
       if (!document.getElementById('am-consent').checked) return melde('Bitte bestätigen Sie die Verarbeitung Ihrer Angaben.');
       btn.disabled = true; btn.textContent = 'Wird gesendet …';
+      if (tsKey && !tsToken) { btn.disabled = false; btn.textContent = 'Anfrage senden'; return melde('Bitte warten Sie kurz auf die Sicherheitsprüfung und senden Sie erneut. Alternativ erreichen Sie uns unter 0221 16829452 oder info@isurance-group.de.'); }
       var e = state.e; var je = {}; r.sparten.forEach(function (s) { je[s.id] = s.ampel; });
       var payload = {
-        name: name, email: mail || undefined, phone: tel || undefined,
+        name: name, email: mail, phone: tel || undefined,
         answers: { check: 'beratungsbedarf-ampel', quelle: 'beratungsbedarf-ampel', telefon: tel, ampel_gesamt: r.gesamt, ampel_je_sparte: je,
           empfehlungen: r.empfehlungen.map(function (x) { return x.sparte + ':' + x.regel; }),
           situation: { alter: e.alter, status: e.status, wohnen: e.wohnen, partner: !!e.partner, kinder: e.kinder, hund: !!e.hund, fahrzeug: !!e.fahrzeug, vermietet: !!e.vermietet, kredit: !!e.kredit },
           absicherung: Object.keys(e.absicherung).reduce(function (o, k) { var a = e.absicherung[k]; if (a && a.vorhanden) o[k] = { vorhanden: a.vorhanden, ueber: a.vorhanden === 'ja' ? a.ueber : null, alt: a.vorhanden === 'ja' ? !!a.alt : null }; return o; }, {}) },
-        extra: Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {}),
+        extra: Object.assign({ tel: tel, cf_turnstile: tsToken || undefined, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {}),
         source: 'beratungsbedarf-ampel'
       };
       fetch(API_URL + '/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(function (res) { if (!res.ok) throw new Error('http'); return res.json(); })
+        .then(function (res) { if (!res.ok) { var er = new Error('http'); er.status = res.status; throw er; } return res.json(); })
         .then(function () {
           ereignis('formular_absenden', { formular: 'beratungsbedarf-ampel' });
           loeschen();
@@ -167,7 +177,11 @@
           root.appendChild(el('div', { class: 'am-ok', role: 'status', tabindex: '-1' }, [el('h2', { text: 'Danke! Ihre Anfrage ist bei uns angekommen.' }), el('p', { text: 'Ihr Ergebnis haben wir mitgespeichert.' })]));
           root.querySelector('.am-ok').focus();
         })
-        .catch(function () { btn.disabled = false; btn.textContent = 'Anfrage senden'; melde('Es gab ein Problem beim Senden. Bitte versuchen Sie es erneut oder schreiben Sie an info@isurance-group.de.'); });
+        .catch(function (er) {
+          btn.disabled = false; btn.textContent = 'Anfrage senden';
+          try { if (tsKey && window.turnstile) window.turnstile.reset(); tsToken = ''; } catch (x) { /* egal */ }
+          melde(er && er.status === 429 ? 'Zu viele Anfragen in kurzer Zeit. Bitte warten Sie einige Minuten.' : 'Es gab ein Problem beim Senden. Bitte versuchen Sie es erneut. Alternativ erreichen Sie uns unter 0221 16829452 oder info@isurance-group.de.');
+        });
     });
     return f;
   }
