@@ -56,6 +56,42 @@ else:
     s0, s1 = skript.start(), skript.end()
 geruest = t[:s0] + t[s1:]
 
+# 12.11.2026 (SEO-Pruefung: Primaerquellen): nur Fundstellen, die am 12.11.2026 mit HTTP 200 geliefert wurden; Beschriftung bewusst
+# nur "Gesetzestext": die Seiten bleiben Verbraucherinfo, die Norm ist der Beleg, kein Rechtsrat.
+_G = "https://www.gesetze-im-internet.de/"
+_Q = {
+    "sgb5_5": ("§ 5 SGB V (Versicherungspflicht), Gesetzestext", _G + "sgb_5/__5.html"),
+    "sgb5_6": ("§ 6 SGB V (Versicherungsfreiheit), Gesetzestext", _G + "sgb_5/__6.html"),
+    "sgb5_27": ("§ 27 SGB V (Krankenbehandlung), Gesetzestext", _G + "sgb_5/__27.html"),
+    "vvg19": ("§ 19 VVG (Anzeigepflicht), Gesetzestext", _G + "vvg_2008/__19.html"),
+    "vvg172": ("§ 172 VVG (Berufsunfähigkeitsversicherung), Gesetzestext", _G + "vvg_2008/__172.html"),
+    "vvg150": ("§ 150 VVG (Lebensversicherung), Gesetzestext", _G + "vvg_2008/__150.html"),
+    "bgb491": ("§ 491 BGB (Verbraucherdarlehensvertrag), Gesetzestext", _G + "bgb/__491.html"),
+    "estg10a": ("§ 10a EStG (Zusätzliche Altersvorsorge), Gesetzestext", _G + "estg/__10a.html"),
+    "estg79": ("§ 79 EStG (Zulageberechtigte), Gesetzestext", _G + "estg/__79.html"),
+    "altzertg7": ("§ 7 AltZertG (Produktinformationsblatt), Gesetzestext", _G + "altzertg/__7.html"),
+    "drv": ("Deutsche Rentenversicherung (Auskunft zur gesetzlichen Rente)", "https://www.deutsche-rentenversicherung.de/"),
+    "bafin": ("BaFin: Informationen für Verbraucherinnen und Verbraucher", "https://www.bafin.de/DE/Verbraucher/verbraucher_node.html"),
+}
+QUELLEN = {
+    "pkv-zugang": ["sgb5_5", "sgb5_6"], "pkv-oder-gkv-entscheidung": ["sgb5_5", "sgb5_6"], "kv-zusatz-luecken": ["sgb5_27", "bafin"],
+    "bu-annahme": ["vvg19", "vvg172"], "bu-beitrag-einflussfaktoren": ["vvg19", "vvg172"], "schulunfaehigkeit-leistung": ["vvg172", "bafin"],
+    "risikoleben-summe": ["vvg150", "bafin"], "kindervorsorge-frueh": ["vvg150", "bafin"],
+    "rentenluecke-rechnen": ["drv", "estg10a"], "depot2027-reform": ["estg10a", "altzertg7"],
+    "riester-kostenstruktur": ["altzertg7", "estg10a"], "riester-kuendigung": ["estg10a", "estg79"],
+    "baufi-vorbereitung": ["bgb491", "bafin"],
+}
+
+
+def quellenblock(artikel_id):
+    ids = QUELLEN.get(artikel_id)
+    if not ids:
+        return ""
+    li = "".join('<li><a href="%s" target="_blank" rel="noopener noreferrer">%s</a></li>' % (H.escape(_Q[i][1], quote=True), H.escape(_Q[i][0])) for i in ids)
+    return ('<aside class="article-quellen" aria-label="Quellen" style="margin:1.6rem 0 0;padding:1rem 1.2rem;border:1px solid rgba(255,255,255,.14);border-radius:12px;font-size:.88rem;line-height:1.55">'
+            '<strong>Quellen und weiterführende Informationen</strong><ul style="margin:.5rem 0 0 1.1rem;padding:0">%s</ul></aside>' % li)
+
+
 FIRMA = {"@type": "Organization", "name": "iSurance Finanz- und Versicherungsvermittlungs UG (haftungsbeschränkt)", "url": BASIS + "/impressum/"}
 # 12.11.2026 (Sven E-04: nur Geschaeftsfuehrer als Autoren): Angaben exakt aus dem Impressum, keine persoenlichen Nummern
 AUTORENBOX = (
@@ -94,13 +130,14 @@ def seite(a):
         faqs = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": H.unescape(q), "acceptedAnswer": {"@type": "Answer", "text": H.unescape(re.sub(r"<[^>]+>", "", an))}} for q, an in fq]}
         g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(faqs, ensure_ascii=False), 1)
+    QUELLENBLOCK = quellenblock(a["id"]).replace("%", "%%")
     inhalt = (
         '<div class="article-breadcrumb"><a href="/">Start</a> <span>›</span> <a href="/news/">Wissen</a> <span>›</span> '
         '<span style="color:var(--txt,#f2f2f2)">%s</span></div>'
         '<span class="article-tag">%s</span><h1 class="article-title">%s</h1>'
         '<div class="article-meta"><span class="meta-pill">%s Lesezeit</span><span class="meta-pill">Stand: %s</span>'
         '<span style="margin-left:auto;font-size:0.75rem;color:var(--txt2,#8888a0);">Kein Beratungsersatz</span></div>'
-        '<div class="article-body">%s</div>' + AUTORENBOX +
+        '<div class="article-body">%s</div>' + QUELLENBLOCK + AUTORENBOX +
         '<div class="article-disclaimer"><strong>Hinweis:</strong> Dieser Artikel dient der allgemeinen Information und stellt keine Anlage-, Rechts- oder '
         'Steuerberatung dar. Alle Angaben ohne Gewähr. Für individuelle Beratung wenden Sie sich an einen zugelassenen Finanzberater.</div>'
     ) % (H.escape(a["tag"]), H.escape(a["tag"]), H.escape(titel), H.escape(a["readtime"]), monat(a["date"]), a["body"])
