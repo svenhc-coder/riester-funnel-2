@@ -426,7 +426,7 @@ function formatDate(d) {
 }
 
 // Artikel mit statischer Seite /news/<id>/ (tools/news_statisch.py); alle anderen laufen weiter ueber die Vorlage mit ?id=
-const STATISCH = new Set(['baufi-vorbereitung', 'bu-annahme', 'depot2027-reform', 'kindervorsorge-frueh', 'kv-zusatz-luecken', 'pkv-zugang', 'rentenluecke-rechnen', 'riester-kostenstruktur', 'risikoleben-summe', 'schulunfaehigkeit-leistung']);
+const STATISCH = new Set(['baufi-vorbereitung', 'bu-annahme', 'bu-beitrag-einflussfaktoren', 'depot2027-reform', 'kindervorsorge-frueh', 'kv-zusatz-luecken', 'pkv-oder-gkv-entscheidung', 'pkv-zugang', 'rentenluecke-rechnen', 'riester-kostenstruktur', 'riester-kuendigung', 'risikoleben-summe', 'schulunfaehigkeit-leistung']);
 const linkFuer = (id) => STATISCH.has(id) ? '/news/' + id + '/' : '/news/article/?id=' + id;
 async function loadArticles() {
   try {

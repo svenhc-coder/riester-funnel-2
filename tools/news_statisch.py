@@ -72,6 +72,11 @@ def seite(a):
               "author": {"@type": "Organization", "name": "Versicherungsfuchs-Redaktion", "url": BASIS + "/"},
               "publisher": {"@type": "Organization", "name": "Versicherungsfuchs", "url": BASIS + "/"}}
     g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(schema, ensure_ascii=False), 1)
+    fq = re.findall(r'<details class="faq-item"><summary>(.*?)</summary><p>(.*?)</p></details>', a["body"], re.S)[:7]
+    if fq:
+        faqs = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": H.unescape(q), "acceptedAnswer": {"@type": "Answer", "text": H.unescape(re.sub(r"<[^>]+>", "", an))}} for q, an in fq]}
+        g = g.replace("</head>", '<script type="application/ld+json">%s</script>\n</head>' % json.dumps(faqs, ensure_ascii=False), 1)
     inhalt = (
         '<div class="article-breadcrumb"><a href="/">Start</a> <span>›</span> <a href="/news/">Wissen</a> <span>›</span> '
         '<span style="color:var(--txt,#f2f2f2)">%s</span></div>'

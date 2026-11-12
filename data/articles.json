@@ -43,10 +43,10 @@
     {
       "id": "riester-kuendigung",
       "tag": "Vertragsanalyse",
-      "category": "vertragsanalyse",
-      "title": "Riester-Vertrag kündigen: Was passiert mit den Zulagen?",
-      "excerpt": "Schädliche vs. unschädliche Verwendung, Rückforderungsrisiken und was beim Wechsel zu beachten ist.",
-      "date": "2026-03-05",
+      "category": "riester",
+      "title": "Riester kündigen, ruhen lassen oder behalten",
+      "excerpt": "Kündigen, beitragsfrei stellen oder behalten? Was mit Zulagen und Steuervorteilen passiert und woran Sie die Entscheidung festmachen.",
+      "date": "2026-11-12",
       "readtime": "6 min",
       "featured": false
     },
@@ -138,6 +138,26 @@
       "excerpt": "Eigenkapital, Nebenkosten, Belastbarkeit — die Größen, die den Rahmen setzen, bevor über Zinsen gesprochen wird.",
       "date": "2026-07-29",
       "readtime": "7 min",
+      "featured": false
+    },
+    {
+      "id": "pkv-oder-gkv-entscheidung",
+      "tag": "Krankenversicherung",
+      "category": "pkv",
+      "title": "PKV oder GKV: Woran Sie entscheiden",
+      "excerpt": "Gesetzlich oder privat? Die Frage stellt sich nur, wenn Sie die Wahl haben. Fünf Punkte, die die Entscheidung tragen.",
+      "date": "2026-11-12",
+      "readtime": "6 min",
+      "featured": false
+    },
+    {
+      "id": "bu-beitrag-einflussfaktoren",
+      "tag": "Arbeitskraft",
+      "category": "bu",
+      "title": "Berufsunfähigkeit: Was den Beitrag bestimmt",
+      "excerpt": "Eintrittsalter, Beruf, Gesundheit, Rentenhöhe und Laufzeit: was den Beitrag der BU bestimmt und warum der günstigste nicht der beste ist.",
+      "date": "2026-11-12",
+      "readtime": "6 min",
       "featured": false
     }
   ]
