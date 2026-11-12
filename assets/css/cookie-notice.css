@@ -26,3 +26,16 @@
 .vf-cn__check input{margin-top:.2rem;width:1.1rem;height:1.1rem;flex:none}
 .vf-cn{max-height:calc(100vh - 2rem);overflow-y:auto}
 @media (prefers-reduced-motion:reduce){.vf-cn{transition:none}}
+/* 12.11.2026 (Sven dringend): mobil kompakt, hoechstens ca. 25 % der Bildhoehe; Wortlaut unveraendert (Ueberschrift nur fuer Vorlesegeraete),
+   'Alle akzeptieren' und 'Nur notwendige' gleich gross und gleich gewichtet, Einstellungen als schmale Zeile darunter. Desktop unveraendert. */
+@media (max-width:600px){
+  .vf-cn{left:.5rem;right:.5rem;bottom:.5rem;border-radius:.8rem}
+  .vf-cn__inner{padding:.6rem .75rem .6rem}
+  .vf-cn__title{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .vf-cn__body{font-size:.74rem;line-height:1.35}
+  .vf-cn__actions{gap:.4rem;margin-top:.5rem}
+  .vf-cn__btn{flex:1 1 0;min-height:2.7rem;padding:0 .5rem;font-size:.82rem}
+  .vf-cn__btn--accept,.vf-cn__btn--reject{background:#1b1b1f;color:#fff;border-color:#1b1b1f}
+  .vf-cn__btn--accept:hover,.vf-cn__btn--reject:hover{background:#34343a}
+  .vf-cn__btn--settings{flex:1 1 100%;min-height:2.1rem;font-size:.78rem}
+}
