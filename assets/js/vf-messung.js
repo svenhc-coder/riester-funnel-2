@@ -54,6 +54,7 @@
   }
   function lade() {
     if (geladen || !ok) return;
+    if (!/^(www\.)?versicherungs-fuchs\.online$/.test(location.hostname)) return; /* MESSHOST: nur der echte Produktionshost laedt Google-Tags (Bett/Vorschau nie ans Prod-Konto) */
     geladen = true;
     window.gtag('js', new Date());
     window.gtag('config', AW, { send_page_view: false });

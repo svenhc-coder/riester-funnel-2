@@ -1,6 +1,7 @@
 /* Anonyme Seitenstatistik ohne Cookies: kein Storage, keine IP/Kennung, nur Zaehl-Beacon (siehe Datenschutzerklaerung). */
 (function () {
   "use strict";
+  if (!/^(www\.)?versicherungs-fuchs\.online$/.test(location.hostname)) return; /* MESSHOST: nur der echte Produktionshost zaehlt (Bett/Vorschau nie ans Prod-Dashboard) */
   var AN = true; /* Endpunkt live seit 13.11. */
   var nav = navigator;
   if (!AN || nav.doNotTrack === "1" || nav.globalPrivacyControl || !nav.sendBeacon || !window.IntersectionObserver) return;
