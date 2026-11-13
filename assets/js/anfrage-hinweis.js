@@ -23,6 +23,14 @@
   function stickyOffen() { var s = document.getElementById("sticky-cta"); return !!s && !s.hidden && getComputedStyle(s).display !== "none"; }
   function messen(aktion, regel, variante) {
     try { (window.dataLayer = window.dataLayer || []).push({ event: "anfrage_hinweis", ah_aktion: aktion, ah_regel: regel, ah_variante: variante }); } catch (e) {}
+    /* cookielose Zaehlung (kein Storage/keine Kennung): nur mit Do-Not-Track/GPC aus; Regel-ID ohne Unterstrich */
+    try {
+      var n = navigator; if (n.doNotTrack === "1" || n.globalPrivacyControl || !n.sendBeacon) return;
+      var pf = location.pathname.toLowerCase().replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+      if (!/^\/[a-z0-9\/-]{0,120}$/.test(pf) || !/^[a-z0-9-]{1,40}$/.test(regel)) return;
+      var w = innerWidth;
+      n.sendBeacon("https://dashboard.isurance-group.de/api/messung/ereignis", JSON.stringify({ pfad: pf, ereignis: "hinweis_" + aktion, wert: regel + "_" + variante, geraet: w < 768 ? "mobil" : w < 1100 ? "tablet" : "desktop" }));
+    } catch (e) {}
   }
   function waehlen(regeln) {
     for (var i = 0; i < regeln.length; i++) {
