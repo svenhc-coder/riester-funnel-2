@@ -1,0 +1,8 @@
+{
+  "regeln": [
+    { "id": "aus-formular", "pfad": "/(riester-check/(start|q|result)|check-anfrage|cookie-richtlinie|datenschutz|impressum|ueber-uns|antworten)(\\.html|/|$)|-check/(start|q|result)", "aus": true },
+    { "id": "avd", "pfad": "altersvorsorgedepot|riester|basisrente|renten|kindervorsorge", "text": ["Riester, Basisrente oder Altersvorsorgedepot? Der kostenlose Check zeigt Ihnen in wenigen Minuten, was für Ihre Situation in Frage kommt.", "Unsicher bei der Altersvorsorge? Starten Sie den kostenlosen Check, ohne Verpflichtung."], "cta": "Check starten", "href": "/riester-check/start/", "scroll": 50, "exit": true },
+    { "id": "absicherung", "pfad": "bu-check|dienstunfaehigkeit|schulunfaehigkeit|risikoleben|kranken-zusatz|pkv|versicherungs-check", "text": ["Wie gut sind Sie abgesichert? Der kostenlose Check ordnet Ihre Situation in wenigen Minuten ein.", "Berufsunfähigkeit, Krankheit, Familie: Prüfen Sie kostenlos, wo bei Ihnen Lücken sein können."], "cta": "Check starten", "href": "/versicherungs-check/", "scroll": 50, "exit": true },
+    { "id": "standard", "text": ["Fragen zu Ihrer Vorsorge? Der kostenlose Riester-Check gibt in wenigen Minuten eine erste Einordnung.", "Möchten Sie wissen, was bei Ihrer Altersvorsorge möglich ist? Starten Sie den kostenlosen Check."], "cta": "Riester-Check starten", "href": "/riester-check/start/", "scroll": 50, "exit": true }
+  ]
+}
