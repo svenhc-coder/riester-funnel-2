@@ -1,9 +1,8 @@
 /* Anonyme Seitenstatistik ohne Cookies: kein Storage, keine IP/Kennung, nur Zaehl-Beacon (siehe Datenschutzerklaerung). */
 (function () {
   "use strict";
-  var AN = false; /* true erst, wenn der Endpunkt live ist (Runde 5) */
   var nav = navigator;
-  if (!AN || nav.doNotTrack === "1" || nav.globalPrivacyControl || !nav.sendBeacon || !window.IntersectionObserver) return;
+  if (nav.doNotTrack === "1" || nav.globalPrivacyControl || !nav.sendBeacon || !window.IntersectionObserver) return;
   var EP = "https://dashboard.isurance-group.de/api/messung/ereignis";
   var p = location.pathname.toLowerCase().replace(/\/index\.html$/, "/").replace(/\.html$/, "");
   if (!/^\/[a-z0-9\/-]{0,120}$/.test(p)) return;
