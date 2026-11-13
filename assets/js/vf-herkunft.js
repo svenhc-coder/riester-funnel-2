@@ -58,7 +58,7 @@
       if (m === true) IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k]; if (v) r[k] = v; });
       var u = Object.keys(utmHier).length ? utmHier : json('vf_utm'), utm = {};
       UTM.forEach(function (k) { if (u[k]) utm[k] = String(u[k]).slice(0, 160); });
-      if (Object.keys(utm).length) r.utm = utm;
+      if (m === true && Object.keys(utm).length) r.utm = utm;   // 13.11.2026: UTM wie Klick-IDs nur mit Einwilligung
       var pfad = lies('vf_landing') || location.pathname;
       if (typeof pfad !== 'string' || pfad.charAt(0) !== '/') pfad = location.pathname;
       r.landing_page = (location.origin + pfad.split('?')[0].split('#')[0]).slice(0, 500);

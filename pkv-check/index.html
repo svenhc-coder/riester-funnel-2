@@ -577,6 +577,7 @@ function showResult() {
     + '<div class="r-field"><label for="f-name">Ihr Name</label><input type="text" id="f-name" name="name" required autocomplete="name" data-plausi="name"></div>'
     + '<div class="r-field"><label for="f-email">E-Mail-Adresse</label><input type="email" id="f-email" name="email" required autocomplete="email" data-plausi="email"></div>'
     + '<div class="r-field"><label for="f-tel">Telefon (für Rückfragen)</label><input type="tel" id="f-tel" name="telefon" required autocomplete="tel" data-plausi="telefon"></div>'
+    + '<div class="r-field" style="flex-basis:100%"><label for="f-nachricht">Wie können wir Ihnen helfen? (optional)</label><textarea id="f-nachricht" name="nachricht" rows="3" maxlength="1000" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 14px;color:var(--txt,#f2f2f2);font-size:.9rem" placeholder="Kurz zu Ihrer Situation (bitte keine Gesundheitsangaben)"></textarea></div>'
     + '<button type="submit">Einordnung anfordern</button>'
     + '</form>'
     + '<div class="consent-row"><label><input type="checkbox" id="f-consent" required> '
@@ -627,6 +628,7 @@ function submitLead(e) {
       answers: { alter: alter, beitrag: beitrag, jahre_pkv: jahre, bap: S.bap, bei: S.bei, grund: S.grund },
       ampel_status: S.tier === 'high' ? 'red' : S.tier === 'medium' ? 'yellow' : 'green',
       phone:  tel,
+      nachricht: ((document.getElementById('f-nachricht') || {}).value || '').trim().slice(0, 1000),
       extra:  Object.assign({ tel: tel, ki_quelle: (window.vfKiQuelle && window.vfKiQuelle()) || undefined }, window.vfHerkunft ? window.vfHerkunft() : {}),   // 08.10.2026 KI-Sichtbarkeit (vf-ki-quelle.js); 11.10.2026 P0-2 Herkunft (vf-herkunft.js)
       meta:   JSON.stringify({ alter: alter, beitrag: beitrag, bap: S.bap, bei: S.bei, grund: S.grund })
       // health fields intentionally omitted
