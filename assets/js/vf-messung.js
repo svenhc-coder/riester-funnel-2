@@ -83,7 +83,8 @@
   window.vfAdsConversion = function () {
     if (!ok || convGesendet) return;
     convGesendet = true;
-    window.gtag('event', 'conversion', { send_to: AW + '/B3c6CLqJ_NgcEPDpiocD', value: 1.0, currency: 'EUR' });
+    /* 14.11.2026: transaction_id je Lead (Google dedupliziert Wiederholungen derselben Uebermittlung) */
+    window.gtag('event', 'conversion', { send_to: AW + '/B3c6CLqJ_NgcEPDpiocD', value: 1.0, currency: 'EUR', transaction_id: 'vf-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8) });
   };
 
   window.addEventListener('vf-consent', an);
