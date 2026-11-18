@@ -1,0 +1,27 @@
+/* CTA-Streifen, Hero-Anker und mobile Leiste (Sven 17.11.2026). Erzeugt/gepflegt mit tools/cta_streifen.py */
+.cta-strip { margin: 28px 0; background: var(--bg2, #111); border: 1px solid var(--border, rgba(255,255,255,.07)); border-radius: 14px; }
+.cta-strip__inner { max-width: 1100px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+.cta-strip__text { margin: 0; flex: 1 1 300px; color: var(--txt, #f2f2f2); font-weight: 600; line-height: 1.4; }
+.cta-strip .btn-primary { flex: 0 0 auto; min-height: 48px; justify-content: center; text-decoration: none; }
+/* Streifen zwischen Sections: volle Breite, ohne Aussenabstand */
+main > .cta-strip, section + .cta-strip, .cta-strip.cta-strip--voll { margin: 0; border-radius: 0; border-left: 0; border-right: 0; }
+.cta-hero { margin: 18px 0 24px; }
+.cta-hero .btn-primary { min-height: 48px; justify-content: center; text-decoration: none; }
+
+/* Mobile Leiste: erst nach dem Hero, nie ueber einem Formular, nie bei offenem Cookie-Hinweis */
+#sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: none; padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px)); background: rgba(12,12,12,.96); border-top: 1px solid var(--border, rgba(255,255,255,.12)); }
+#sticky-cta.is-on { display: flex; }
+#sticky-cta .btn-primary { flex: 1 1 0; min-height: 48px; justify-content: center; text-decoration: none; }
+html.cta-leiste-an body { padding-bottom: 72px; }
+@media (min-width: 641px) { #sticky-cta { display: none !important; } html.cta-leiste-an body { padding-bottom: 0; } }
+@media (max-width: 640px) { .cta-strip .btn-primary, .cta-hero .btn-primary { width: 100%; } }
+
+/* Startseite mobil: Marke kleiner und engere Abstaende, damit die Hauptaktion auch bei offenem Cookie-Hinweis (390x844) im Bild steht. Kein Text entfaellt. */
+@media (max-width: 640px) {
+  .hero__stage { max-width: min(340px, 15vh); }
+  .hero { padding-top: 20px; }
+  .hero__inner { gap: 12px; }
+  .hero-badge { margin-bottom: 16px; }
+  .hero h1 { margin-bottom: 14px; }
+  .hero p { margin-bottom: 20px; }
+}
