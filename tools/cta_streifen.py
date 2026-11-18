@@ -28,7 +28,7 @@ OHNE = {
 }
 TEXTE = [
     "Ihre Situation ist anders? Schreiben Sie uns, wir ordnen sie persönlich ein.",
-    "Fragen zu Ihrem Fall? Eine kurze Anfrage genügt, kostenlos und unverbindlich.",
+    "Fragen zu Ihrem Fall? Eine kurze Anfrage genügt, unverbindlich.",
     "Möchten Sie Ihre Zahlen einordnen lassen? Senden Sie uns eine Anfrage.",
 ]
 SKIP_KLASSE = r"\b(hero|check-hero|avd-hero|pkv-hero|page-hero|trust-bar|trust-break|vf-auszeichnungen|vf-fox3d-band|cta-section|app-section|antwort-kurz)\b"
