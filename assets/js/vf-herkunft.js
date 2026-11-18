@@ -37,13 +37,12 @@
     UTM.forEach(function (k) { var v = p.get('utm_' + k); if (v) utmHier[k] = String(v).slice(0, 160); });
   }
 
-  // Sitzungs-Kontext wie vf-checks.js (nicht personenbezogen): erste Seite + erste utm
-  if (!lies('vf_landing')) schreib('vf_landing', location.pathname);
-  if (Object.keys(utmHier).length && !lies('vf_utm')) schreib('vf_utm', JSON.stringify(utmHier));
-
   // Klick-IDs nur mit Einwilligung ueber Seitenwechsel tragen
   function merken() {
     var m = marketing();
+    // 18.11.2026 (Koordination, Regel 12.11.): Sitzungs-Kontext (Einstiegsseite, utm) wie die Klick-IDs nur mit Marketing-Einwilligung
+    if (m !== true) { loesch('vf_landing'); loesch('vf_utm'); loesch('vf_ref'); }
+    else { if (!lies('vf_landing')) schreib('vf_landing', location.pathname); if (Object.keys(utmHier).length && !lies('vf_utm')) schreib('vf_utm', JSON.stringify(utmHier)); }
     if (m === false) { loesch('vf_klick'); return; }
     if (m === true && Object.keys(hier).length && !lies('vf_klick')) schreib('vf_klick', JSON.stringify(hier));
   }
@@ -75,3 +74,13 @@
     return r;
   };
 })();
+
+/* PARAM-WEITERREICHEN 18.11.2026 (Koordination): Ads-Parameter ueber Klick auf interne Links in der URL weiterreichen, keine Speicherung */
+document.addEventListener("click",function(x){try{
+ if(x.defaultPrevented||x.button||x.metaKey||x.ctrlKey||x.shiftKey||x.altKey)return;
+ var a=x.target.closest&&x.target.closest("a[href]");if(!a||a.hasAttribute("download"))return;
+ var h=a.getAttribute("href")||"";if(!h||h.charAt(0)==="#"||/^(mailto|tel|javascript):/i.test(h))return;
+ var t=new URL(h,location.href);if(t.origin!==location.origin||(t.pathname===location.pathname&&t.hash))return;
+ var cur=new URLSearchParams(location.search),ks=["gclid","gbraid","wbraid","utm_source","utm_medium","utm_campaign","utm_content","utm_term"],n=0;
+ ks.forEach(function(k){var v=cur.get(k);if(v&&!t.searchParams.has(k)){t.searchParams.set(k,v.slice(0,200));n++;}});
+ if(n)a.setAttribute("href",t.pathname+t.search+t.hash);}catch(e){}},true);

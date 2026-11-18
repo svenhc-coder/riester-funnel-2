@@ -842,6 +842,8 @@ window.VF_CHECKS = {
 
 // UTM-/Landing-Erfassung (persistiert über Seitenwechsel; einmal beim ersten Kontakt gesetzt).
 (function(){ try{
+  // 18.11.2026 (Koordination, Regel 12.11.): Sitzungs-Kontext (utm/Landing/Referrer) nur mit Marketing-Einwilligung merken
+  if(localStorage.getItem('vf_cookie_consent')!=='accepted') return;
   var p=new URLSearchParams(location.search), u={};
   ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ if(p.get(k)) u[k.replace('utm_','')]=p.get(k); });
   if(Object.keys(u).length && !sessionStorage.getItem('vf_utm')) sessionStorage.setItem('vf_utm', JSON.stringify(u));
