@@ -84,3 +84,56 @@ document.addEventListener("click",function(x){try{
  var cur=new URLSearchParams(location.search),ks=["gclid","gbraid","wbraid","utm_source","utm_medium","utm_campaign","utm_content","utm_term"],n=0;
  ks.forEach(function(k){var v=cur.get(k);if(v&&!t.searchParams.has(k)){t.searchParams.set(k,v.slice(0,200));n++;}});
  if(n)a.setAttribute("href",t.pathname+t.search+t.hash);}catch(e){}},true);
+
+/* WERBEMESSUNG-KAESTCHEN 19.11.2026 (Sven-Entscheidung, Koordination): freiwillig, nicht vorangekreuzt, kein Google-Aufruf.
+   Fuegt vor dem Absenden-Knopf aller Lead-Formulare ein Kaestchen ein (auch dynamisch gebaute Formulare) und haengt
+   werbemessung_einwilligung/_zeit/_text/_version an window.vfHerkunft() -> landet in extra des Lead-POST. */
+(function () {
+  var TEXT = 'Ja, meine Anfrage darf zur Messung und Verbesserung unserer Online-Werbung genutzt werden (Übermittlung an Google, Widerruf jederzeit).', VER = '2026-11-19-v1', IDS = { 'avd-lead-form': 1, 'lead-form': 1, 'pkv-lead-form': 1, 'leadform': 1, 'cform': 1, 'vform': 1 };
+  try {
+    var st = document.createElement('style');
+    st.textContent = '.vf-wm{display:flex!important;gap:10px;align-items:flex-start;font-size:.85rem!important;line-height:1.45!important;font-weight:400!important;margin:12px 0!important;text-align:left!important;cursor:pointer;width:auto!important;color:inherit}' +
+      '.vf-wm input{width:20px!important;height:20px!important;min-width:20px;margin:2px 0 0!important;flex:none;padding:0!important}.vf-wm a{color:inherit!important;text-decoration:underline}';
+    document.head.appendChild(st);
+  } catch (e) { /* ohne Stil weiter */ }
+  function sync(ev) {
+    try { var c = ev.target; if (!c || c.name !== 'werbemessung_einwilligung') return;
+      var all = document.querySelectorAll('input[name="werbemessung_einwilligung"]');
+      for (var i = 0; i < all.length; i++) all[i].checked = c.checked; } catch (e) { /* nie blockieren */ }
+  }
+  function einfuegen() {
+    try {
+      var fs = document.querySelectorAll('form');
+      for (var i = 0; i < fs.length; i++) {
+        var f = fs[i];
+        if (!IDS[f.id] || f.querySelector('input[name="werbemessung_einwilligung"]')) continue;
+        var btn = f.querySelector('[type=submit],button:not([type])');
+        if (!btn || !btn.parentNode) continue;
+        var l = document.createElement('label');
+        l.className = 'vf-wm';
+        l.innerHTML = '<input type="checkbox" name="werbemessung_einwilligung" value="1"><span>' + TEXT + ' <a href="/datenschutz#werbemessung" target="_blank" rel="noopener noreferrer">Mehr dazu</a></span>';
+        btn.parentNode.insertBefore(l, btn);
+      }
+    } catch (e) { /* nie blockieren */ }
+  }
+  document.addEventListener('change', sync);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', einfuegen); else einfuegen();
+  try { new MutationObserver(einfuegen).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) { /* alt */ }
+  var alt = window.vfHerkunft;
+  window.vfHerkunft = function () {
+    var r = {};
+    try { r = alt ? alt() : {}; } catch (e) { r = {}; }
+    try {
+      var bx = document.querySelectorAll('input[name="werbemessung_einwilligung"]'), b = null;
+      for (var i = 0; i < bx.length; i++) if (bx[i].offsetParent !== null) { b = bx[i]; break; }
+      if (!b && bx.length) b = bx[0];
+      if (b) {
+        r.werbemessung_einwilligung = !!b.checked;
+        r.werbemessung_einwilligung_zeit = new Date().toISOString();
+        r.werbemessung_einwilligung_text = TEXT;
+        r.werbemessung_einwilligung_version = VER;
+      }
+    } catch (e) { /* nie den Lead blockieren */ }
+    return r;
+  };
+})();
