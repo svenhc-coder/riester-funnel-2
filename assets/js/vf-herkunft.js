@@ -89,7 +89,7 @@ document.addEventListener("click",function(x){try{
    Fuegt vor dem Absenden-Knopf aller Lead-Formulare ein Kaestchen ein (auch dynamisch gebaute Formulare) und haengt
    werbemessung_einwilligung/_zeit/_text/_version an window.vfHerkunft() -> landet in extra des Lead-POST. */
 (function () {
-  var TEXT = 'Ja, meine Anfrage darf zur Messung und Verbesserung unserer Online-Werbung genutzt werden (Übermittlung an Google, Widerruf jederzeit).', VER = '2026-11-19-v1', IDS = { 'avd-lead-form': 1, 'lead-form': 1, 'pkv-lead-form': 1, 'leadform': 1, 'cform': 1, 'vform': 1 };
+  var TEXT = 'Ich willige in die Erfolgsmessung meiner Anfrage über Google ein.', VER = '2026-11-19-v2', IDS = { 'avd-lead-form': 1, 'lead-form': 1, 'pkv-lead-form': 1, 'leadform': 1, 'cform': 1, 'vform': 1 };
   try {
     var st = document.createElement('style');
     st.textContent = '.vf-wm{display:flex!important;gap:10px;align-items:flex-start;font-size:.85rem!important;line-height:1.45!important;font-weight:400!important;margin:12px 0!important;text-align:left!important;cursor:pointer;width:auto!important;color:inherit}' +
@@ -127,8 +127,8 @@ document.addEventListener("click",function(x){try{
       var bx = document.querySelectorAll('input[name="werbemessung_einwilligung"]'), b = null;
       for (var i = 0; i < bx.length; i++) if (bx[i].offsetParent !== null) { b = bx[i]; break; }
       if (!b && bx.length) b = bx[0];
-      if (b) {
-        r.werbemessung_einwilligung = !!b.checked;
+      if (b && b.checked) {   // nur bei Haken senden, unangekreuzt GAR NICHT (kein false)
+        r.werbemessung_einwilligung = true;
         r.werbemessung_einwilligung_zeit = new Date().toISOString();
         r.werbemessung_einwilligung_text = TEXT;
         r.werbemessung_einwilligung_version = VER;
