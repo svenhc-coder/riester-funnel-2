@@ -37,12 +37,26 @@
     UTM.forEach(function (k) { var v = p.get('utm_' + k); if (v) utmHier[k] = String(v).slice(0, 160); });
   }
 
+  // 21.11.2026 (d-bau3/Koordination): Klick-ID nur bei Einwilligung 30 Tage in localStorage 'vf_klick30' (Unterseiten, Wiederkehr);
+  // ohne Einwilligung / bei Widerruf sofort geloescht.
+  var K30 = 'vf_klick30', K30MS = 30 * 24 * 60 * 60 * 1000;
+  function lese30() {
+    try {
+      var r = JSON.parse(window.localStorage.getItem(K30) || 'null');
+      if (!r || !r.t || Date.now() - r.t > K30MS) { window.localStorage.removeItem(K30); return {}; }
+      return r;
+    } catch (e) { return {}; }
+  }
+  function schreib30() { try { var d = {}; IDS.forEach(function (k) { if (hier[k]) d[k] = hier[k]; }); d.t = Date.now(); window.localStorage.setItem(K30, JSON.stringify(d)); } catch (e) { /* gesperrt */ } }
+  function loesch30() { try { window.localStorage.removeItem(K30); } catch (e) { /* gesperrt */ } }
+
   // Klick-IDs nur mit Einwilligung ueber Seitenwechsel tragen
   function merken() {
     var m = marketing();
     // 18.11.2026 (Koordination, Regel 12.11.): Sitzungs-Kontext (Einstiegsseite, utm) wie die Klick-IDs nur mit Marketing-Einwilligung
     if (m !== true) { loesch('vf_landing'); loesch('vf_utm'); loesch('vf_ref'); }
     else { if (!lies('vf_landing')) schreib('vf_landing', location.pathname); if (Object.keys(utmHier).length && !lies('vf_utm')) schreib('vf_utm', JSON.stringify(utmHier)); }
+    if (m !== true) loesch30(); else if (Object.keys(hier).length) schreib30();
     if (m === false) { loesch('vf_klick'); return; }
     if (m === true && Object.keys(hier).length && !lies('vf_klick')) schreib('vf_klick', JSON.stringify(hier));
   }
@@ -54,7 +68,7 @@
     try {
       var m = marketing(), gemerkt = m === true ? json('vf_klick') : {};
       // 12.11.2026: Klick-IDs nur mit ausdruecklicher Marketing-Einwilligung (vorher gingen IDs der aktuellen URL auch ohne Wahl mit)
-      if (m === true) IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k]; if (v) r[k] = v; });
+      if (m === true) IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k] || klickId(lese30()[k]); if (v) r[k] = v; });
       var u = Object.keys(utmHier).length ? utmHier : json('vf_utm'), utm = {};
       UTM.forEach(function (k) { if (u[k]) utm[k] = String(u[k]).slice(0, 160); });
       if (m === true && Object.keys(utm).length) r.utm = utm;   // 13.11.2026: UTM wie Klick-IDs nur mit Einwilligung
