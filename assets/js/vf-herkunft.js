@@ -47,7 +47,7 @@
       return r;
     } catch (e) { return {}; }
   }
-  function schreib30() { try { var d = {}; IDS.forEach(function (k) { if (hier[k]) d[k] = hier[k]; }); d.t = Date.now(); window.localStorage.setItem(K30, JSON.stringify(d)); } catch (e) { /* gesperrt */ } }
+  function schreib30() { try { var d = {}, alt = lese30(); IDS.forEach(function (k) { if (hier[k]) d[k] = hier[k]; }); var gleich = alt.t && IDS.every(function (k) { return (alt[k] || '') === (d[k] || ''); }); d.t = gleich ? alt.t : Date.now(); window.localStorage.setItem(K30, JSON.stringify(d)); } catch (e) { /* gesperrt */ } }
   function loesch30() { try { window.localStorage.removeItem(K30); } catch (e) { /* gesperrt */ } }
 
   // Klick-IDs nur mit Einwilligung ueber Seitenwechsel tragen
@@ -69,6 +69,8 @@
       var m = marketing(), gemerkt = m === true ? json('vf_klick') : {};
       // 12.11.2026: Klick-IDs nur mit ausdruecklicher Marketing-Einwilligung (vorher gingen IDs der aktuellen URL auch ohne Wahl mit)
       if (m === true) IDS.forEach(function (k) { var v = klickId(gemerkt[k]) || hier[k] || klickId(lese30()[k]); if (v) r[k] = v; });
+      // 21.11.2026 (d-bau3): Klickzeit (ISO) der Klick-ID mitsenden, nur mit Einwilligung (r[k] nur dann gesetzt)
+      if (r.gclid || r.gbraid || r.wbraid) r.klick_id_zeit = new Date(lese30().t || Date.now()).toISOString();
       var u = Object.keys(utmHier).length ? utmHier : json('vf_utm'), utm = {};
       UTM.forEach(function (k) { if (u[k]) utm[k] = String(u[k]).slice(0, 160); });
       if (m === true && Object.keys(utm).length) r.utm = utm;   // 13.11.2026: UTM wie Klick-IDs nur mit Einwilligung
