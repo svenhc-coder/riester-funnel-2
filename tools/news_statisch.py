@@ -34,6 +34,18 @@ try:
 except Exception:
     pass
 
+def leadfett(body):
+    """Webdesign-Standard (Audit 21.11.2026): Lead zweigeteilt - erster Satz des ersten Absatzes fett, Rest gedaempft. Idempotent."""
+    m = re.match(r"^(\s*<p>)(.*?)(</p>)", body, re.S)
+    if not m or m.group(2).lstrip().startswith("<strong"):
+        return body
+    t = m.group(2)
+    k = re.search(r"(?<=[.!?])(?:&[a-z]+;)?\s+(?=[A-ZÄÖÜ&])", t)
+    if not k:
+        return body
+    return m.group(1) + "<strong>" + t[:k.start()] + "</strong>" + t[k.start():] + m.group(3) + body[m.end():]
+
+
 def monat(d):
     if not d:
         return ""
@@ -140,7 +152,7 @@ def seite(a):
         '<div class="article-body">%s</div>' + QUELLENBLOCK + AUTORENBOX +
         '<div class="article-disclaimer"><strong>Hinweis:</strong> Dieser Artikel dient der allgemeinen Information und stellt keine Anlage-, Rechts- oder '
         'Steuerberatung dar. Alle Angaben ohne Gewähr. Für individuelle Beratung wenden Sie sich an einen zugelassenen Finanzberater.</div>'
-    ) % (H.escape(a["tag"]), H.escape(a["tag"]), H.escape(titel), H.escape(a["readtime"]), monat(a["date"]), a["body"])
+    ) % (H.escape(a["tag"]), H.escape(a["tag"]), H.escape(titel), H.escape(a["readtime"]), monat(a["date"]), leadfett(a["body"]))
     g, n = re.subn(r'(<main[^>]*id="article-main"[^>]*>).*?(</main>)', lambda m: m.group(1) + inhalt + m.group(2), g, 1, flags=re.S)
     if n != 1:
         raise SystemExit("article-main nicht gefunden")
