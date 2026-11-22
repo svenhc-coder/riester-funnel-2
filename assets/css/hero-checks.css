@@ -24,3 +24,7 @@
   .hero-checks span { display: block; margin-top: 3px; font-size: 0.78rem; line-height: 1.35; color: rgba(255, 255, 255, 0.68); }
 }
 @media (prefers-reduced-motion: reduce) { .hero-checks a { transition: none; } .hero-checks a:hover { transform: none; } }
+
+/* 22.11.2026 Design-Audit: Zweitaktion im Startseiten-Hero als Textlink (eine Primaeraktion) */
+.hero-actions .btn-ghost{border:0;background:none;box-shadow:none;padding:12px 6px;min-height:44px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
+.hero-actions .btn-ghost:hover,.hero-actions .btn-ghost:focus-visible{text-decoration-color:var(--orange,#ff7a00);color:var(--orange,#ff7a00)}
