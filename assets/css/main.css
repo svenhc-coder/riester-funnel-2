@@ -549,3 +549,7 @@ button.btn-primary,.cookie-btn-accept{color:#0a0a0f !important;}
 
 /* Mobil (06.11.2026): wie auf der Startseite nur den CTA zeigen. Der spaetere nachgezogen-Block (.nav-links{display:flex}) hob die Regel unter 640 px auf, die Check-Seiten liefen bei 320 px 51 px ueber. */
 @media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
+
+/* 22.11.2026 Design-Audit: Zweitaktion im Hero als Textlink (eine Primaeraktion, keine zwei gleichrangigen Knoepfe) */
+.home-hero-actions .btn-ghost{border:0;background:none;box-shadow:none;padding:12px 6px;min-height:44px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
+.home-hero-actions .btn-ghost:hover,.home-hero-actions .btn-ghost:focus-visible{text-decoration-color:var(--orange,#ff7a00);color:var(--orange,#ff7a00)}
