@@ -51,7 +51,7 @@
       + '<div class="vf-cn__inner">'
       + '  <h2 id="vf-cn-title" class="vf-cn__title">Cookies &amp; Datenschutz</h2>'
       + '  <p id="vf-cn-desc" class="vf-cn__body">'
-      + '    <span class="vf-cn__short">Google Analytics und die Anzeigen-Messung von Google Ads laden nur mit Ihrer Zustimmung. Ohne Zustimmung setzen wir keine Analyse- oder Werbe-Cookies. <button type="button" class="vf-cn__more" aria-expanded="false" aria-controls="vf-cn-full">Mehr</button></span>'
+      + '    <span class="vf-cn__short">Mit Ihrer Zustimmung laden wir Google Analytics (Statistik) und die Anzeigen-Messung von Google Ads; dabei setzt Google Cookies. Ohne Zustimmung keine Google-Dienste. Widerruf jederzeit über „Cookie-Einstellungen“ im Fußbereich. <a href="/datenschutz">Datenschutzerklärung</a> · <button type="button" class="vf-cn__more" aria-expanded="false" aria-controls="vf-cn-full">Mehr</button></span>'
       + '    <span class="vf-cn__full" id="vf-cn-full">'
       + '    Mit Ihrer Zustimmung laden wir Google Analytics (Statistik) und die Anzeigen-Messung von Google Ads;'
       + '    dabei setzt Google Cookies und erhält Angaben zu Ihrem Besuch.'
