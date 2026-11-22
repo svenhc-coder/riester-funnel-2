@@ -39,6 +39,8 @@
 
   function ok() { return { ok: true }; }
   function nein(m) { return { ok: false, meldung: m }; }
+  // Weicher Hinweis (v1.2.0): Absenden bleibt erlaubt, das Feld zeigt nur "Bitte kurz prüfen".
+  function hinweis(m) { return { ok: true, hinweis: m }; }
   // NFC: „Renée“ (zerlegter Akzent) wird zu „Renée“, sonst scheitert \p{L}.
   function norm(v) {
     var s = String(v == null ? '' : v);
@@ -107,13 +109,15 @@
     // KEIN Vokal-Zwang (v1.1.0): wwk.de, vkb.de sind echte Versicherer.
     var haupt = labels[labels.length - 2];
     var lokalBuchst = lokal.replace(/[^a-z]/g, '');
-    if (haupt.length >= 3 && (wiederholt(haupt) || tastatur(haupt) || dreifach(haupt)))
+    if (haupt.length >= 3 && (wiederholt(haupt) || tastatur(haupt)))
       return nein('Bitte prüfen Sie Ihre E-Mail-Adresse.');
     if (lokalBuchst.length >= 4 && (wiederholt(lokalBuchst) || tastatur(lokalBuchst)))
       return nein('Bitte prüfen Sie Ihre E-Mail-Adresse.');
     if (PLATZHALTER.indexOf(lokal) !== -1 && ['test', 'asdf', 'sdf', 'xxx', 'abc', 'dummy', 'bla'].indexOf(lokal) !== -1)
       return nein('Bitte verwenden Sie Ihre persönliche E-Mail-Adresse.');
     if (tld.length > 1 && wiederholt(tld) && tld.length >= 4) return nein('Bitte prüfen Sie Ihre E-Mail-Adresse.');
+    // v1.2.0: Betriebe nennen sich "AAA-…"/"KKK-…", um in Verzeichnissen vorne zu stehen: nicht ablehnen, nur Hinweis.
+    if (haupt.length >= 3 && dreifach(haupt)) return hinweis('Bitte kurz prüfen, ob die E-Mail-Adresse stimmt.');
     return ok();
   }
 
@@ -193,7 +197,20 @@
     function zeige(feld, erg) {
       // Meldung haengt am Feld selbst (keine aus Feldnamen gebauten Selektoren, eindeutige ID).
       var box = feld.__isuPlausiBox;
-      if (!erg.ok) {
+      if (erg.ok && erg.hinweis) {
+        if (!box) {
+          box = document.createElement('p');
+          box.id = 'isu-plausi-' + (++zaehler);
+          box.className = 'plausi-meldung plausi-hinweis';
+          box.setAttribute('role', 'status');
+          feld.insertAdjacentElement('afterend', box);
+          feld.__isuPlausiBox = box;
+        }
+        box.textContent = erg.hinweis;
+        beschreibung(feld, box.id, true);
+        feld.removeAttribute('aria-invalid');
+        if (feld.setCustomValidity) feld.setCustomValidity('');
+      } else if (!erg.ok) {
         if (!box) {
           box = document.createElement('p');
           box.id = 'isu-plausi-' + (++zaehler);
@@ -250,5 +267,5 @@
   }
 
   return { name: name, email: email, telefon: telefon, telefonNormal: telefonNormal,
-    anschliessen: anschliessen, alleAnschliessen: alleAnschliessen, version: '1.1.0' };
+    anschliessen: anschliessen, alleAnschliessen: alleAnschliessen, version: '1.2.0' };
 });
