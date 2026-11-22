@@ -11,7 +11,7 @@
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest && e.target.closest('a[data-cta-ort]');
     if (!a || typeof window.vfEvent !== 'function') return;
-    var p = { cta_ort: a.getAttribute('data-cta-ort'), cta_ziel: a.getAttribute('data-cta-ziel') || '' };
+    var p = { ort: a.getAttribute('data-cta-ort'), marke: 'versicherungsfuchs', cta_ort: a.getAttribute('data-cta-ort'), cta_ziel: a.getAttribute('data-cta-ziel') || '' };
     try {
       window.vfEvent('cta_klick', p);
       if (p.cta_ort === 'hero') window.vfEvent('hero_anfrage_klick', p);
