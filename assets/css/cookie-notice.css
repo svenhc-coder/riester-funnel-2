@@ -39,3 +39,8 @@
   .vf-cn__btn--accept:hover,.vf-cn__btn--reject:hover{background:#34343a}
   .vf-cn__btn--settings{flex:1 1 100%;min-height:2.1rem;font-size:.78rem}
 }
+
+/* 22.11.2026 (Koordination-GO): mobil Kurztext + "Mehr"; voller Wortlaut unveraendert, Ablehnen/Zustimmen bleiben gleichrangig. */
+.vf-cn__short{display:none}
+.vf-cn__more{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+@media (max-width:600px){.vf-cn:not(.is-more) .vf-cn__full{display:none}.vf-cn:not(.is-more) .vf-cn__short{display:inline}}

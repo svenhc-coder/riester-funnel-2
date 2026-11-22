@@ -36,6 +36,7 @@ def main():
             fehler.append("cookie-notice.js: Banner-Absatz vf-cn-desc nicht gefunden")
         else:
             roh = re.sub(r"'\s*\+\s*'", "", p.group(1))
+            roh = re.sub(r'<span class="vf-cn__short">.*?</span>', '', roh, flags=re.S)   # mobiler Kurztext; der volle Text bleibt Nachweis
             banner = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", roh))).strip()
             if re.sub(r"\s+", " ", text).strip() != banner:
                 fehler.append("VF_EINWILLIGUNG.text weicht vom Banner ab (Text UND Version anpassen):\n   Konstante: %s\n   Banner:    %s" % (text, banner))
